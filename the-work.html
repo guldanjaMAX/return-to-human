@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Work | Anthony Balduzzi - Return to Human</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a08;
+            --bg2: #0f0e0c;
+            --bg3: #161412;
+            --ember: #d4872c;
+            --ember-light: #e8a84c;
+            --fire: #c45a1a;
+            --fire-deep: #8b3a10;
+            --gold: #c9a84c;
+            --ash: #7a756b;
+            --smoke: #a09888;
+            --bone: #ddd5c5;
+            --white: #f2ece0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background-color: var(--bg);
+            color: var(--bone);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            transition: background-color 0.3s ease;
+            z-index: 1000;
+        }
+
+        nav.scrolled {
+            background-color: rgba(10, 10, 8, 0.95);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--white);
+        }
+
+        .tagline {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--ember);
+            margin-top: 0.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            text-decoration: none;
+            color: var(--bone);
+            transition: color 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover {
+            color: var(--ember);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .logo {
+                font-size: 1rem;
+                letter-spacing: 1px;
+            }
+
+            .tagline {
+                font-size: 0.6rem;
+                letter-spacing: 2px;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                display: none;
+            }
+
+            nav.mobile-menu-open .nav-links {
+                display: flex;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background-color: rgba(10, 10, 8, 0.98);
+                padding: 2rem 1.5rem;
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 1rem;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 50%, var(--bg3) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('photos/duzzi-log-amazon.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.35;
+            z-index: 0;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(10,10,8,0.3) 0%, rgba(10,10,8,0.8) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            max-width: 700px;
+            padding: 2rem;
+        }
+
+        .hero-eyebrow {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--ember);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+            animation: fadeInUp 1s ease 0.4s both;
+            line-height: 1;
+        }
+
+        .hero-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--bone);
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border: 2px solid var(--ember);
+            background-color: transparent;
+            color: var(--ember);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            animation: fadeInUp 1s ease 0.8s both;
+        }
+
+        .cta-button:hover {
+            background-color: var(--ember);
+            color: var(--bg);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 135, 44, 0.2);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 3rem;
+            text-align: center;
+            letter-spacing: -1px;
+        }
+
+        /* The Invitation Section */
+        .invitation {
+            background-color: var(--bg2);
+        }
+
+        .invitation-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .invitation-intro {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--ember);
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .invitation-quote {
+            font-size: 1.4rem;
+            color: var(--bone);
+            margin-bottom: 2rem;
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        .invitation-body {
+            font-size: 1.2rem;
+            color: var(--smoke);
+            line-height: 2;
+            margin-bottom: 0;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.3, 1);
+        }
+
+        .reveal.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Transformation Section */
+        .transformation {
+            background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+        }
+
+        .transform-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            align-items: start;
+        }
+
+        .transform-column {
+            padding: 2rem;
+            border-left: 3px solid var(--fire);
+            background-color: rgba(196, 90, 26, 0.05);
+        }
+
+        .transform-column.to {
+            border-left-color: var(--ember);
+            background-color: rgba(212, 135, 44, 0.05);
+        }
+
+        .transform-column h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ember);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .transform-column.to h3 {
+            color: var(--ember-light);
+        }
+
+        .transform-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--bone);
+        }
+
+        @media (max-width: 768px) {
+            .transform-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* Five Phases Section */
+        .phases {
+            background-color: var(--bg2);
+        }
+
+        .phases-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .phase {
+            margin-bottom: 3rem;
+            padding: 2.5rem;
+            border-top: 2px solid var(--ember);
+            background-color: rgba(212, 135, 44, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .phase:hover {
+            background-color: rgba(212, 135, 44, 0.08);
+            transform: translateX(10px);
+        }
+
+        .phase-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--ember);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .phase-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--white);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .phase-desc {
+            font-size: 1.1rem;
+            color: var(--bone);
+            line-height: 1.9;
+        }
+
+        /* Agreements Section */
+        .agreements {
+            background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+        }
+
+        .agreements-intro {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--ember);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .agreements-list {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .agreement-item {
+            padding: 1.5rem 2rem;
+            border-left: 3px solid var(--gold);
+            background-color: rgba(201, 168, 76, 0.05);
+            font-size: 1.1rem;
+            color: var(--bone);
+            line-height: 1.8;
+        }
+
+        /* Who This Is For */
+        .who-for {
+            background-color: var(--bg);
+        }
+
+        .who-for-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .who-intro {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .who-subtitle {
+            font-size: 1.3rem;
+            color: var(--bone);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .who-description {
+            font-size: 1.1rem;
+            color: var(--smoke);
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .who-description strong {
+            color: var(--ember);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            min-height: 70vh;
+            background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('photos/duzzi-stump-lake.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(10,10,8,0.2) 0%, rgba(10,10,8,0.8) 100%);
+            z-index: 1;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 600px;
+            padding: 3rem 2rem;
+        }
+
+        .cta-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .cta-subtext {
+            font-size: 1.1rem;
+            color: var(--bone);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .cta-note {
+            font-size: 1rem;
+            color: var(--ash);
+            margin-top: 2rem;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            background-color: rgba(15, 14, 12, 0.8);
+            padding: 2.5rem;
+            border: 1px solid rgba(212, 135, 44, 0.2);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--bone);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 1rem;
+            border: 1px solid rgba(212, 135, 44, 0.3);
+            background-color: rgba(10, 10, 8, 0.6);
+            color: var(--white);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--ash);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--ember);
+            background-color: rgba(10, 10, 8, 0.8);
+            box-shadow: 0 0 15px rgba(212, 135, 44, 0.15);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            padding: 1.2rem;
+            border: 2px solid var(--ember);
+            background-color: var(--ember);
+            color: var(--bg);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            margin-top: 0.5rem;
+        }
+
+        .form-submit:hover {
+            background-color: var(--ember-light);
+            border-color: var(--ember-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 135, 44, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg3);
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(212, 135, 44, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-secondary {
+            font-size: 0.9rem;
+            color: var(--ash);
+            margin-top: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--bone);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--ember);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--ember);
+            color: var(--ember);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--ember);
+            color: var(--bg);
+        }
+
+        .footer-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 135, 44, 0.1);
+            font-size: 1.1rem;
+            color: var(--bone);
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-message {
+                grid-column: 1;
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .contact-form {
+                max-width: 100%;
+            }
+
+            .cta-heading {
+                font-size: 2rem;
+            }
+
+            .invitation-intro {
+                font-size: 2rem;
+            }
+
+            .who-intro {
+                font-size: 2rem;
+            }
+
+            body {
+                font-size: 16px;
+            }
+        }
+
+        /* Fire accent line */
+        .fire-line {
+            width: 60px;
+            height: 3px;
+            background-color: var(--fire);
+            margin: 0 auto 2rem;
+        }
+
+        .fire-line.center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="nav">
+        <div class="logo-group">
+            <div class="logo">ANTHONY BALDUZZI</div>
+            <div class="tagline">Return to Human</div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="the-story.html">The Story</a></li>
+            <li><a href="the-work.html" class="active">The Work</a></li>
+            <li><a href="speak.html">Speak</a></li>
+            <li><a href="the-manifesto.html">The Manifesto</a></li>
+            <li><a href="#letters">Letters from Center</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-eyebrow">Sacred Mentorship</div>
+            <h1 class="hero-title">The Work</h1>
+            <p class="hero-subtitle">A baptism by fire. Not iron sharpens iron. Fire transforms the state of things entirely.</p>
+        </div>
+    </section>
+
+    <!-- The Invitation Section -->
+    <section class="invitation">
+        <div class="invitation-container">
+            <div class="fire-line center"></div>
+            <p class="invitation-intro reveal">This is not coaching. This is not therapy.</p>
+            <p class="invitation-quote reveal">This is a sacred container where a man comes to be broken open, rebuilt, and sent home alive.</p>
+            <p class="invitation-body reveal">Anthony meets you exactly where you are. Beside you, not above you. And together, you walk into the fire.</p>
+        </div>
+    </section>
+
+    <!-- Transformation Section -->
+    <section class="transformation">
+        <h2 class="section-title">The Transformation</h2>
+        <div class="transform-grid">
+            <div class="transform-column reveal">
+                <h3>From</h3>
+                <p class="transform-text">Tame. Numb. Disconnected from God. Physically stagnant. Spiritually performative. Relationship tension. Routine bound. Quietly suffocating behind a successful exterior. Running from a pain he cannot name. Caged by the life he built.</p>
+            </div>
+            <div class="transform-column to reveal">
+                <h3>To</h3>
+                <p class="transform-text">Fully alive. Centered in his power. Connected to God directly, his own relationship, his own knowing. Physically strong, aligned, vibrant. Relationships mending, deepening, honest. Planning and living adventures. Free of numbing habits. Leading his partner, family, and mission from center. Waking up with enthusiasm. Expressing fully. A knowing man on the high path.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Five Phases Section -->
+    <section class="phases">
+        <h2 class="section-title">The Five Phases of the Work</h2>
+        <div class="phases-container">
+
+            <div class="phase reveal">
+                <div class="phase-number">Phase 1</div>
+                <h3 class="phase-title">Physical Alignment</h3>
+                <p class="phase-desc">We train the body. Jaw to spine alignment, hanging, moving, twisting. Cardiovascular activation, nitric oxide. Cleaning the digestive tract. Living foods. Connecting daily routine with natural alignment. Strength, agility, full embodied vitality.</p>
+            </div>
+
+            <div class="phase reveal">
+                <div class="phase-number">Phase 2</div>
+                <h3 class="phase-title">Spiritual Exploration</h3>
+                <p class="phase-desc">We explore the deepest questions: Who are you? Where do you come from? Why are you here? What is the alignment from your center? We develop your direct relationship with Creator. One that is real, yours, and direct.</p>
+            </div>
+
+            <div class="phase reveal">
+                <div class="phase-number">Phase 3</div>
+                <h3 class="phase-title">Ceremony</h3>
+                <p class="phase-desc">At the right point in the work, we go into nature, by the fire. You take sacred medicine (psilocybin, in a legal container). Anthony plays the flute. You go deep within yourself. He holds space.</p>
+            </div>
+
+            <div class="phase reveal">
+                <div class="phase-number">Phase 4</div>
+                <h3 class="phase-title">Life Alignment</h3>
+                <p class="phase-desc">We examine your relationships, your fears, your mission, your daily patterns. We do the forgiveness work, the clearing, the rebuilding. We plan adventures. We make radical shifts where they are needed. At the midpoint, Anthony comes to your home.</p>
+            </div>
+
+            <div class="phase reveal">
+                <div class="phase-number">Phase 5</div>
+                <h3 class="phase-title">Integration and Release</h3>
+                <p class="phase-desc">Anthony teaches you his system. The movements, the nutrition, the stillness practices, the prayer life, the daily alignment. May it serve you for life. The work has an ending. He transmits and releases.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- The Agreements Section -->
+    <section class="agreements">
+        <div class="agreements-intro reveal">What Anthony Promises</div>
+        <div class="agreements-list">
+            <div class="agreement-item reveal">I promise to meet you exactly where you are.</div>
+            <div class="agreement-item reveal">I promise to do this work together. Beside you, not above you.</div>
+            <div class="agreement-item reveal">I promise to hold sacred, confidential space for whatever emerges.</div>
+            <div class="agreement-item reveal">I promise to bring the full weight of my life experience, my medical knowledge, my spiritual practice.</div>
+            <div class="agreement-item reveal">I promise to help you face and overcome your fears.</div>
+            <div class="agreement-item reveal">I promise to help you awaken your sacred connection to Creator.</div>
+            <div class="agreement-item reveal">I promise that this work has an ending. I am not building dependency. I am transmitting what I know and sending you back into your life, transformed and free.</div>
+        </div>
+    </section>
+
+    <!-- Who This Is For Section -->
+    <section class="who-for">
+        <h2 class="section-title">Who This Is For</h2>
+        <div class="who-for-container">
+            <p class="who-subtitle reveal">Men, likely ages 35 to 55. <strong>Accomplished. Successful by the world's standards.</strong> And quietly suffocating.</p>
+            <p class="who-description reveal">You have the family, the career, the exterior. And <strong>something essential is missing.</strong></p>
+            <p class="who-description reveal">You are ready to <strong>stop performing and start living.</strong></p>
+            <p class="who-description reveal">You are open to the sacred, the unconventional, <strong>the fire.</strong></p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 class="cta-heading">Every crossing begins with a single conversation.</h2>
+            <p class="cta-subtext">This is a sacred, exclusive container. One client at a time. The conversation begins with a simple message.</p>
+
+            <form class="contact-form" onsubmit="handleFormSubmit(event)">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Tell me where you are</label>
+                    <textarea id="message" name="message" placeholder="Share what brings you here..." required></textarea>
+                </div>
+                <button type="submit" class="form-submit">Begin the Conversation</button>
+            </form>
+
+            <p class="cta-note">Your message will initiate a direct conversation with Anthony. This is sacred ground.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="footer-brand">Anthony Balduzzi</div>
+                <div class="footer-secondary">Return to Human</div>
+            </div>
+            <div class="footer-links">
+                <a href="the-story.html">The Story</a>
+                <a href="the-work.html">The Work</a>
+                <a href="speak.html">Speak</a>
+                <a href="the-manifesto.html">The Manifesto</a>
+                <a href="#letters">Letters from Center</a>
+            </div>
+            <div class="footer-social">
+                <a href="#" class="social-link">IN</a>
+                <a href="#" class="social-link">YT</a>
+            </div>
+            <div class="footer-message">Wake up. Come feel this.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        const nav = document.getElementById('nav');
+        const heroSection = document.querySelector('.hero');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > heroSection.offsetHeight * 0.5) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll reveal animation
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        revealElements.forEach((element) => {
+            observer.observe(element);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Form submission handler
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Log the submission (in production, this would send to a backend)
+            console.log('Form submitted:', { name, email, message });
+
+            // Reset form
+            event.target.reset();
+
+            // Show success message
+            const button = event.target.querySelector('.form-submit');
+            const originalText = button.textContent;
+            button.textContent = 'Message Received';
+            button.style.opacity = '0.8';
+
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.opacity = '1';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

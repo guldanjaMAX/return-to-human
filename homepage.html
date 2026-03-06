@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return to Human | Anthony Balduzzi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a08;
+            --bg2: #0f0e0c;
+            --bg3: #161412;
+            --ember: #d4872c;
+            --ember-light: #e8a84c;
+            --fire: #c45a1a;
+            --fire-deep: #8b3a10;
+            --gold: #c9a84c;
+            --ash: #7a756b;
+            --smoke: #a09888;
+            --bone: #ddd5c5;
+            --white: #f2ece0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background-color: var(--bg);
+            color: var(--bone);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            transition: background-color 0.3s ease;
+            z-index: 1000;
+        }
+
+        nav.scrolled {
+            background-color: rgba(10, 10, 8, 0.95);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--white);
+        }
+
+        .tagline {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--ember);
+            margin-top: 0.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            text-decoration: none;
+            color: var(--bone);
+            transition: color 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover {
+            color: var(--ember);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .logo {
+                font-size: 1rem;
+                letter-spacing: 1px;
+            }
+
+            .tagline {
+                font-size: 0.6rem;
+                letter-spacing: 2px;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                display: none;
+            }
+
+            nav.mobile-menu-open .nav-links {
+                display: flex;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background-color: rgba(10, 10, 8, 0.98);
+                padding: 2rem 1.5rem;
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 1rem;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 50%, var(--bg3) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('photos/duzzi-sunset-rock.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(10,10,8,0.2) 0%, rgba(10,10,8,0.7) 100%);
+            z-index: 1;
+        }
+
+        .hero-portrait {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30%;
+            max-width: 400px;
+            opacity: 0.3;
+            mix-blend-mode: lighten;
+            z-index: 2;
+        }
+
+        .hero-portrait img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            max-width: 700px;
+            padding: 2rem;
+        }
+
+        .hero-eyebrow {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--ember);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+            animation: fadeInUp 1s ease 0.4s both;
+            line-height: 1;
+        }
+
+        .hero-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--bone);
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border: 2px solid var(--ember);
+            background-color: transparent;
+            color: var(--ember);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            animation: fadeInUp 1s ease 0.8s both;
+        }
+
+        .cta-button:hover {
+            background-color: var(--ember);
+            color: var(--bg);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 135, 44, 0.2);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-portrait {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 3rem;
+            text-align: center;
+            letter-spacing: -1px;
+        }
+
+        /* Thesis Section */
+        .thesis {
+            background-color: var(--bg2);
+        }
+
+        .thesis-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--ember);
+            text-align: center;
+            margin-bottom: 3rem;
+            line-height: 1.1;
+        }
+
+        .thesis-body {
+            font-size: 1.1rem;
+            line-height: 2;
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            color: var(--bone);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.3, 1);
+        }
+
+        .reveal.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* What AI Will Never Touch */
+        .ai-never {
+            background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-never::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            background-image: url('photos/duzzi-meditating.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .ai-never-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .ai-never-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .ai-never-item {
+            padding: 1.5rem 2rem;
+            border-left: 3px solid var(--ember);
+            background-color: rgba(212, 135, 44, 0.05);
+        }
+
+        .ai-never-item .reveal {
+            font-size: 1.2rem;
+            color: var(--bone);
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .ai-never::before {
+                width: 100%;
+                opacity: 0.08;
+            }
+        }
+
+        /* The Guide Section */
+        .the-guide {
+            background-color: var(--bg2);
+        }
+
+        .guide-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .guide-image {
+            position: relative;
+        }
+
+        .guide-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-left: 4px solid var(--ember);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .guide-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .guide-content p {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--bone);
+            margin-bottom: 1.5rem;
+        }
+
+        .guide-link {
+            display: inline-block;
+            color: var(--ember);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .guide-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--ember);
+            transition: width 0.3s ease;
+        }
+
+        .guide-link:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .guide-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .guide-content h3 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Framework Section */
+        .framework {
+            background-color: var(--bg);
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pillar {
+            padding: 2rem;
+            border-top: 3px solid var(--ember);
+            background-color: rgba(212, 135, 44, 0.03);
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .pillar:hover {
+            background-color: rgba(212, 135, 44, 0.08);
+            transform: translateY(-5px);
+        }
+
+        .pillar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ember);
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .pillar-text {
+            font-size: 1rem;
+            color: var(--bone);
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .pillars-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .pillar {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Rules Section */
+        .rules {
+            background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+        }
+
+        .rules-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .rule {
+            padding: 2rem;
+            border-left: 2px solid var(--gold);
+            background-color: rgba(201, 168, 76, 0.03);
+        }
+
+        .rule-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--ember);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .rule-text {
+            font-size: 1.1rem;
+            color: var(--bone);
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .rules-list {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .rule {
+                padding: 1.5rem;
+            }
+        }
+
+        /* What We Do Section */
+        .what-we-do {
+            background-color: var(--bg2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .what-we-do::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50%;
+            height: 80%;
+            background-image: url('photos/duzzi-ffp-group-close.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .offerings {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .offering {
+            padding: 2.5rem 2rem;
+            background-color: rgba(212, 135, 44, 0.05);
+            border: 1px solid rgba(212, 135, 44, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .offering:hover {
+            border-color: var(--ember);
+            background-color: rgba(212, 135, 44, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(212, 135, 44, 0.1);
+        }
+
+        .offering-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .offering-desc {
+            font-size: 1rem;
+            color: var(--bone);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .offering-link {
+            color: var(--ember);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .offering-link:hover {
+            color: var(--ember-light);
+        }
+
+        @media (max-width: 768px) {
+            .offerings {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .what-we-do::before {
+                display: none;
+            }
+        }
+
+        /* Newsletter Section */
+        .newsletter {
+            background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+        }
+
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .newsletter-subtext {
+            font-size: 1.1rem;
+            color: var(--bone);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 1rem;
+            border: 1px solid var(--ember);
+            background-color: rgba(10, 10, 8, 0.5);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form input::placeholder {
+            color: var(--ash);
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            background-color: rgba(10, 10, 8, 0.8);
+            border-color: var(--ember-light);
+            box-shadow: 0 0 20px rgba(212, 135, 44, 0.2);
+        }
+
+        .newsletter-form button {
+            padding: 1rem 2rem;
+            border: 1px solid var(--ember);
+            background-color: var(--ember);
+            color: var(--bg);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background-color: var(--ember-light);
+            border-color: var(--ember-light);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg3);
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(212, 135, 44, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-secondary {
+            font-size: 0.9rem;
+            color: var(--ash);
+            margin-top: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--bone);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--ember);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--ember);
+            color: var(--ember);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--ember);
+            color: var(--bg);
+        }
+
+        .footer-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 135, 44, 0.1);
+            font-size: 1.1rem;
+            color: var(--bone);
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-message {
+                grid-column: 1;
+            }
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 3rem 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            body {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="nav">
+        <div class="logo-group">
+            <div class="logo">ANTHONY BALDUZZI</div>
+            <div class="tagline">Return to Human</div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="the-story.html">The Story</a></li>
+            <li><a href="the-work.html">The Work</a></li>
+            <li><a href="speak.html">Speak</a></li>
+            <li><a href="the-manifesto.html">The Manifesto</a></li>
+            <li><a href="#letters">Letters from Center</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-portrait">
+            <img src="photos/duzzi-hero-portrait-faded.jpg" alt="Anthony Balduzzi">
+        </div>
+        <div class="hero-content">
+            <div class="hero-eyebrow">In the Age of AI</div>
+            <h1 class="hero-title">Return to Human</h1>
+            <p class="hero-subtitle">The things that make you feel most alive are the things no machine will ever touch.</p>
+            <a href="#thesis" class="cta-button">Enter</a>
+        </div>
+    </section>
+
+    <!-- Thesis Section -->
+    <section class="thesis" id="thesis">
+        <h2 class="thesis-quote reveal">We lost ourselves a bit.</h2>
+        <div class="thesis-body reveal">
+            <p>Anxiety is skyrocketing. Depression is everywhere. We are more connected than ever and more alone than ever. We outsourced our attention, our bodies, our decision making to algorithms designed to keep us hooked and hollow. AI is changing everything. But here is the truth: turbulent waters are an invitation to find our deepest roots. The fire we are walking through right now is calling us home to what makes us actually, fiercely, undeniably human. This is not a retreat from the modern world. This is an ascent toward your truest power.</p>
+        </div>
+    </section>
+
+    <!-- What AI Will Never Touch -->
+    <section class="ai-never">
+        <div class="ai-never-content">
+            <h2 class="section-title">What No Algorithm Can Replicate</h2>
+            <div class="ai-never-list">
+                <div class="ai-never-item">
+                    <p class="reveal">The feeling of singing in the shower when nobody is listening.</p>
+                </div>
+                <div class="ai-never-item">
+                    <p class="reveal">The feeling of making love.</p>
+                </div>
+                <div class="ai-never-item">
+                    <p class="reveal">The feeling of conquering a challenge you thought would break you.</p>
+                </div>
+                <div class="ai-never-item">
+                    <p class="reveal">The feeling of your child falling asleep on your chest.</p>
+                </div>
+                <div class="ai-never-item">
+                    <p class="reveal">The quiet knowing that you are exactly where you are meant to be.</p>
+                </div>
+                <div class="ai-never-item">
+                    <p class="reveal">The raw, burning aliveness of coming home to yourself.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Guide Section -->
+    <section class="the-guide" id="story">
+        <h2 class="section-title">The Guide</h2>
+        <div class="guide-container">
+            <div class="guide-image">
+                <img src="photos/duzzi-amazon-walk.jpg" alt="Anthony Balduzzi in the Amazon">
+            </div>
+            <div class="guide-content reveal">
+                <h3>Anthony Balduzzi</h3>
+                <p>Anthony Balduzzi lost his father at nine. That loss set him on a path through competitive bodybuilding, naturopathic medicine, a near fatal skiing accident, seven surgeries, plant medicine in the Amazon, a week in total darkness, and the slow return to what was always there. He is not a guru. He is a man who walked the fire and came back to tell you: the way home is through, not around.</p>
+                <a href="#story" class="guide-link">Read the full story →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Framework Section -->
+    <section class="framework" id="framework">
+        <h2 class="section-title">The Dimensions of a Fully Alive Human</h2>
+        <div class="pillars-grid">
+            <div class="pillar reveal">
+                <div class="pillar-title">Spirit</div>
+                <p class="pillar-text">Find your direct line to God</p>
+            </div>
+            <div class="pillar reveal">
+                <div class="pillar-title">Body</div>
+                <p class="pillar-text">Train. Align. Embody your strength</p>
+            </div>
+            <div class="pillar reveal">
+                <div class="pillar-title">Ceremony</div>
+                <p class="pillar-text">Enter the fire. Come out different</p>
+            </div>
+            <div class="pillar reveal">
+                <div class="pillar-title">Purpose</div>
+                <p class="pillar-text">Align your life around your center</p>
+            </div>
+            <div class="pillar reveal">
+                <div class="pillar-title">Adventure</div>
+                <p class="pillar-text">Into the wild. Break free</p>
+            </div>
+            <div class="pillar reveal">
+                <div class="pillar-title">Heart</div>
+                <p class="pillar-text">Repair. Forgive. Love without walls</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rules Section -->
+    <section class="rules" id="manifesto">
+        <h2 class="section-title">Simple Rules for Human Life</h2>
+        <div class="rules-list">
+            <div class="rule reveal">
+                <div class="rule-number">1</div>
+                <div class="rule-text">Your body is sacred ground. Train it like a temple.</div>
+            </div>
+            <div class="rule reveal">
+                <div class="rule-number">2</div>
+                <div class="rule-text">Comfort is the slow death of the spirit. Seek the edge.</div>
+            </div>
+            <div class="rule reveal">
+                <div class="rule-number">3</div>
+                <div class="rule-text">Nature is not a vacation. It is home.</div>
+            </div>
+            <div class="rule reveal">
+                <div class="rule-number">4</div>
+                <div class="rule-text">Your direct line to God belongs to you. No intermediary required.</div>
+            </div>
+            <div class="rule reveal">
+                <div class="rule-number">5</div>
+                <div class="rule-text">Fear is the door. Walk through it.</div>
+            </div>
+            <div class="rule reveal">
+                <div class="rule-number">6</div>
+                <div class="rule-text">The wound you are running from holds the gift you are looking for.</div>
+            </div>
+            <div class="rule reveal">
+                <div class="rule-number">7</div>
+                <div class="rule-text">Play is not optional. It is the language of the soul.</div>
+            </div>
+            <div class="rule reveal">
+                <div class="rule-number">8</div>
+                <div class="rule-text">Relationships are mirrors. Clean yours.</div>
+            </div>
+            <div class="rule reveal">
+                <div class="rule-number">9</div>
+                <div class="rule-text">Adventure is a spiritual practice.</div>
+            </div>
+            <div class="rule reveal">
+                <div class="rule-number">10</div>
+                <div class="rule-text">You are not broken. You are caged. Break out.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Do Section -->
+    <section class="what-we-do" id="work">
+        <h2 class="section-title">What We Do</h2>
+        <div class="offerings">
+            <div class="offering reveal">
+                <h3 class="offering-title">Private Mentorship</h3>
+                <p class="offering-desc">Sacred, one on one transformation. Body, spirit, and life alignment guided by fire.</p>
+                <a href="#work" class="offering-link">Explore →</a>
+            </div>
+            <div class="offering reveal">
+                <h3 class="offering-title">Retreat Experiences</h3>
+                <p class="offering-desc">Into the wild. Fasting, hiking, ceremony. The adventures that crack you open.</p>
+                <a href="#work" class="offering-link">Coming Soon</a>
+            </div>
+            <div class="offering reveal">
+                <h3 class="offering-title">Letters from Center</h3>
+                <p class="offering-desc">Weekly dispatches from the path. Stories, teachings, and invitations to go deeper.</p>
+                <a href="#letters" class="offering-link">Subscribe →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter" id="letters">
+        <div class="newsletter-container">
+            <h2>Letters from Center</h2>
+            <p class="newsletter-subtext">Weekly. From the path. No algorithms, no optimization hacks. Just truth, from the fire.</p>
+            <form class="newsletter-form" onsubmit="event.preventDefault();">
+                <input type="email" placeholder="Your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="footer-brand">Anthony Balduzzi</div>
+                <div class="footer-secondary">Return to Human</div>
+            </div>
+            <div class="footer-links">
+                <a href="the-story.html">The Story</a>
+                <a href="the-work.html">The Work</a>
+                <a href="speak.html">Speak</a>
+                <a href="the-manifesto.html">The Manifesto</a>
+                <a href="#letters">Letters from Center</a>
+            </div>
+            <div class="footer-social">
+                <a href="#" class="social-link">IN</a>
+                <a href="#" class="social-link">YT</a>
+            </div>
+            <div class="footer-message">Wake up. Come feel this.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        const nav = document.getElementById('nav');
+        const heroSection = document.querySelector('.hero');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > heroSection.offsetHeight * 0.5) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll reveal animation
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        revealElements.forEach((element) => {
+            observer.observe(element);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

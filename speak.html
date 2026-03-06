@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speak | Return to Human</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a08;
+            --bg2: #0f0e0c;
+            --bg3: #161412;
+            --ember: #d4872c;
+            --ember-light: #e8a84c;
+            --fire: #c45a1a;
+            --gold: #c9a84c;
+            --ash: #7a756b;
+            --smoke: #a09888;
+            --bone: #ddd5c5;
+            --white: #f2ece0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 8, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 135, 44, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--white);
+        }
+
+        .nav-tagline {
+            font-size: 0.7rem;
+            color: var(--ash);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: var(--smoke);
+            text-decoration: none;
+            transition: color 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--ember);
+        }
+
+        .nav-links a.active {
+            color: var(--ember);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            background: linear-gradient(rgba(10, 10, 8, 0.7), rgba(10, 10, 8, 0.7)), url('photos/duzzi-sunset-rock.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .hero-content p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--bone);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        section {
+            margin-bottom: 6rem;
+        }
+
+        section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 2rem;
+            letter-spacing: -0.5px;
+        }
+
+        section h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: var(--white);
+        }
+
+        /* Speaking Topics */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .topic-card {
+            background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+            border: 1px solid rgba(212, 135, 44, 0.3);
+            padding: 2.5rem;
+            border-radius: 8px;
+            transition: all 0.4s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topic-card:hover {
+            border-color: rgba(212, 135, 44, 0.8);
+            background: linear-gradient(135deg, rgba(212, 135, 44, 0.05) 0%, rgba(196, 90, 26, 0.05) 100%);
+            transform: translateY(-4px);
+        }
+
+        .topic-card h3 {
+            color: var(--ember);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .topic-card p {
+            color: var(--bone);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        /* Ideal Stages */
+        .ideal-stages {
+            background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+            border: 1px solid rgba(212, 135, 44, 0.3);
+            padding: 2.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .ideal-stages h3 {
+            color: var(--ember);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .ideal-stages p {
+            color: var(--bone);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        /* Speaking Reel */
+        .speaking-reel {
+            background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+            border: 1px solid rgba(212, 135, 44, 0.3);
+            padding: 4rem 2rem;
+            border-radius: 8px;
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .speaking-reel p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: var(--smoke);
+        }
+
+        /* Booking Form */
+        .booking-section {
+            background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+            border: 1px solid rgba(212, 135, 44, 0.3);
+            padding: 3rem;
+            border-radius: 8px;
+        }
+
+        .booking-section h3 {
+            color: var(--ember);
+            margin-bottom: 2rem;
+            font-size: 1.3rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--bone);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(10, 10, 8, 0.5);
+            border: 1px solid rgba(212, 135, 44, 0.3);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--ember);
+            background: rgba(10, 10, 8, 0.7);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            background: var(--ember);
+            color: var(--bg);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+        .submit-btn:hover {
+            background: var(--ember-light);
+            transform: translateY(-2px);
+        }
+
+        .booking-contact {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 135, 44, 0.2);
+            color: var(--smoke);
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg2);
+            border-top: 1px solid rgba(212, 135, 44, 0.2);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--smoke);
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.8rem;
+            }
+
+            main {
+                padding: 2rem 1.5rem;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-section {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo-group">
+                <div class="nav-brand">ANTHONY BALDUZZI</div>
+                <div class="nav-tagline">Return to Human</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="the-story.html">The Story</a></li>
+                <li><a href="the-work.html">The Work</a></li>
+                <li><a href="speak.html" class="active">Speak</a></li>
+                <li><a href="the-manifesto.html">The Manifesto</a></li>
+                <li><a href="#letters">Letters from Center</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="speak">
+        <div class="hero-content">
+            <h1>Speak</h1>
+            <p>Anthony Balduzzi speaks on the intersection of physical mastery, spiritual depth, and what it means to be fully alive in the age of AI.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Speaking Topics -->
+        <section>
+            <h2>Speaking Topics</h2>
+            <div class="topics-grid">
+                <div class="topic-card">
+                    <h3>The Through Line of Pain and Purpose</h3>
+                    <p>How every wound is preparation. Anthony's story from losing his father to finding God, and what it teaches about the path through suffering to power.</p>
+                </div>
+
+                <div class="topic-card">
+                    <h3>Physical Alignment as a Gateway to Spiritual Alignment</h3>
+                    <p>The body is not separate from the soul. How training the physical form opens doorways to connection, clarity, and communion with Creator.</p>
+                </div>
+
+                <div class="topic-card">
+                    <h3>Return to Human: Finding Ourselves in the Age of AI</h3>
+                    <p>The flagship talk. What happens when machines handle everything but the things that make us feel alive? A call to adventure, embodiment, and sacred reconnection.</p>
+                </div>
+
+                <div class="topic-card">
+                    <h3>Sacred Plant Medicine and Men's Transformation</h3>
+                    <p>The role of ceremony, nature, and sacred substances in breaking through the walls men build around their hearts. Not recreational. Sacred.</p>
+                </div>
+
+                <div class="topic-card">
+                    <h3>Facing Fear as the Gateway to Full Expression</h3>
+                    <p>How accomplished men lose themselves in success, and the radical path back to aliveness through confronting the things they have been avoiding.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ideal Stages -->
+        <section>
+            <div class="ideal-stages">
+                <h3>Ideal Stages</h3>
+                <p>Anthony speaks at intimate gatherings over large arenas.</p>
+                <p>Men's leadership summits, consciousness and transformation events, podcasts hosted by men doing deep work, stages at the intersection of performance, purpose, and spirit.</p>
+                <p>Not mainstream fitness stages.</p>
+            </div>
+        </section>
+
+        <!-- Speaking Reel -->
+        <section>
+            <h2>Speaking Reel</h2>
+            <div class="speaking-reel">
+                <p>Speaking reel coming soon</p>
+            </div>
+        </section>
+
+        <!-- Booking -->
+        <section>
+            <div class="booking-section">
+                <h3>Book Anthony to Speak</h3>
+                <form id="booking-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event-name">Event Name</label>
+                        <input type="text" id="event-name" name="event-name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event-date">Event Date</label>
+                        <input type="date" id="event-date" name="event-date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="audience-size">Audience Size</label>
+                        <input type="text" id="audience-size" name="audience-size" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+
+                <div class="booking-contact">
+                    <p>For booking inquiries: <strong>speak@anthonybalduzzi.com</strong></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div style="max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+            <div style="text-align: center;">
+                <div style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--white); letter-spacing: 1px;">Anthony Balduzzi</div>
+                <div style="font-size: 0.8rem; color: var(--ash); letter-spacing: 2px; text-transform: uppercase;">Return to Human</div>
+            </div>
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;">
+                <a href="the-story.html" style="color: var(--smoke); text-decoration: none; font-size: 0.85rem;">The Story</a>
+                <a href="the-work.html" style="color: var(--smoke); text-decoration: none; font-size: 0.85rem;">The Work</a>
+                <a href="speak.html" style="color: var(--smoke); text-decoration: none; font-size: 0.85rem;">Speak</a>
+                <a href="the-manifesto.html" style="color: var(--smoke); text-decoration: none; font-size: 0.85rem;">The Manifesto</a>
+            </div>
+            <div style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--ember); font-style: italic;">Wake up. Come feel this.</div>
+            <p>&copy; 2026 Return to Human. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Form submission
+        document.getElementById('booking-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                eventName: document.getElementById('event-name').value,
+                eventDate: document.getElementById('event-date').value,
+                audienceSize: document.getElementById('audience-size').value,
+                message: document.getElementById('message').value
+            };
+
+            console.log('Booking inquiry submitted:', formData);
+            alert('Thank you for your inquiry. We will be in touch shortly at ' + formData.email);
+            this.reset();
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
