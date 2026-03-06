@@ -339,22 +339,20 @@
 
         /* What AI Will Never Touch */
         .ai-never {
-            background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+            background: var(--bg);
             position: relative;
             overflow: hidden;
+            padding: 6rem 2rem 8rem;
         }
 
         .ai-never::before {
             content: '';
             position: absolute;
             top: 0;
+            left: 0;
             right: 0;
-            width: 60%;
-            height: 100%;
-            background-image: url('photos/duzzi-meditating.jpg');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.15;
+            bottom: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(212, 135, 44, 0.08) 0%, transparent 70%);
             z-index: 0;
         }
 
@@ -363,30 +361,141 @@
             z-index: 1;
         }
 
+        .ai-never .section-title {
+            font-size: 3.5rem;
+            margin-bottom: 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--white) 0%, var(--ember) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         .ai-never-list {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2.5rem;
-            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            max-width: 800px;
             margin: 0 auto;
         }
 
         .ai-never-item {
-            padding: 1.5rem 2rem;
-            border-left: 3px solid var(--ember);
-            background-color: rgba(212, 135, 44, 0.05);
+            padding: 2.5rem 3rem;
+            position: relative;
+            border: none;
+            background: none;
+            transition: all 0.6s ease;
+        }
+
+        .ai-never-item::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(212, 135, 44, 0.3), transparent);
+        }
+
+        .ai-never-item::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--ember);
+            opacity: 0.6;
+            box-shadow: 0 0 20px rgba(212, 135, 44, 0.4);
+            z-index: 2;
+        }
+
+        .ai-never-item:nth-child(odd) {
+            text-align: right;
+            padding-right: calc(50% + 2rem);
+            padding-left: 1rem;
+        }
+
+        .ai-never-item:nth-child(even) {
+            text-align: left;
+            padding-left: calc(50% + 2rem);
+            padding-right: 1rem;
+        }
+
+        .ai-never-item:last-child {
+            text-align: center;
+            padding-left: 3rem;
+            padding-right: 3rem;
+            padding-top: 3.5rem;
+        }
+
+        .ai-never-item:last-child::before {
+            height: 50%;
+            top: 0;
+        }
+
+        .ai-never-item:last-child::after {
+            top: 0;
+            transform: translate(-50%, 0);
+            width: 12px;
+            height: 12px;
+            opacity: 0.8;
+            box-shadow: 0 0 30px rgba(212, 135, 44, 0.6);
         }
 
         .ai-never-item .reveal {
-            font-size: 1.2rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.35rem;
             color: var(--bone);
             font-style: italic;
+            line-height: 1.7;
+            transition: all 0.5s ease;
+        }
+
+        .ai-never-item:hover .reveal {
+            color: var(--white);
+        }
+
+        .ai-never-item:last-child .reveal {
+            font-size: 1.6rem;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--ember);
+            letter-spacing: 0.02em;
         }
 
         @media (max-width: 768px) {
-            .ai-never::before {
-                width: 100%;
-                opacity: 0.08;
+            .ai-never .section-title {
+                font-size: 2.5rem;
+            }
+
+            .ai-never-item:nth-child(odd),
+            .ai-never-item:nth-child(even) {
+                text-align: center;
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+
+            .ai-never-item::before {
+                display: none;
+            }
+
+            .ai-never-item::after {
+                display: none;
+            }
+
+            .ai-never-item {
+                border-bottom: 1px solid rgba(212, 135, 44, 0.15);
+                padding: 2rem 1rem;
+            }
+
+            .ai-never-item:last-child {
+                border-bottom: none;
+                padding-left: 1rem;
+                padding-right: 1rem;
             }
         }
 
@@ -1139,22 +1248,25 @@
             <h2 class="section-title">What No Algorithm Can Replicate</h2>
             <div class="ai-never-list">
                 <div class="ai-never-item">
-                    <p class="reveal">The feeling of singing in the shower when nobody is listening.</p>
+                    <p class="reveal">The tremble in your voice the first time you say "I love you" and mean it with every cell of your body.</p>
                 </div>
                 <div class="ai-never-item">
-                    <p class="reveal">The feeling of making love.</p>
+                    <p class="reveal">The tears that fall when you hold your newborn and realize your whole life was leading to this one breath.</p>
                 </div>
                 <div class="ai-never-item">
-                    <p class="reveal">The feeling of conquering a challenge you thought would break you.</p>
+                    <p class="reveal">The moment you forgive your father and feel thirty years of weight lift off your chest in a single exhale.</p>
                 </div>
                 <div class="ai-never-item">
-                    <p class="reveal">The feeling of your child falling asleep on your chest.</p>
+                    <p class="reveal">The fire in your lungs at the top of the mountain when you realize the thing you were chasing was never out there. It was always in here.</p>
                 </div>
                 <div class="ai-never-item">
-                    <p class="reveal">The quiet knowing that you are exactly where you are meant to be.</p>
+                    <p class="reveal">The sacred silence of sitting with a dying loved one, holding their hand, needing no words because love has already said everything.</p>
                 </div>
                 <div class="ai-never-item">
-                    <p class="reveal">The raw, burning aliveness of coming home to yourself.</p>
+                    <p class="reveal">The moment you stop performing and start living. When the mask falls and you stand naked in your own truth. And for the first time in your life, you are not afraid.</p>
+                </div>
+                <div class="ai-never-item">
+                    <p class="reveal">This. This is what it means to be human. And no machine will ever touch it.</p>
                 </div>
             </div>
         </div>
@@ -1181,6 +1293,7 @@
 
     <!-- Framework Section -->
     <section class="framework" id="framework">
+        <h2 class="section-title">The Dimensions of a Fully Alive Human</h2>
         <div class="framework-visual">
             <img src="photos/sacred-geometry-meditation-ai.png" alt="Sacred geometry surrounding meditation figure" class="sacred-geometry-img">
             <span class="pillar-label"><span class="pl-title">Spirit</span><span class="pl-desc">Find your direct line to God</span></span>
@@ -1189,33 +1302,6 @@
             <span class="pillar-label"><span class="pl-title">Purpose</span><span class="pl-desc">Align your life around your center</span></span>
             <span class="pillar-label"><span class="pl-title">Adventure</span><span class="pl-desc">Into the wild. Break free</span></span>
             <span class="pillar-label"><span class="pl-title">Heart</span><span class="pl-desc">Repair. Forgive. Love without walls</span></span>
-        </div>
-        <h2 class="section-title">The Dimensions of a Fully Alive Human</h2>
-        <div class="pillars-grid">
-            <div class="pillar reveal">
-                <div class="pillar-title">Spirit</div>
-                <p class="pillar-text">Find your direct line to God</p>
-            </div>
-            <div class="pillar reveal">
-                <div class="pillar-title">Body</div>
-                <p class="pillar-text">Train. Align. Embody your strength</p>
-            </div>
-            <div class="pillar reveal">
-                <div class="pillar-title">Ceremony</div>
-                <p class="pillar-text">Enter the fire. Come out different</p>
-            </div>
-            <div class="pillar reveal">
-                <div class="pillar-title">Purpose</div>
-                <p class="pillar-text">Align your life around your center</p>
-            </div>
-            <div class="pillar reveal">
-                <div class="pillar-title">Adventure</div>
-                <p class="pillar-text">Into the wild. Break free</p>
-            </div>
-            <div class="pillar reveal">
-                <div class="pillar-title">Heart</div>
-                <p class="pillar-text">Repair. Forgive. Love without walls</p>
-            </div>
         </div>
     </section>
 
