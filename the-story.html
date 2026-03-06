@@ -44,7 +44,7 @@
     <link rel="preload" href="/photos/duzzi-hero-portrait-faded.jpg" as="image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -124,37 +124,59 @@
         .skip-link:focus { top: 0; }
 
         /* ===== NAVIGATION ===== */
-        .nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            padding: calc(1.5rem + var(--safe-top)) 3rem 1.5rem;
-            display: flex; justify-content: space-between; align-items: center;
-            transition: all 0.5s ease;
+        nav#nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            background-color: transparent;
+            transition: background-color 0.3s ease;
+            z-index: 1000;
         }
-        .nav.scrolled {
-            background: rgba(10, 10, 8, 0.92);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            padding: calc(1rem + var(--safe-top)) 3rem 1rem;
-            border-bottom: 1px solid rgba(212, 135, 44, 0.1);
+
+        nav#nav.scrolled {
+            background-color: rgba(10, 10, 8, 0.95);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
         }
-        .nav-logo {
-            font-family: var(--font-serif); font-size: 1.3rem;
-            font-weight: 400; letter-spacing: 0.15em;
-            text-transform: uppercase; color: var(--color-white);
+
+        .logo-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
         }
-        .nav-logo span { color: var(--color-ember); }
-        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--color-white);
+        }
+
+        .tagline {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--color-ember);
+            margin-top: 0.2rem;
+        }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
         .nav-links a {
-            font-size: 0.8rem; font-weight: 400; letter-spacing: 0.15em;
-            text-transform: uppercase; color: var(--color-smoke);
-            transition: color 0.3s ease; position: relative; padding: 0.5rem 0;
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            text-decoration: none;
+            color: var(--color-bone);
+            transition: color 0.3s ease;
+            letter-spacing: 1px;
         }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: 0; left: 0;
-            width: 0; height: 1px; background: var(--color-ember);
-            transition: width 0.3s ease;
-        }
-        .nav-links a:hover { color: var(--color-ember-light); }
-        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--color-ember); }
 
         .nav-toggle {
             display: none; flex-direction: column; gap: 5px;
@@ -619,22 +641,24 @@
 
         /* ===== RESPONSIVE: MOBILE ===== */
         @media (max-width: 768px) {
-            .nav { padding: calc(1rem + var(--safe-top)) 1.5rem 1rem; }
-            .nav.scrolled { padding: calc(0.75rem + var(--safe-top)) 1.5rem 0.75rem; }
-            .nav-logo { font-size: 1.1rem; }
-            .nav-links { display: none; }
+            nav#nav { padding: 1rem 1.5rem; }
+            .logo { font-size: 1rem; letter-spacing: 1px; }
+            .tagline { font-size: 0.6rem; letter-spacing: 2px; }
+            .nav-links { display: none; gap: 1rem; }
             .nav-toggle { display: flex; }
-            .nav-links.open {
-                display: flex; flex-direction: column;
-                position: fixed; inset: 0;
-                background: rgba(10, 10, 8, 0.97);
-                justify-content: center; align-items: center; gap: 2rem;
-                z-index: 999;
-                padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
+            nav#nav.mobile-menu-open .nav-links {
+                display: flex;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background-color: rgba(10, 10, 8, 0.98);
+                padding: 2rem 1.5rem;
+                gap: 1.5rem;
             }
-            .nav-links.open a {
-                font-size: 1.1rem; padding: 0.75rem 1.5rem;
-                min-height: 48px; display: flex; align-items: center;
+            nav#nav.mobile-menu-open .nav-links a {
+                font-size: 1rem;
             }
             .hero { min-height: 550px; }
             .hero-content { padding: 0 1.5rem; max-width: 100%; }
@@ -667,7 +691,7 @@
         }
 
         @media (max-width: 400px) {
-            .nav-logo { font-size: 0.95rem; letter-spacing: 0.1em; }
+            .logo { font-size: 0.9rem; letter-spacing: 0.5px; }
             .hero-eyebrow { font-size: 0.65rem; letter-spacing: 0.25em; }
             .section { padding: 4rem 1.25rem; }
         }
@@ -849,14 +873,17 @@
     <a href="#about" class="skip-link">Skip to content</a>
 
     <!-- ===== NAVIGATION ===== -->
-    <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
-        <a href="#hero" class="nav-logo" aria-label="Anthony Balduzzi, Return to Human, return to top">ANTHONY BALDUZZI <span>/</span> RETURN TO HUMAN</a>
-        <ul class="nav-links" id="navLinks" role="menubar">
-            <li role="none"><a href="#hero" role="menuitem">The Story</a></li>
-            <li role="none"><a href="#work" role="menuitem">The Work</a></li>
-            <li role="none"><a href="#apply" role="menuitem">Speak</a></li>
-            <li role="none"><a href="#letters" role="menuitem">The Manifesto</a></li>
-            <li role="none"><a href="#letters" role="menuitem">Letters from Center</a></li>
+    <nav id="nav">
+        <a href="index.html" class="logo-group" style="text-decoration:none;">
+            <div class="logo">ANTHONY BALDUZZI</div>
+            <div class="tagline">Return to Human</div>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="the-story.html">The Story</a></li>
+            <li><a href="the-work.html">The Work</a></li>
+            <li><a href="speak.html">Speak</a></li>
+            <li><a href="the-manifesto.html">The Manifesto</a></li>
+            <li><a href="index.html#letters">Letters from Center</a></li>
         </ul>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
             <span></span><span></span><span></span>
@@ -1197,44 +1224,34 @@
 
     <!-- ===== SCRIPTS ===== -->
     <script>
+        // Navigation scroll effect
         const nav = document.getElementById('nav');
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    nav.classList.toggle('scrolled', window.scrollY > 80);
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }, { passive: true });
+        const heroSection = document.querySelector('.hero');
 
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > heroSection.offsetHeight * 0.5) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
         const navToggle = document.getElementById('navToggle');
         const navLinks = document.getElementById('navLinks');
         navToggle.addEventListener('click', () => {
-            const isOpen = navLinks.classList.toggle('open');
+            nav.classList.toggle('mobile-menu-open');
             navToggle.classList.toggle('active');
+            const isOpen = nav.classList.contains('mobile-menu-open');
             navToggle.setAttribute('aria-expanded', isOpen);
-            document.body.style.overflow = isOpen ? 'hidden' : '';
         });
 
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
-                navLinks.classList.remove('open');
+                nav.classList.remove('mobile-menu-open');
                 navToggle.classList.remove('active');
                 navToggle.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
             });
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && navLinks.classList.contains('open')) {
-                navLinks.classList.remove('open');
-                navToggle.classList.remove('active');
-                navToggle.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
-                navToggle.focus();
-            }
         });
 
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
