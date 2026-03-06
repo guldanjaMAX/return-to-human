@@ -3,528 +3,270 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Return to Human Manifesto | Return to Human</title>
+    <title>The Manifesto | Anthony Balduzzi - Return to Human</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         :root {
-            --bg: #0a0a08;
-            --bg2: #0f0e0c;
-            --bg3: #161412;
-            --ember: #d4872c;
-            --ember-light: #e8a84c;
-            --fire: #c45a1a;
-            --gold: #c9a84c;
-            --ash: #7a756b;
-            --smoke: #a09888;
-            --bone: #ddd5c5;
-            --white: #f2ece0;
+            --bg: #0a0a08; --bg2: #0f0e0c; --bg3: #161412;
+            --ember: #d4872c; --ember-light: #e8a84c;
+            --fire: #c45a1a; --fire-deep: #8b3a10;
+            --gold: #c9a84c; --ash: #7a756b; --smoke: #a09888;
+            --bone: #ddd5c5; --white: #f2ece0;
+            --sg-flower: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104'%3E%3Ccircle cx='60' cy='52' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='30' cy='52' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='90' cy='52' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='45' cy='26' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='75' cy='26' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='45' cy='78' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='75' cy='78' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3C/svg%3E");
+            --sg-hex: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52'%3E%3Cpolygon points='30,1 57,14 57,38 30,51 3,38 3,14' fill='none' stroke='%23c9a84c' stroke-width='0.3' opacity='0.08'/%3E%3C/svg%3E");
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            width: 100%;
-            height: 100%;
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--white);
-            font-family: 'Inter', sans-serif;
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Cormorant Garamond', serif; background-color: var(--bg); color: var(--bone); line-height: 1.8; overflow-x: hidden; }
 
         /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(10, 10, 8, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(212, 135, 44, 0.2);
-        }
+        nav { position: fixed; top: 0; left: 0; right: 0; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; background-color: transparent; transition: background-color 0.3s ease; z-index: 1000; }
+        nav.scrolled { background-color: rgba(10, 10, 8, 0.95); box-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+        .logo-group { display: flex; flex-direction: column; gap: 0.25rem; text-decoration: none; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; letter-spacing: 2px; color: var(--white); }
+        .tagline { font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--ember); margin-top: 0.2rem; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { font-family: 'Inter', sans-serif; font-size: 0.95rem; text-decoration: none; color: var(--bone); transition: color 0.3s ease; letter-spacing: 1px; }
+        .nav-links a:hover, .nav-links a.active { color: var(--ember); }
+        .mobile-toggle { display: none; background: none; border: none; color: var(--white); font-size: 1.5rem; cursor: pointer; }
+        @media (max-width: 768px) { nav { padding: 1rem 1.5rem; } .logo { font-size: 1rem; } .tagline { font-size: 0.6rem; } .nav-links { gap: 1rem; display: none; } .mobile-toggle { display: block; } nav.mobile-menu-open .nav-links { display: flex; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background-color: rgba(10,10,8,0.98); padding: 2rem 1.5rem; gap: 1.5rem; } }
 
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        /* Hero */
+        .hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 50%, var(--bg3) 100%); }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('photos/sacred-geometry-meditation-ai.png'); background-size: cover; background-position: center; opacity: 0.2; z-index: 0; }
+        .hero::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at center, rgba(10,10,8,0.3) 0%, rgba(10,10,8,0.85) 100%); z-index: 1; }
+        .hero-content { position: relative; z-index: 3; text-align: center; max-width: 750px; padding: 2rem; }
+        .hero-content::before { content: ''; position: absolute; top: -100px; left: -100px; right: -100px; bottom: -100px; background: var(--sg-flower); background-size: 120px 104px; opacity: 0.3; z-index: -1; }
+        .hero-eyebrow { font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--ember); margin-bottom: 1rem; animation: fadeInUp 1s ease 0.2s both; }
+        .hero-title { font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 800; color: var(--white); margin-bottom: 1.5rem; letter-spacing: -1px; animation: fadeInUp 1s ease 0.4s both; line-height: 1; }
+        .hero-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--bone); font-weight: 400; max-width: 600px; margin: 0 auto; animation: fadeInUp 1s ease 0.6s both; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 768px) { .hero-title { font-size: 3rem; } .hero-subtitle { font-size: 1.1rem; } }
 
-        .logo-group {
-            display: flex;
-            flex-direction: column;
-        }
+        /* Sacred Geometry */
+        .sg-divider { display: block; width: 100%; text-align: center; padding: 1.5rem 0; overflow: hidden; background-color: var(--bg); }
+        .sg-divider svg { width: 280px; height: 40px; opacity: 0.5; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: var(--white); margin-bottom: 3rem; text-align: center; letter-spacing: -1px; }
+        .section-title::before { content: ''; display: block; width: 60px; height: 60px; margin: 0 auto 1.5rem; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ccircle cx='30' cy='30' r='28' fill='none' stroke='%23d4872c' stroke-width='0.5' opacity='0.4'/%3E%3Ccircle cx='30' cy='30' r='18' fill='none' stroke='%23d4872c' stroke-width='0.5' opacity='0.3'/%3E%3Ccircle cx='30' cy='30' r='8' fill='none' stroke='%23d4872c' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='30' y1='2' x2='30' y2='58' stroke='%23d4872c' stroke-width='0.3' opacity='0.2'/%3E%3Cline x1='2' y1='30' x2='58' y2='30' stroke='%23d4872c' stroke-width='0.3' opacity='0.2'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
+        footer::before { content: ''; display: block; width: 100%; height: 2px; background: repeating-linear-gradient(90deg, transparent 0px, transparent 8px, var(--ember) 8px, var(--ember) 10px, transparent 10px, transparent 18px, var(--gold) 18px, var(--gold) 19px, transparent 19px, transparent 30px); opacity: 0.3; }
 
-        .nav-brand {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            color: var(--white);
-        }
-
-        .nav-tagline {
-            font-size: 0.7rem;
-            color: var(--ash);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            color: var(--smoke);
-            text-decoration: none;
-            transition: color 0.3s;
-            letter-spacing: 0.5px;
-        }
-
-        .nav-links a:hover {
-            color: var(--ember);
-        }
-
-        .nav-links a.active {
-            color: var(--ember);
-        }
-
-        /* Hero Section */
-        .hero {
-            margin-top: 80px;
-            position: relative;
-            height: 100vh;
-            min-height: 700px;
-            background: linear-gradient(135deg, rgba(10, 10, 8, 0.95) 0%, rgba(22, 20, 18, 0.9) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(212, 135, 44, 0.08) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-        }
-
-        .hero-content h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 4.5rem;
-            font-weight: 700;
-            color: var(--white);
-            margin-bottom: 1.5rem;
-            letter-spacing: -1px;
-            line-height: 1.1;
-        }
-
-        .hero-content p {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
-            color: var(--ember);
-            line-height: 1.8;
-            font-weight: 400;
-        }
-
-        /* Main Content */
-        main {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        section {
-            margin-bottom: 5rem;
-        }
-
-        section.crisis {
-            background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
-            border-left: 4px solid var(--ember);
-            padding: 3rem;
-            border-radius: 4px;
-            margin-bottom: 5rem;
-        }
-
-        .crisis h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: var(--white);
-            margin-bottom: 2rem;
-        }
-
-        .crisis p {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
-            color: var(--bone);
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .crisis p:nth-child(3) {
-            color: var(--ember-light);
-            font-weight: 600;
-        }
+        /* Crisis Section */
+        .crisis { background-color: var(--bg2); padding: 6rem 2rem; position: relative; }
+        .crisis::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--sg-flower); background-size: 120px 104px; opacity: 0.08; pointer-events: none; z-index: 0; }
+        .crisis > * { position: relative; z-index: 1; }
+        .crisis-container { max-width: 800px; margin: 0 auto; text-align: center; }
+        .crisis-text { font-size: 1.4rem; color: var(--bone); line-height: 2; margin-bottom: 1.5rem; }
+        .crisis-text.highlight { color: var(--ember); font-weight: 600; font-size: 1.6rem; }
+        .crisis-text:last-child { margin-bottom: 0; }
 
         /* Dimensions */
-        .dimensions {
-            display: flex;
-            flex-direction: column;
-            gap: 2.5rem;
-        }
-
-        .dimension {
-            background: linear-gradient(135deg, rgba(212, 135, 44, 0.05) 0%, rgba(196, 90, 26, 0.03) 100%);
-            border: 1px solid rgba(212, 135, 44, 0.2);
-            padding: 2.5rem;
-            border-radius: 4px;
-            transition: all 0.4s;
-        }
-
-        .dimension:hover {
-            border-color: rgba(212, 135, 44, 0.6);
-            background: linear-gradient(135deg, rgba(212, 135, 44, 0.1) 0%, rgba(196, 90, 26, 0.05) 100%);
-        }
-
-        .dimension-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--ember);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .dimension-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
-            color: var(--bone);
-            line-height: 1.9;
-        }
-
-        .dimensions h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--white);
-            margin-bottom: 3rem;
-        }
+        .dimensions { padding: 6rem 2rem; position: relative; }
+        .dimensions::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--sg-hex); background-size: 60px 52px; opacity: 0.15; pointer-events: none; z-index: 0; }
+        .dimensions > * { position: relative; z-index: 1; }
+        .dimensions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; max-width: 1000px; margin: 0 auto; }
+        .dimension-card { background: linear-gradient(135deg, rgba(212, 135, 44, 0.05) 0%, rgba(196, 90, 26, 0.03) 100%); border: 1px solid rgba(212, 135, 44, 0.15); padding: 2.5rem; position: relative; overflow: hidden; transition: all 0.4s ease; }
+        .dimension-card:hover { border-color: rgba(212, 135, 44, 0.5); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(212, 135, 44, 0.08); }
+        .dimension-card::before, .dimension-card::after { content: ''; position: absolute; width: 24px; height: 24px; border: 1px solid var(--ember); opacity: 0.2; }
+        .dimension-card::before { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+        .dimension-card::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+        .dimension-icon { font-size: 2rem; margin-bottom: 1rem; }
+        .dimension-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--ember); margin-bottom: 1rem; letter-spacing: 1px; }
+        .dimension-desc { font-size: 1.15rem; color: var(--bone); line-height: 1.9; }
+        @media (max-width: 768px) { .dimensions-grid { grid-template-columns: 1fr; } }
 
         /* Declaration */
-        .declaration {
-            background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
-            border: 1px solid rgba(212, 135, 44, 0.4);
-            padding: 3.5rem;
-            border-radius: 4px;
-            margin-bottom: 5rem;
-            text-align: center;
-        }
+        .declaration { background-color: var(--bg2); padding: 6rem 2rem; position: relative; }
+        .declaration::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--sg-flower); background-size: 120px 104px; opacity: 0.06; pointer-events: none; z-index: 0; }
+        .declaration > * { position: relative; z-index: 1; }
+        .declaration-container { max-width: 800px; margin: 0 auto; text-align: center; }
+        .declaration-line { font-size: 1.5rem; color: var(--bone); margin-bottom: 1.8rem; line-height: 1.8; }
+        .declaration-line.bold { font-weight: 700; font-size: 1.7rem; color: var(--white); }
+        .declaration-close { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--ember); margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(212, 135, 44, 0.2); }
 
-        .declaration h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: var(--white);
-            margin-bottom: 2.5rem;
-        }
-
-        .declaration p {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
-            color: var(--bone);
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .declaration p:last-child {
-            color: var(--ember);
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(212, 135, 44, 0.2);
-        }
-
-        /* Download Manifesto */
-        .download-section {
-            background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
-            border: 1px solid rgba(212, 135, 44, 0.3);
-            padding: 3rem;
-            border-radius: 4px;
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .download-section h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            color: var(--white);
-            margin-bottom: 1.5rem;
-        }
-
-        .download-section p {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
-            color: var(--bone);
-            margin-bottom: 2rem;
-            line-height: 1.8;
-        }
-
-        .email-signup {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .email-signup input {
-            padding: 0.9rem;
-            background: rgba(10, 10, 8, 0.5);
-            border: 1px solid rgba(212, 135, 44, 0.3);
-            color: var(--white);
-            font-family: 'Inter', sans-serif;
-            border-radius: 4px;
-            transition: border-color 0.3s;
-        }
-
-        .email-signup input:focus {
-            outline: none;
-            border-color: var(--ember);
-            background: rgba(10, 10, 8, 0.7);
-        }
-
-        .email-signup input::placeholder {
-            color: var(--ash);
-        }
-
-        .signup-btn {
-            background: var(--ember);
-            color: var(--bg);
-            border: none;
-            padding: 0.9rem;
-            border-radius: 4px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            letter-spacing: 0.5px;
-        }
-
-        .signup-btn:hover {
-            background: var(--ember-light);
-            transform: translateY(-2px);
-        }
+        /* Coming Soon / CTA */
+        .cta-section { padding: 6rem 2rem; position: relative; }
+        .cta-section::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--sg-hex); background-size: 60px 52px; opacity: 0.1; pointer-events: none; z-index: 0; }
+        .cta-section > * { position: relative; z-index: 1; }
+        .cta-container { max-width: 600px; margin: 0 auto; text-align: center; background: linear-gradient(135deg, rgba(212, 135, 44, 0.06) 0%, rgba(196, 90, 26, 0.03) 100%); border: 1px solid rgba(212, 135, 44, 0.2); padding: 3.5rem; position: relative; overflow: hidden; }
+        .cta-container::before, .cta-container::after { content: ''; position: absolute; width: 30px; height: 30px; border: 1px solid var(--ember); opacity: 0.25; }
+        .cta-container::before { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+        .cta-container::after { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+        .cta-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 1.5rem; }
+        .cta-text { font-size: 1.2rem; color: var(--smoke); margin-bottom: 2rem; line-height: 1.8; }
+        .email-signup { display: flex; flex-direction: column; gap: 1rem; max-width: 400px; margin: 0 auto; }
+        .email-signup input { padding: 0.9rem 1.2rem; background: rgba(10, 10, 8, 0.5); border: 1px solid rgba(212, 135, 44, 0.3); color: var(--white); font-family: 'Inter', sans-serif; font-size: 0.95rem; transition: all 0.3s; }
+        .email-signup input:focus { outline: none; border-color: var(--ember); background: rgba(10, 10, 8, 0.7); }
+        .email-signup input::placeholder { color: var(--ash); }
+        .signup-btn { background: var(--ember); color: var(--bg); border: none; padding: 0.9rem; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.3s; letter-spacing: 1px; text-transform: uppercase; }
+        .signup-btn:hover { background: var(--ember-light); transform: translateY(-2px); }
 
         /* Footer */
-        footer {
-            background: var(--bg2);
-            border-top: 1px solid rgba(212, 135, 44, 0.2);
-            padding: 3rem 2rem;
-            text-align: center;
-            color: var(--smoke);
-        }
-
-        footer p {
-            font-size: 0.9rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 2.8rem;
-            }
-
-            .hero-content p {
-                font-size: 1.2rem;
-            }
-
-            .dimensions h2 {
-                font-size: 2rem;
-            }
-
-            .dimension {
-                padding: 2rem;
-            }
-
-            .dimension-text {
-                font-size: 1rem;
-            }
-
-            .nav-links {
-                gap: 1rem;
-                font-size: 0.8rem;
-            }
-
-            main {
-                padding: 2rem 1.5rem;
-            }
-
-            .crisis {
-                padding: 2rem;
-            }
-
-            .declaration {
-                padding: 2rem;
-            }
-
-            .download-section {
-                padding: 2rem;
-            }
-
-            .declaration p {
-                font-size: 1.1rem;
-            }
-        }
+        footer { background: var(--bg2); padding: 4rem 2rem 3rem; }
+        .footer-container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+        .footer-brand { text-align: center; }
+        .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--white); letter-spacing: 1px; }
+        .footer-tagline { font-size: 0.8rem; color: var(--ash); letter-spacing: 2px; text-transform: uppercase; }
+        .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; }
+        .footer-links a { color: var(--smoke); text-decoration: none; font-family: 'Inter', sans-serif; font-size: 0.85rem; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--ember); }
+        .footer-motto { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--ember); font-style: italic; }
+        .footer-copy { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--smoke); }
     </style>
 </head>
 <body>
+
     <!-- Navigation -->
     <nav>
-        <div class="nav-container">
-            <div class="logo-group">
-                <div class="nav-brand">ANTHONY BALDUZZI</div>
-                <div class="nav-tagline">Return to Human</div>
-            </div>
-            <ul class="nav-links">
-                <li><a href="the-story.html">The Story</a></li>
-                <li><a href="the-work.html">The Work</a></li>
-                <li><a href="speak.html">Speak</a></li>
-                <li><a href="the-manifesto.html" class="active">The Manifesto</a></li>
-                <li><a href="#letters">Letters from Center</a></li>
-            </ul>
-        </div>
+        <a href="index.html" class="logo-group" style="text-decoration:none;">
+            <div class="logo">ANTHONY BALDUZZI</div>
+            <div class="tagline">Return to Human</div>
+        </a>
+        <button class="mobile-toggle" onclick="this.closest('nav').classList.toggle('mobile-menu-open')">&#9776;</button>
+        <ul class="nav-links">
+            <li><a href="the-story.html">The Story</a></li>
+            <li><a href="the-work.html">The Work</a></li>
+            <li><a href="speak.html">Speak</a></li>
+            <li><a href="the-manifesto.html" class="active">The Manifesto</a></li>
+        </ul>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="the-manifesto">
+    <!-- Hero -->
+    <section class="hero">
         <div class="hero-content">
-            <h1>The Return to Human Manifesto</h1>
-            <p>A declaration for the age of AI. Written from the fire.</p>
+            <div class="hero-eyebrow">A Declaration for the Age of AI</div>
+            <h1 class="hero-title">The Return to Human Manifesto</h1>
+            <p class="hero-subtitle">Written from the fire. For those who feel the pull to come back to what is real.</p>
         </div>
     </section>
 
-    <!-- Main Content -->
-    <main>
-        <!-- The Crisis -->
-        <section class="crisis">
-            <h2>The Crisis</h2>
-            <p>We are living through the most significant transition in human history.</p>
-            <p>Machines are learning to think. To write. To create. To replace.</p>
-            <p>And in the acceleration, something essential is being forgotten.</p>
-            <p>Not a technology. Not a skill. Not even a job.</p>
-            <p>The felt experience of being alive.</p>
-        </section>
+    <!-- Sacred Geometry Divider -->
+    <div class="sg-divider"><svg viewBox="0 0 280 40"><circle cx="140" cy="20" r="16" fill="none" stroke="#d4872c" stroke-width="0.6" opacity="0.4"/><circle cx="140" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.5"/><circle cx="140" cy="20" r="3" fill="#d4872c" opacity="0.4"/><line x1="30" y1="20" x2="124" y2="20" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><line x1="156" y1="20" x2="250" y2="20" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><circle cx="30" cy="20" r="2" fill="#d4872c" opacity="0.3"/><circle cx="250" cy="20" r="2" fill="#d4872c" opacity="0.3"/><polygon points="70,14 78,20 70,26" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.3"/><polygon points="210,14 202,20 210,26" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.3"/></svg></div>
 
-        <!-- The Six Dimensions -->
-        <section>
-            <h2>The Six Dimensions</h2>
-            <p style="color: var(--smoke); font-size: 1rem; margin-bottom: 2rem;">The architecture of what it means to be fully alive:</p>
+    <!-- The Crisis -->
+    <section class="crisis">
+        <div class="crisis-container">
+            <h2 class="section-title">The Crisis</h2>
+            <p class="crisis-text">We are living through the most significant transition in human history.</p>
+            <p class="crisis-text">Machines are learning to think. To write. To create. To replace.</p>
+            <p class="crisis-text highlight">And in the acceleration, something essential is being forgotten.</p>
+            <p class="crisis-text">Not a technology. Not a skill. Not even a job.</p>
+            <p class="crisis-text highlight">The felt experience of being alive.</p>
+            <p class="crisis-text">The ache in your chest when you hold your child for the first time. The fire that moves through your body when you push past what you thought was possible. The silence that opens when you sit with God in the dark. The raw, unfiltered aliveness that no screen can deliver and no algorithm can replicate.</p>
+            <p class="crisis-text">This is what we are losing. And most of us do not even know it is gone.</p>
+        </div>
+    </section>
 
-            <div class="dimensions">
-                <div class="dimension">
-                    <div class="dimension-title">SPIRIT</div>
-                    <p class="dimension-text">Your direct line to God is yours alone. No institution, no algorithm, no intermediary. The felt knowing that you are held by something greater. This is the foundation.</p>
-                </div>
+    <!-- Sacred Geometry Divider -->
+    <div class="sg-divider"><svg viewBox="0 0 280 40"><circle cx="140" cy="20" r="16" fill="none" stroke="#d4872c" stroke-width="0.6" opacity="0.4"/><circle cx="140" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.5"/><circle cx="140" cy="20" r="3" fill="#d4872c" opacity="0.4"/><line x1="30" y1="20" x2="124" y2="20" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><line x1="156" y1="20" x2="250" y2="20" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><circle cx="30" cy="20" r="2" fill="#d4872c" opacity="0.3"/><circle cx="250" cy="20" r="2" fill="#d4872c" opacity="0.3"/><polygon points="70,14 78,20 70,26" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.3"/><polygon points="210,14 202,20 210,26" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.3"/></svg></div>
 
-                <div class="dimension">
-                    <div class="dimension-title">BODY</div>
-                    <p class="dimension-text">Your body is not a machine to optimize. It is sacred ground. The temple through which everything is experienced. Train it. Align it. Honor it.</p>
-                </div>
+    <!-- The Six Dimensions -->
+    <section class="dimensions">
+        <h2 class="section-title">The Six Dimensions</h2>
+        <p style="text-align:center; font-family:'Inter',sans-serif; font-size:1rem; color:var(--smoke); margin-top:-2rem; margin-bottom:3rem; letter-spacing:1px;">The architecture of what it means to be fully alive</p>
 
-                <div class="dimension">
-                    <div class="dimension-title">CEREMONY</div>
-                    <p class="dimension-text">There are thresholds that cannot be crossed through thinking. The fire. The darkness. The medicine. These are the doorways to transformation that no app can simulate.</p>
-                </div>
-
-                <div class="dimension">
-                    <div class="dimension-title">PURPOSE</div>
-                    <p class="dimension-text">Alignment is not productivity. It is the felt sense that your life, your work, your relationships, and your mission are organized around what is true at your center.</p>
-                </div>
-
-                <div class="dimension">
-                    <div class="dimension-title">ADVENTURE</div>
-                    <p class="dimension-text">The soul requires wildness. Not as escape, but as practice. Into the unknown. Into nature. Into the edges of what you thought you could handle.</p>
-                </div>
-
-                <div class="dimension">
-                    <div class="dimension-title">HEART</div>
-                    <p class="dimension-text">Every wall you built to protect yourself is now the wall between you and love. Repair. Forgive. Open. The heart is the final frontier.</p>
-                </div>
+        <div class="dimensions-grid">
+            <div class="dimension-card">
+                <div class="dimension-icon">&#10022;</div>
+                <div class="dimension-name">Spirit</div>
+                <p class="dimension-desc">Your direct line to God is yours alone. No institution, no algorithm, no intermediary. The felt knowing that you are held by something greater. This is the foundation.</p>
             </div>
-        </section>
 
-        <!-- The Declaration -->
-        <section class="declaration">
-            <h2>The Declaration</h2>
-            <p>This is our line in the sand.</p>
-            <p>We choose embodiment over optimization.</p>
-            <p>We choose fire over comfort.</p>
-            <p>We choose direct communion over secondhand belief.</p>
-            <p>We choose adventure over routine.</p>
-            <p>We choose the messy, beautiful, terrifying act of being fully human.</p>
-            <p>We are not going back. We are going deeper.</p>
-            <p>Return to Human.</p>
-        </section>
+            <div class="dimension-card">
+                <div class="dimension-icon">&#9670;</div>
+                <div class="dimension-name">Body</div>
+                <p class="dimension-desc">Your body is not a machine to optimize. It is sacred ground. The temple through which everything is experienced. Train it. Align it. Honor it.</p>
+            </div>
 
-        <!-- Manifesto Download -->
-        <section class="download-section">
-            <h3>The Full Manifesto</h3>
-            <p>The full manifesto is being written. Coming Spring 2026.</p>
-            <p>Sign up for Letters from Center to be the first to receive it.</p>
+            <div class="dimension-card">
+                <div class="dimension-icon">&#9711;</div>
+                <div class="dimension-name">Ceremony</div>
+                <p class="dimension-desc">There are thresholds that cannot be crossed through thinking. The fire. The darkness. The medicine. These are the doorways to transformation that no app can simulate.</p>
+            </div>
 
+            <div class="dimension-card">
+                <div class="dimension-icon">&#9733;</div>
+                <div class="dimension-name">Purpose</div>
+                <p class="dimension-desc">Alignment is not productivity. It is the felt sense that your life, your work, your relationships, and your mission are organized around what is true at your center.</p>
+            </div>
+
+            <div class="dimension-card">
+                <div class="dimension-icon">&#9651;</div>
+                <div class="dimension-name">Adventure</div>
+                <p class="dimension-desc">The soul requires wildness. Not as escape, but as practice. Into the unknown. Into nature. Into the edges of what you thought you could handle.</p>
+            </div>
+
+            <div class="dimension-card">
+                <div class="dimension-icon">&#10084;</div>
+                <div class="dimension-name">Heart</div>
+                <p class="dimension-desc">Every wall you built to protect yourself is now the wall between you and love. Repair. Forgive. Open. The heart is the final frontier.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sacred Geometry Divider -->
+    <div class="sg-divider"><svg viewBox="0 0 280 40"><circle cx="140" cy="20" r="16" fill="none" stroke="#d4872c" stroke-width="0.6" opacity="0.4"/><circle cx="140" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.5"/><circle cx="140" cy="20" r="3" fill="#d4872c" opacity="0.4"/><line x1="30" y1="20" x2="124" y2="20" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><line x1="156" y1="20" x2="250" y2="20" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><circle cx="30" cy="20" r="2" fill="#d4872c" opacity="0.3"/><circle cx="250" cy="20" r="2" fill="#d4872c" opacity="0.3"/><polygon points="70,14 78,20 70,26" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.3"/><polygon points="210,14 202,20 210,26" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.3"/></svg></div>
+
+    <!-- The Declaration -->
+    <section class="declaration">
+        <div class="declaration-container">
+            <h2 class="section-title">The Declaration</h2>
+            <p class="declaration-line bold">This is our line in the sand.</p>
+            <p class="declaration-line">We choose embodiment over optimization.</p>
+            <p class="declaration-line">We choose fire over comfort.</p>
+            <p class="declaration-line">We choose direct communion over secondhand belief.</p>
+            <p class="declaration-line">We choose adventure over routine.</p>
+            <p class="declaration-line">We choose the messy, beautiful, terrifying act of being fully human.</p>
+            <p class="declaration-line bold">We are not going back. We are going deeper.</p>
+            <p class="declaration-close">Return to Human.</p>
+        </div>
+    </section>
+
+    <!-- Sacred Geometry Divider -->
+    <div class="sg-divider"><svg viewBox="0 0 280 40"><circle cx="140" cy="20" r="16" fill="none" stroke="#d4872c" stroke-width="0.6" opacity="0.4"/><circle cx="140" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.5"/><circle cx="140" cy="20" r="3" fill="#d4872c" opacity="0.4"/><line x1="30" y1="20" x2="124" y2="20" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><line x1="156" y1="20" x2="250" y2="20" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><circle cx="30" cy="20" r="2" fill="#d4872c" opacity="0.3"/><circle cx="250" cy="20" r="2" fill="#d4872c" opacity="0.3"/><polygon points="70,14 78,20 70,26" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.3"/><polygon points="210,14 202,20 210,26" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.3"/></svg></div>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h3 class="cta-title">The Full Manifesto</h3>
+            <p class="cta-text">The complete manifesto is being written. Coming Spring 2026.</p>
+            <p class="cta-text" style="margin-top:-1rem;">Sign up for Letters from Center to be the first to receive it.</p>
             <form class="email-signup" id="signup-form">
                 <input type="email" placeholder="Enter your email" required>
                 <button type="submit" class="signup-btn">Notify Me</button>
             </form>
-        </section>
-    </main>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer>
-        <div style="max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
-            <div style="text-align: center;">
-                <div style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--white); letter-spacing: 1px;">Anthony Balduzzi</div>
-                <div style="font-size: 0.8rem; color: var(--ash); letter-spacing: 2px; text-transform: uppercase;">Return to Human</div>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-name">Anthony Balduzzi</div>
+                <div class="footer-tagline">Return to Human</div>
             </div>
-            <div style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;">
-                <a href="the-story.html" style="color: var(--smoke); text-decoration: none; font-size: 0.85rem;">The Story</a>
-                <a href="the-work.html" style="color: var(--smoke); text-decoration: none; font-size: 0.85rem;">The Work</a>
-                <a href="speak.html" style="color: var(--smoke); text-decoration: none; font-size: 0.85rem;">Speak</a>
-                <a href="the-manifesto.html" style="color: var(--smoke); text-decoration: none; font-size: 0.85rem;">The Manifesto</a>
+            <div class="footer-links">
+                <a href="the-story.html">The Story</a>
+                <a href="the-work.html">The Work</a>
+                <a href="speak.html">Speak</a>
+                <a href="the-manifesto.html">The Manifesto</a>
             </div>
-            <div style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--ember); font-style: italic;">Wake up. Come feel this.</div>
-            <p>&copy; 2026 Return to Human. All rights reserved.</p>
+            <div class="footer-motto">Wake up. Come feel this.</div>
+            <p class="footer-copy">&copy; 2026 Return to Human. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
+        // Nav scroll effect
+        window.addEventListener('scroll', () => {
+            document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
         // Email signup
         document.getElementById('signup-form').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -533,17 +275,7 @@
             alert('Thank you. You will be notified when the manifesto is released.');
             this.reset();
         });
-
-        // Smooth scroll for nav links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
     </script>
+
 </body>
 </html>
