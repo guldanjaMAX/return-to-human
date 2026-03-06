@@ -632,7 +632,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background-color: rgba(10, 10, 8, 0.95);
+            background: linear-gradient(to bottom, rgba(10, 10, 8, 0.92) 0%, rgba(10, 10, 8, 0.85) 50%, rgba(10, 10, 8, 0.92) 100%);
             z-index: 0;
         }
 
@@ -712,6 +712,10 @@
         /* What AI Will Never Touch */
         .ai-never {
             background: var(--bg);
+            background-image: url('photos/duzzi-amazon-walk.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             position: relative;
             overflow: hidden;
             padding: 6rem 2rem 8rem;
@@ -724,7 +728,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(ellipse at 50% 0%, rgba(212, 135, 44, 0.08) 0%, transparent 70%);
+            background: linear-gradient(to bottom, rgba(10, 10, 8, 0.93) 0%, rgba(10, 10, 8, 0.88) 50%, rgba(10, 10, 8, 0.93) 100%);
             z-index: 0;
         }
 
@@ -1146,7 +1150,7 @@
         /* Rules Section */
         .rules {
             background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
-            background-image: url('generated/embers.jpg');
+            background-image: url('photos/embers.jpg');
             background-size: cover;
             background-attachment: fixed;
             position: relative;
@@ -1156,7 +1160,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(10, 10, 8, 0.96) 0%, rgba(22, 20, 18, 0.96) 100%);
+            background: linear-gradient(135deg, rgba(10, 10, 8, 0.91) 0%, rgba(22, 20, 18, 0.88) 100%);
             z-index: 0;
         }
 
@@ -1394,13 +1398,40 @@
 
         /* Newsletter Section */
         .newsletter {
-            background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+            background: var(--bg);
+            background-image: url('photos/duzzi-meditating.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(10, 10, 8, 0.88) 0%, rgba(10, 10, 8, 0.95) 100%);
+            z-index: 0;
         }
 
         .newsletter-container {
             max-width: 600px;
             margin: 0 auto;
             text-align: center;
+            position: relative;
+            z-index: 1;
+            background: rgba(15, 14, 12, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 135, 44, 0.15);
+            padding: 3rem;
+        }
+        .newsletter-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--ember), transparent);
         }
 
         .newsletter h2 {
@@ -1885,9 +1916,9 @@
 
     <!-- Thesis Section -->
     <section class="thesis" id="thesis">
-        <h2 class="thesis-quote reveal">We lost ourselves a bit.</h2>
+        <h2 class="thesis-quote reveal">You built the life. But something is missing.</h2>
         <div class="thesis-body reveal">
-            <p>Anxiety is skyrocketing. Depression is everywhere. We are more connected than ever and more alone than ever. We outsourced our attention, our bodies, our decision making to algorithms designed to keep us hooked and hollow. AI is changing everything. But here is the truth: turbulent waters are an invitation to find our deepest roots. The fire we are walking through right now is calling us home to what makes us actually, fiercely, undeniably human. This is not a retreat from the modern world. This is an ascent toward your truest power.</p>
+            <p>You have done everything right. You built the career. You optimized the body. You checked every box the world told you to check. And yet, when the noise stops and you are alone with yourself, there is a hollow ache that no achievement can fill. You are more connected than ever and more alone than ever. You outsourced your attention, your instincts, your aliveness to algorithms designed to keep you hooked and hollow. AI is changing everything around you. But here is what no one is telling you: this fire is not here to destroy you. It is here to burn away everything that was never really yours. The anxiety, the numbness, the quiet desperation of performing a life you were never meant to live. On the other side of that fire is something you have not felt in years. Maybe decades. Your actual, raw, undeniable aliveness. This is not a retreat from the modern world. This is your ascent toward the truest version of yourself.</p>
         </div>
     </section>
 
@@ -1909,7 +1940,7 @@
     <!-- What AI Will Never Touch -->
     <section class="ai-never">
         <div class="ai-never-content">
-            <h2 class="section-title">What No Algorithm Can Replicate</h2>
+            <h2 class="section-title">What You Are Actually Missing</h2>
             <div class="ai-never-list">
                 <div class="ai-never-item">
                     <p class="reveal">The tremble in your voice the first time you say "I love you" and mean it with every cell of your body.</p>
@@ -2183,7 +2214,7 @@
     <section class="newsletter" id="letters">
         <div class="newsletter-container">
             <h2>Letters from Center</h2>
-            <p class="newsletter-subtext">Weekly. From the path. No algorithms, no optimization hacks. Just truth, from the fire.</p>
+            <p class="newsletter-subtext">If you are tired of the noise. If you feel that something deeper is calling you. These letters are written from the fire for men who are ready to stop performing and start living. Weekly. Raw. No algorithms, no optimization hacks. Just truth that lands in your chest and refuses to leave.</p>
             <form class="newsletter-form" onsubmit="event.preventDefault();">
                 <input type="email" placeholder="Your email" required>
                 <button type="submit">Subscribe</button>
