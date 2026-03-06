@@ -476,17 +476,52 @@
         }
 
         .framework-visual {
-            text-align: center;
-            margin-bottom: 2rem;
+            position: relative;
+            width: 100%;
+            max-width: 620px;
+            margin: 0 auto 2rem;
+            aspect-ratio: 1 / 1;
         }
 
         .sacred-geometry-img {
-            width: 100%;
-            max-width: 500px;
+            width: 72%;
             height: auto;
-            margin: 0 auto;
             display: block;
             opacity: 0.9;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .pillar-label {
+            position: absolute;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--ember);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        /* Position 6 labels in a circle around the image */
+        .pillar-label:nth-child(2) { top: 2%; left: 50%; transform: translateX(-50%); }       /* Spirit - top center */
+        .pillar-label:nth-child(3) { top: 20%; right: 2%; }                                     /* Body - top right */
+        .pillar-label:nth-child(4) { bottom: 20%; right: 2%; }                                  /* Ceremony - bottom right */
+        .pillar-label:nth-child(5) { bottom: 2%; left: 50%; transform: translateX(-50%); }     /* Purpose - bottom center */
+        .pillar-label:nth-child(6) { bottom: 20%; left: 2%; }                                   /* Adventure - bottom left */
+        .pillar-label:nth-child(7) { top: 20%; left: 2%; }                                      /* Heart - top left */
+
+        @media (max-width: 600px) {
+            .framework-visual {
+                max-width: 360px;
+            }
+            .pillar-label {
+                font-size: 0.75rem;
+                letter-spacing: 0.1em;
+            }
         }
 
         .pillars-grid {
@@ -947,6 +982,12 @@
     <section class="framework" id="framework">
         <div class="framework-visual">
             <img src="photos/sacred-geometry-meditation-ai.png" alt="Sacred geometry surrounding meditation figure" class="sacred-geometry-img">
+            <span class="pillar-label">Spirit</span>
+            <span class="pillar-label">Body</span>
+            <span class="pillar-label">Ceremony</span>
+            <span class="pillar-label">Purpose</span>
+            <span class="pillar-label">Adventure</span>
+            <span class="pillar-label">Heart</span>
         </div>
         <h2 class="section-title">The Dimensions of a Fully Alive Human</h2>
         <div class="pillars-grid">
