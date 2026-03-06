@@ -691,7 +691,7 @@
             font-family: 'Cormorant Garamond', serif;
             font-weight: 400;
             font-size: 0.85rem;
-            color: var(--smoke);
+            color: var(--bone);
             display: block;
             margin-top: 0.2rem;
             letter-spacing: 0.02em;
@@ -780,7 +780,7 @@
         .rules-intro-text {
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.35rem;
-            color: var(--smoke);
+            color: var(--bone);
             line-height: 2;
         }
 
@@ -853,7 +853,7 @@
         .rule-expand {
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.15rem;
-            color: var(--smoke);
+            color: var(--bone);
             line-height: 1.8;
         }
 
@@ -897,7 +897,7 @@
             background-image: url('photos/duzzi-ffp-group-close.jpg');
             background-size: cover;
             background-position: center;
-            opacity: 0.1;
+            opacity: 0.04;
             z-index: 0;
         }
 
@@ -913,9 +913,36 @@
 
         .offering {
             padding: 2.5rem 2rem;
-            background-color: rgba(212, 135, 44, 0.05);
+            background-color: rgba(212, 135, 44, 0.06);
             border: 1px solid rgba(212, 135, 44, 0.2);
             transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .offering::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 24px;
+            height: 24px;
+            border-top: 1px solid var(--ember);
+            border-left: 1px solid var(--ember);
+            opacity: 0.4;
+            transition: opacity 0.4s ease;
+        }
+
+        .offering::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            width: 24px;
+            height: 24px;
+            border-bottom: 1px solid var(--ember);
+            border-right: 1px solid var(--ember);
+            opacity: 0.4;
+            transition: opacity 0.4s ease;
         }
 
         .offering:hover {
@@ -923,6 +950,11 @@
             background-color: rgba(212, 135, 44, 0.1);
             transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(212, 135, 44, 0.1);
+        }
+
+        .offering:hover::before,
+        .offering:hover::after {
+            opacity: 0.8;
         }
 
         .offering-title {
