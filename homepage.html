@@ -704,42 +704,112 @@
             background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
         }
 
+        .rules-intro {
+            max-width: 700px;
+            margin: 0 auto 4rem;
+            text-align: center;
+        }
+
+        .rules-intro-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.35rem;
+            color: var(--smoke);
+            line-height: 2;
+        }
+
+        .rules-intro-text em {
+            color: var(--ember);
+            font-style: italic;
+        }
+
         .rules-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         .rule {
-            padding: 2rem;
-            border-left: 2px solid var(--gold);
-            background-color: rgba(201, 168, 76, 0.03);
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 2rem;
+            align-items: start;
+            padding: 2.5rem 2rem;
+            border-bottom: 1px solid rgba(212, 135, 44, 0.08);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rule:first-child {
+            border-top: 1px solid rgba(212, 135, 44, 0.08);
+        }
+
+        .rule:hover {
+            background: rgba(212, 135, 44, 0.03);
+        }
+
+        .rule-number-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 0.3rem;
         }
 
         .rule-number {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--ember);
-            margin-bottom: 0.5rem;
             font-weight: 700;
+            line-height: 1;
+            position: relative;
+            display: inline-block;
+            width: 56px;
+            height: 56px;
+            text-align: center;
+            line-height: 56px;
         }
 
+        .rule-body {}
+
         .rule-text {
-            font-size: 1.1rem;
-            color: var(--bone);
-            line-height: 1.7;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1.4;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.3px;
+        }
+
+        .rule-expand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            color: var(--smoke);
+            line-height: 1.8;
         }
 
         @media (max-width: 768px) {
-            .rules-list {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+            .rule {
+                grid-template-columns: 60px 1fr;
+                gap: 1.2rem;
+                padding: 2rem 1.5rem;
             }
 
-            .rule {
-                padding: 1.5rem;
+            .rule-number {
+                font-size: 1.8rem;
+                width: 44px;
+                height: 44px;
+                line-height: 44px;
+            }
+
+            .rule-text {
+                font-size: 1.25rem;
+            }
+
+            .rule-expand {
+                font-size: 1.05rem;
             }
         }
 
@@ -1124,21 +1194,29 @@
         .pillar { position: relative; }
 
         /* Rule number sacred geometry ring */
-        .rule-number {
-            position: relative;
-            display: inline-block;
-        }
         .rule-number::after {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 48px;
-            height: 48px;
+            width: 56px;
+            height: 56px;
             border: 1px solid var(--ember);
             border-radius: 50%;
-            opacity: 0.2;
+            opacity: 0.15;
+        }
+        .rule-number::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            opacity: 0.1;
         }
 
         /* Flower of Life subtle overlay on newsletter */
@@ -1311,46 +1389,110 @@
     <!-- Rules Section -->
     <section class="rules" id="manifesto">
         <h2 class="section-title">Simple Rules for Human Life</h2>
+
+        <div class="rules-intro">
+            <p class="rules-intro-text">These are not commandments. They are not ideas borrowed from books. They were forged in the fire of one man's life, <em>from losing his father at nine years old to spending a week in total darkness in the Amazon</em>, and now they are offered to anyone who feels the pull to come back to what is real.</p>
+        </div>
+
         <div class="rules-list">
             <div class="rule reveal">
-                <div class="rule-number">1</div>
-                <div class="rule-text">Your body is sacred ground. Train it like a temple.</div>
+                <div class="rule-number-wrap">
+                    <div class="rule-number">1</div>
+                </div>
+                <div class="rule-body">
+                    <div class="rule-text">Your body is sacred ground. Train it like a temple.</div>
+                    <p class="rule-expand">Not for vanity. Not for optimization. Because the body is the vessel through which everything is experienced. Strength is not separate from spirit. It is the container for it. Move every day. Eat with reverence. Your physical alignment is the foundation for every other kind.</p>
+                </div>
             </div>
+
             <div class="rule reveal">
-                <div class="rule-number">2</div>
-                <div class="rule-text">Comfort is the slow death of the spirit. Seek the edge.</div>
+                <div class="rule-number-wrap">
+                    <div class="rule-number">2</div>
+                </div>
+                <div class="rule-body">
+                    <div class="rule-text">Comfort is the slow death of the spirit. Seek the edge.</div>
+                    <p class="rule-expand">The comfortable life is not the good life. It is the numb life. Growth lives at the boundary of what you think you can handle. Cold water, hard conversations, the wilderness, fasting, silence. These are not punishments. They are invitations back to aliveness.</p>
+                </div>
             </div>
+
             <div class="rule reveal">
-                <div class="rule-number">3</div>
-                <div class="rule-text">Nature is not a vacation. It is home.</div>
+                <div class="rule-number-wrap">
+                    <div class="rule-number">3</div>
+                </div>
+                <div class="rule-body">
+                    <div class="rule-text">Nature is not a vacation. It is home.</div>
+                    <p class="rule-expand">You were not built for fluorescent lights and cubicle walls. Your nervous system was designed to sync with the rhythm of rain and wind and fire. Step outside. Walk barefoot. Sleep under the stars. Let the land remind you who you are.</p>
+                </div>
             </div>
+
             <div class="rule reveal">
-                <div class="rule-number">4</div>
-                <div class="rule-text">Your direct line to God belongs to you. No intermediary required.</div>
+                <div class="rule-number-wrap">
+                    <div class="rule-number">4</div>
+                </div>
+                <div class="rule-body">
+                    <div class="rule-text">Your direct line to God belongs to you. No intermediary required.</div>
+                    <p class="rule-expand">Not a priest. Not a guru. Not an app. The relationship between you and the sacred is yours to build, in your own way, on your own terms. Get quiet enough to hear it. Brave enough to follow it. This is the foundation beneath everything.</p>
+                </div>
             </div>
+
             <div class="rule reveal">
-                <div class="rule-number">5</div>
-                <div class="rule-text">Fear is the door. Walk through it.</div>
+                <div class="rule-number-wrap">
+                    <div class="rule-number">5</div>
+                </div>
+                <div class="rule-body">
+                    <div class="rule-text">Fear is the door. Walk through it.</div>
+                    <p class="rule-expand">Every time you feel the pull of fear, know that you are standing at a threshold. On the other side of that fear is everything you want. The conversation you are avoiding. The leap you are delaying. The truth you are not speaking. Walk through it. That is where you come alive.</p>
+                </div>
             </div>
+
             <div class="rule reveal">
-                <div class="rule-number">6</div>
-                <div class="rule-text">The wound you are running from holds the gift you are looking for.</div>
+                <div class="rule-number-wrap">
+                    <div class="rule-number">6</div>
+                </div>
+                <div class="rule-body">
+                    <div class="rule-text">The wound you are running from holds the gift you are looking for.</div>
+                    <p class="rule-expand">The thing you least want to look at is the thing that is trying to free you. The father you lost. The love that broke you open. The failure that burned your old identity to the ground. Turn toward it. Sit with it. The medicine is in the wound.</p>
+                </div>
             </div>
+
             <div class="rule reveal">
-                <div class="rule-number">7</div>
-                <div class="rule-text">Play is not optional. It is the language of the soul.</div>
+                <div class="rule-number-wrap">
+                    <div class="rule-number">7</div>
+                </div>
+                <div class="rule-body">
+                    <div class="rule-text">Play is not optional. It is the language of the soul.</div>
+                    <p class="rule-expand">Watch a child. They do not need permission to be alive. They create, they move, they laugh without reason. Somewhere along the way you forgot that play is sacred. Bring it back. Climb something. Build something with your hands. Wrestle. Dance badly. Joy is not earned. It is remembered.</p>
+                </div>
             </div>
+
             <div class="rule reveal">
-                <div class="rule-number">8</div>
-                <div class="rule-text">Relationships are mirrors. Clean yours.</div>
+                <div class="rule-number-wrap">
+                    <div class="rule-number">8</div>
+                </div>
+                <div class="rule-body">
+                    <div class="rule-text">Relationships are mirrors. Clean yours.</div>
+                    <p class="rule-expand">The people in your life are showing you exactly where you are. The anger, the tenderness, the distance, the longing. All of it is information. Do not run from the reflection. Repair what is broken. Forgive where you can. Let love in, even when it terrifies you.</p>
+                </div>
             </div>
+
             <div class="rule reveal">
-                <div class="rule-number">9</div>
-                <div class="rule-text">Adventure is a spiritual practice.</div>
+                <div class="rule-number-wrap">
+                    <div class="rule-number">9</div>
+                </div>
+                <div class="rule-body">
+                    <div class="rule-text">Adventure is a spiritual practice.</div>
+                    <p class="rule-expand">The soul requires wildness. Not as escape, but as practice. Into the jungle. Up the mountain. Down the river. Across the desert. When you step beyond the boundary of the familiar, something ancient wakes up inside you. You do not find yourself in comfort. You find yourself on the edge.</p>
+                </div>
             </div>
+
             <div class="rule reveal">
-                <div class="rule-number">10</div>
-                <div class="rule-text">You are not broken. You are caged. Break out.</div>
+                <div class="rule-number-wrap">
+                    <div class="rule-number">10</div>
+                </div>
+                <div class="rule-body">
+                    <div class="rule-text">You are not broken. You are caged. Break out.</div>
+                    <p class="rule-expand">You were never damaged. You were contained. By expectations, by stories you were told about who you should be, by the weight of a culture that rewards compliance over aliveness. The cage is not locked. It never was. Stand up. Open the door. Return to human.</p>
+                </div>
             </div>
         </div>
     </section>
