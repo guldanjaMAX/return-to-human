@@ -594,11 +594,6 @@
         @keyframes scrollPulse {
             0%, 100% { opacity: 0.3; } 50% { opacity: 1; }
         }
-        .fade-in {
-            opacity: 0; transform: translateY(40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
 
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -607,7 +602,6 @@
                 transition-duration: 0.01ms !important;
             }
             html { scroll-behavior: auto; }
-            .fade-in { opacity: 1; transform: none; }
             .hero-eyebrow, .hero-title, .hero-subtitle, .hero-cta, .hero-scroll { opacity: 1; }
         }
 
@@ -677,9 +671,180 @@
             .hero-eyebrow { font-size: 0.65rem; letter-spacing: 0.25em; }
             .section { padding: 4rem 1.25rem; }
         }
+
+        /* ===== FLOATING EMBER PARTICLES ===== */
+        .ember-particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 10;
+        }
+        .ember {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--color-ember);
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(212, 135, 44, 0.6);
+            opacity: 0.4;
+            animation: floatUpEmber linear infinite;
+        }
+        .ember:nth-child(1) { width: 3px; height: 3px; left: 10%; animation-duration: 12s; animation-delay: 0s; opacity: 0.3; }
+        .ember:nth-child(2) { width: 2px; height: 2px; left: 8%; animation-duration: 18s; animation-delay: 1s; opacity: 0.4; }
+        .ember:nth-child(3) { width: 4px; height: 4px; left: 15%; animation-duration: 15s; animation-delay: 2s; opacity: 0.35; }
+        .ember:nth-child(4) { width: 2px; height: 2px; left: 22%; animation-duration: 20s; animation-delay: 0.5s; opacity: 0.3; }
+        .ember:nth-child(5) { width: 3px; height: 3px; left: 5%; animation-duration: 14s; animation-delay: 1.5s; opacity: 0.4; }
+        .ember:nth-child(6) { width: 2px; height: 2px; left: 28%; animation-duration: 16s; animation-delay: 2.5s; opacity: 0.35; }
+        .ember:nth-child(7) { width: 4px; height: 4px; left: 18%; animation-duration: 22s; animation-delay: 0s; opacity: 0.3; }
+        .ember:nth-child(8) { width: 3px; height: 3px; left: 35%; animation-duration: 13s; animation-delay: 1s; opacity: 0.4; }
+        .ember:nth-child(9) { width: 2px; height: 2px; left: 12%; animation-duration: 19s; animation-delay: 3s; opacity: 0.35; }
+        .ember:nth-child(10) { width: 3px; height: 3px; left: 42%; animation-duration: 17s; animation-delay: 1.5s; opacity: 0.3; }
+        .ember:nth-child(11) { width: 4px; height: 4px; left: 25%; animation-duration: 21s; animation-delay: 2s; opacity: 0.4; }
+        .ember:nth-child(12) { width: 2px; height: 2px; left: 3%; animation-duration: 15s; animation-delay: 0.5s; opacity: 0.35; }
+        .ember:nth-child(13) { width: 3px; height: 3px; left: 48%; animation-duration: 14s; animation-delay: 2.5s; opacity: 0.3; }
+        .ember:nth-child(14) { width: 2px; height: 2px; left: 32%; animation-duration: 18s; animation-delay: 1s; opacity: 0.4; }
+        .ember:nth-child(15) { width: 4px; height: 4px; left: 55%; animation-duration: 16s; animation-delay: 3s; opacity: 0.35; }
+        .ember:nth-child(16) { width: 2px; height: 2px; left: 40%; animation-duration: 23s; animation-delay: 0s; opacity: 0.3; }
+        .ember:nth-child(17) { width: 3px; height: 3px; left: 20%; animation-duration: 12s; animation-delay: 2s; opacity: 0.4; }
+        .ember:nth-child(18) { width: 2px; height: 2px; left: 60%; animation-duration: 19s; animation-delay: 1.5s; opacity: 0.35; }
+        .ember:nth-child(19) { width: 4px; height: 4px; left: 8%; animation-duration: 25s; animation-delay: 2.5s; opacity: 0.3; }
+        .ember:nth-child(20) { width: 3px; height: 3px; left: 50%; animation-duration: 14s; animation-delay: 1s; opacity: 0.4; }
+        @keyframes floatUpEmber {
+            0% {
+                bottom: -10px;
+                opacity: 0;
+                transform: translateX(0) translateY(0);
+            }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.35; }
+            100% {
+                bottom: 110vh;
+                opacity: 0;
+                transform: translateX(var(--drift, 20px)) translateY(0);
+            }
+        }
+        .ember:nth-child(odd) { --drift: 30px; }
+        .ember:nth-child(even) { --drift: -25px; }
+
+        /* ===== FILM GRAIN TEXTURE ===== */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="4" /%3E%3C/filter%3E%3Crect width="400" height="400" fill="%23000" filter="url(%23noise)" opacity="0.03"/%3E%3C/svg%3E');
+            opacity: 0.03;
+            z-index: 1;
+            animation: grainBreathe 4s ease-in-out infinite;
+        }
+        @keyframes grainBreathe {
+            0%, 100% { opacity: 0.03; }
+            50% { opacity: 0.04; }
+        }
+
+        /* ===== ENHANCED TEXT CONTRAST ===== */
+        .section-body {
+            color: var(--color-bone);
+        }
+        .section-title {
+            color: var(--color-white);
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* ===== AMBIENT GLOW EFFECTS ===== */
+        .section-title::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -100px;
+            width: 400px;
+            height: 300px;
+            background: radial-gradient(ellipse 400px 300px at center, rgba(212, 135, 44, 0.08), transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        .section-title {
+            position: relative;
+        }
+
+        /* Glow for work section title */
+        #work-title::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -100px;
+            width: 500px;
+            height: 350px;
+            background: radial-gradient(ellipse 500px 350px at center, rgba(212, 135, 44, 0.06), transparent 60%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ===== BREATHING EFFECTS ON DIVIDER IMAGES ===== */
+        .divider img {
+            animation: dividerPulse 8s ease-in-out infinite;
+        }
+        .river-divider img {
+            animation: dividerPulse 8s ease-in-out infinite;
+        }
+        @keyframes dividerPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* ===== IMPROVED FADE-IN ANIMATIONS FOR REDUCED MOTION ===== */
+        @media (prefers-reduced-motion: reduce) {
+            .fade-in {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+            .divider img, .river-divider img {
+                animation: none;
+            }
+            body::after {
+                animation: none;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- ===== FLOATING EMBER PARTICLES ===== -->
+    <div class="ember-particles" aria-hidden="true">
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+    </div>
 
     <a href="#about" class="skip-link">Skip to content</a>
 
