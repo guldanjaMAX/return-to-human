@@ -18,12 +18,41 @@
             --fire: #c45a1a; --fire-deep: #8b3a10;
             --gold: #c9a84c; --ash: #7a756b; --smoke: #a09888;
             --bone: #ddd5c5; --white: #f2ece0;
-            --sg-flower: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104'%3E%3Ccircle cx='60' cy='52' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='30' cy='52' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='90' cy='52' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='45' cy='26' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='75' cy='26' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='45' cy='78' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='75' cy='78' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3C/svg%3E");
-            --sg-hex: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52'%3E%3Cpolygon points='30,1 57,14 57,38 30,51 3,38 3,14' fill='none' stroke='%23c9a84c' stroke-width='0.3' opacity='0.08'/%3E%3C/svg%3E");
         }
 
         html { scroll-behavior: smooth; }
         body { font-family: 'Cormorant Garamond', serif; background-color: var(--bg); color: var(--bone); line-height: 1.8; overflow-x: hidden; }
+
+        /* Film grain overlay */
+        body::after {
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 9999; opacity: 0.5;
+        }
+
+        /* Center line */
+        body::before {
+            content: ''; position: fixed; top: 0; left: 50%; width: 1px; height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(212,135,44,0.08) 20%, rgba(212,135,44,0.12) 50%, rgba(212,135,44,0.08) 80%, transparent);
+            z-index: 1; pointer-events: none;
+        }
+
+        /* Floating embers */
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+            10% { opacity: 1; transform: translateY(90vh) translateX(10px) scale(1); }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) translateX(-20px) scale(0.3); opacity: 0; }
+        }
+        .ember-particle {
+            position: fixed; width: 3px; height: 3px; border-radius: 50%;
+            background: var(--ember); pointer-events: none; z-index: 2;
+            animation: floatUp linear infinite;
+        }
+
+        /* Reveal animations */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal.in-view { opacity: 1; transform: translateY(0); }
 
         /* Navigation */
         nav { position: fixed; top: 0; left: 0; right: 0; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; background-color: transparent; transition: background-color 0.3s ease; z-index: 1000; }
@@ -38,76 +67,103 @@
         @media (max-width: 768px) { nav { padding: 1rem 1.5rem; } .logo { font-size: 1rem; } .tagline { font-size: 0.6rem; } .nav-links { gap: 1rem; display: none; } .mobile-toggle { display: block; } nav.mobile-menu-open .nav-links { display: flex; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background-color: rgba(10,10,8,0.98); padding: 2rem 1.5rem; gap: 1.5rem; } }
 
         /* Hero */
-        .hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 50%, var(--bg3) 100%); }
-        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('photos/sacred-geometry-meditation-ai.png'); background-size: cover; background-position: center; opacity: 0.2; z-index: 0; }
-        .hero::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at center, rgba(10,10,8,0.3) 0%, rgba(10,10,8,0.85) 100%); z-index: 1; }
+        .hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('photos/duzzi-stump-lake.jpg'); background-size: cover; background-position: center; opacity: 0.35; z-index: 0; }
+        .hero::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at center, rgba(10,10,8,0.2) 0%, rgba(10,10,8,0.88) 100%); z-index: 1; }
         .hero-content { position: relative; z-index: 3; text-align: center; max-width: 750px; padding: 2rem; }
-        .hero-content::before { content: ''; position: absolute; top: -100px; left: -100px; right: -100px; bottom: -100px; background: var(--sg-flower); background-size: 120px 104px; opacity: 0.3; z-index: -1; }
-        .hero-eyebrow { font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--ember); margin-bottom: 1rem; animation: fadeInUp 1s ease 0.2s both; }
-        .hero-title { font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 800; color: var(--white); margin-bottom: 1.5rem; letter-spacing: -1px; animation: fadeInUp 1s ease 0.4s both; line-height: 1; }
-        .hero-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--bone); font-weight: 400; max-width: 600px; margin: 0 auto; animation: fadeInUp 1s ease 0.6s both; }
+        .hero-eyebrow { font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; color: var(--ember); margin-bottom: 1.5rem; animation: fadeInUp 1s ease 0.2s both; }
+        .hero-title { font-family: 'Playfair Display', serif; font-size: 5.5rem; font-weight: 800; color: var(--white); margin-bottom: 1.5rem; letter-spacing: -2px; animation: fadeInUp 1s ease 0.4s both; line-height: 1; }
+        .hero-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: var(--bone); font-weight: 400; max-width: 600px; margin: 0 auto; animation: fadeInUp 1s ease 0.6s both; line-height: 1.8; }
+        .hero-scroll-indicator { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); z-index: 3; animation: fadeInUp 1s ease 1s both; }
+        .hero-scroll-indicator svg { width: 24px; height: 36px; animation: bounce 2s ease infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @media (max-width: 768px) { .hero-title { font-size: 3rem; } .hero-subtitle { font-size: 1.1rem; } }
-
-        /* Sacred Geometry */
-        .sg-divider { display: block; width: 100%; text-align: center; padding: 1.5rem 0; overflow: hidden; background-color: var(--bg); }
-        .sg-divider svg { width: 280px; height: 40px; opacity: 0.5; }
-        .section-title { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: var(--white); margin-bottom: 3rem; text-align: center; letter-spacing: -1px; }
-        .section-title::before { content: ''; display: block; width: 60px; height: 60px; margin: 0 auto 1.5rem; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ccircle cx='30' cy='30' r='28' fill='none' stroke='%23d4872c' stroke-width='0.5' opacity='0.4'/%3E%3Ccircle cx='30' cy='30' r='18' fill='none' stroke='%23d4872c' stroke-width='0.5' opacity='0.3'/%3E%3Ccircle cx='30' cy='30' r='8' fill='none' stroke='%23d4872c' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='30' y1='2' x2='30' y2='58' stroke='%23d4872c' stroke-width='0.3' opacity='0.2'/%3E%3Cline x1='2' y1='30' x2='58' y2='30' stroke='%23d4872c' stroke-width='0.3' opacity='0.2'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        footer::before { content: ''; display: block; width: 100%; height: 2px; background: repeating-linear-gradient(90deg, transparent 0px, transparent 8px, var(--ember) 8px, var(--ember) 10px, transparent 10px, transparent 18px, var(--gold) 18px, var(--gold) 19px, transparent 19px, transparent 30px); opacity: 0.3; }
+        @media (max-width: 768px) { .hero-title { font-size: 3.2rem; } .hero-subtitle { font-size: 1.1rem; } }
 
         /* Crisis Section */
-        .crisis { background-color: var(--bg2); padding: 6rem 2rem; position: relative; }
-        .crisis::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--sg-flower); background-size: 120px 104px; opacity: 0.08; pointer-events: none; z-index: 0; }
-        .crisis > * { position: relative; z-index: 1; }
+        .crisis { position: relative; padding: 8rem 2rem; overflow: hidden; }
+        .crisis::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('photos/embers.jpg'); background-size: cover; background-position: center; opacity: 0.15; z-index: 0; }
+        .crisis::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, var(--bg) 0%, rgba(15,14,12,0.92) 15%, rgba(15,14,12,0.92) 85%, var(--bg) 100%); z-index: 1; }
+        .crisis > * { position: relative; z-index: 2; }
         .crisis-container { max-width: 800px; margin: 0 auto; text-align: center; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: var(--white); margin-bottom: 3rem; text-align: center; letter-spacing: -1px; }
+        .section-title .title-line { display: block; width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--ember), transparent); margin: 1.5rem auto 0; }
         .crisis-text { font-size: 1.4rem; color: var(--bone); line-height: 2; margin-bottom: 1.5rem; }
         .crisis-text.highlight { color: var(--ember); font-weight: 600; font-size: 1.6rem; }
         .crisis-text:last-child { margin-bottom: 0; }
 
+        /* Ember line divider */
+        .ember-line { width: 100%; padding: 2rem 0; display: flex; align-items: center; justify-content: center; gap: 1rem; }
+        .ember-line-segment { height: 1px; width: 80px; background: linear-gradient(90deg, transparent, var(--ember), transparent); opacity: 0.4; }
+        .ember-line-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ember); opacity: 0.5; }
+
         /* Dimensions */
-        .dimensions { padding: 6rem 2rem; position: relative; }
-        .dimensions::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--sg-hex); background-size: 60px 52px; opacity: 0.15; pointer-events: none; z-index: 0; }
-        .dimensions > * { position: relative; z-index: 1; }
-        .dimensions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; max-width: 1000px; margin: 0 auto; }
-        .dimension-card { background: linear-gradient(135deg, rgba(212, 135, 44, 0.05) 0%, rgba(196, 90, 26, 0.03) 100%); border: 1px solid rgba(212, 135, 44, 0.15); padding: 2.5rem; position: relative; overflow: hidden; transition: all 0.4s ease; }
-        .dimension-card:hover { border-color: rgba(212, 135, 44, 0.5); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(212, 135, 44, 0.08); }
-        .dimension-card::before, .dimension-card::after { content: ''; position: absolute; width: 24px; height: 24px; border: 1px solid var(--ember); opacity: 0.2; }
-        .dimension-card::before { top: 8px; left: 8px; border-right: none; border-bottom: none; }
-        .dimension-card::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
-        .dimension-icon { font-size: 2rem; margin-bottom: 1rem; }
+        .dimensions { padding: 8rem 2rem; position: relative; }
+        .dimensions-subtitle { text-align: center; font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--smoke); margin-top: -2rem; margin-bottom: 3.5rem; letter-spacing: 1px; }
+        .dimensions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; max-width: 1050px; margin: 0 auto; }
+        .dimension-card {
+            background: linear-gradient(135deg, rgba(212, 135, 44, 0.04) 0%, rgba(10, 10, 8, 0.6) 100%);
+            border: 1px solid rgba(212, 135, 44, 0.12);
+            padding: 2.5rem;
+            position: relative; overflow: hidden;
+            transition: all 0.5s ease;
+            backdrop-filter: blur(5px);
+        }
+        .dimension-card:hover {
+            border-color: rgba(212, 135, 44, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(212, 135, 44, 0.1);
+        }
+        .dimension-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: linear-gradient(to bottom, var(--ember), var(--fire-deep)); opacity: 0; transition: opacity 0.4s ease; }
+        .dimension-card:hover::before { opacity: 1; }
+        .dimension-icon { width: 48px; height: 48px; margin-bottom: 1.2rem; opacity: 0.85; }
+        .dimension-icon svg { width: 48px; height: 48px; }
         .dimension-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--ember); margin-bottom: 1rem; letter-spacing: 1px; }
         .dimension-desc { font-size: 1.15rem; color: var(--bone); line-height: 1.9; }
         @media (max-width: 768px) { .dimensions-grid { grid-template-columns: 1fr; } }
 
         /* Declaration */
-        .declaration { background-color: var(--bg2); padding: 6rem 2rem; position: relative; }
-        .declaration::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--sg-flower); background-size: 120px 104px; opacity: 0.06; pointer-events: none; z-index: 0; }
-        .declaration > * { position: relative; z-index: 1; }
+        .declaration { position: relative; padding: 8rem 2rem; overflow: hidden; }
+        .declaration::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('photos/duzzi-sunset-rock.jpg'); background-size: cover; background-position: center top; opacity: 0.2; z-index: 0; }
+        .declaration::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, var(--bg) 0%, rgba(15,14,12,0.88) 15%, rgba(15,14,12,0.88) 85%, var(--bg) 100%); z-index: 1; }
+        .declaration > * { position: relative; z-index: 2; }
         .declaration-container { max-width: 800px; margin: 0 auto; text-align: center; }
-        .declaration-line { font-size: 1.5rem; color: var(--bone); margin-bottom: 1.8rem; line-height: 1.8; }
+        .declaration-line { font-size: 1.5rem; color: var(--bone); margin-bottom: 1.8rem; line-height: 1.8; transition: all 0.4s ease; }
         .declaration-line.bold { font-weight: 700; font-size: 1.7rem; color: var(--white); }
-        .declaration-close { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--ember); margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(212, 135, 44, 0.2); }
+        .declaration-line.in-view { opacity: 1; transform: translateY(0); }
+        .declaration-close {
+            font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700;
+            color: var(--ember); margin-top: 3rem; padding-top: 2rem;
+            border-top: 1px solid rgba(212, 135, 44, 0.2);
+            text-shadow: 0 0 40px rgba(212, 135, 44, 0.2);
+        }
 
-        /* Coming Soon / CTA */
-        .cta-section { padding: 6rem 2rem; position: relative; }
-        .cta-section::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--sg-hex); background-size: 60px 52px; opacity: 0.1; pointer-events: none; z-index: 0; }
-        .cta-section > * { position: relative; z-index: 1; }
-        .cta-container { max-width: 600px; margin: 0 auto; text-align: center; background: linear-gradient(135deg, rgba(212, 135, 44, 0.06) 0%, rgba(196, 90, 26, 0.03) 100%); border: 1px solid rgba(212, 135, 44, 0.2); padding: 3.5rem; position: relative; overflow: hidden; }
-        .cta-container::before, .cta-container::after { content: ''; position: absolute; width: 30px; height: 30px; border: 1px solid var(--ember); opacity: 0.25; }
-        .cta-container::before { top: 10px; left: 10px; border-right: none; border-bottom: none; }
-        .cta-container::after { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+        /* CTA */
+        .cta-section { position: relative; padding: 8rem 2rem; overflow: hidden; }
+        .cta-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('photos/jungle.jpg'); background-size: cover; background-position: center; opacity: 0.1; z-index: 0; }
+        .cta-section::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at center, rgba(10,10,8,0.85) 0%, rgba(10,10,8,0.97) 100%); z-index: 1; }
+        .cta-section > * { position: relative; z-index: 2; }
+        .cta-container {
+            max-width: 600px; margin: 0 auto; text-align: center;
+            background: rgba(15, 14, 12, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 135, 44, 0.2);
+            padding: 3.5rem;
+            position: relative; overflow: hidden;
+        }
+        .cta-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--ember), transparent); }
         .cta-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 1.5rem; }
         .cta-text { font-size: 1.2rem; color: var(--bone); margin-bottom: 2rem; line-height: 1.8; }
         .email-signup { display: flex; flex-direction: column; gap: 1rem; max-width: 400px; margin: 0 auto; }
         .email-signup input { padding: 0.9rem 1.2rem; background: rgba(10, 10, 8, 0.5); border: 1px solid rgba(212, 135, 44, 0.3); color: var(--white); font-family: 'Inter', sans-serif; font-size: 0.95rem; transition: all 0.3s; }
-        .email-signup input:focus { outline: none; border-color: var(--ember); background: rgba(10, 10, 8, 0.7); }
+        .email-signup input:focus { outline: none; border-color: var(--ember); background: rgba(10, 10, 8, 0.7); box-shadow: 0 0 20px rgba(212, 135, 44, 0.1); }
         .email-signup input::placeholder { color: var(--ash); }
         .signup-btn { background: var(--ember); color: var(--bg); border: none; padding: 0.9rem; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.3s; letter-spacing: 1px; text-transform: uppercase; }
-        .signup-btn:hover { background: var(--ember-light); transform: translateY(-2px); }
+        .signup-btn:hover { background: var(--ember-light); transform: translateY(-2px); box-shadow: 0 5px 20px rgba(212, 135, 44, 0.3); }
 
         /* Footer */
         footer { background: var(--bg2); padding: 4rem 2rem 3rem; }
+        footer::before { content: ''; display: block; width: 100%; height: 2px; background: repeating-linear-gradient(90deg, transparent 0px, transparent 8px, var(--ember) 8px, var(--ember) 10px, transparent 10px, transparent 18px, var(--gold) 18px, var(--gold) 19px, transparent 19px, transparent 30px); opacity: 0.3; }
         .footer-container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
         .footer-brand { text-align: center; }
         .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--white); letter-spacing: 1px; }
@@ -120,6 +176,14 @@
     </style>
 </head>
 <body>
+
+    <!-- Floating ember particles -->
+    <div class="ember-particle" style="left:8%; animation-duration:12s; animation-delay:0s;"></div>
+    <div class="ember-particle" style="left:22%; animation-duration:15s; animation-delay:3s;"></div>
+    <div class="ember-particle" style="left:45%; animation-duration:11s; animation-delay:1s;"></div>
+    <div class="ember-particle" style="left:62%; animation-duration:14s; animation-delay:5s;"></div>
+    <div class="ember-particle" style="left:78%; animation-duration:13s; animation-delay:2s;"></div>
+    <div class="ember-particle" style="left:90%; animation-duration:16s; animation-delay:4s;"></div>
 
     <!-- Navigation -->
     <nav>
@@ -143,96 +207,169 @@
             <h1 class="hero-title">The Return to Human Manifesto</h1>
             <p class="hero-subtitle">Written from the fire. For those who feel the pull to come back to what is real.</p>
         </div>
+        <div class="hero-scroll-indicator">
+            <svg viewBox="0 0 24 36" fill="none" stroke="rgba(212,135,44,0.6)" stroke-width="1.5">
+                <rect x="1" y="1" width="22" height="34" rx="11" />
+                <circle cx="12" cy="10" r="2" fill="rgba(212,135,44,0.8)" />
+            </svg>
+        </div>
     </section>
 
-    <!-- Sacred Geometry Divider -->
-    <div class="sg-divider"><svg viewBox="0 0 280 40"><circle cx="140" cy="20" r="16" fill="none" stroke="#d4872c" stroke-width="0.6" opacity="0.4"/><circle cx="140" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.5"/><circle cx="140" cy="20" r="3" fill="#d4872c" opacity="0.4"/><line x1="30" y1="20" x2="124" y2="20" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><line x1="156" y1="20" x2="250" y2="20" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><circle cx="30" cy="20" r="2" fill="#d4872c" opacity="0.3"/><circle cx="250" cy="20" r="2" fill="#d4872c" opacity="0.3"/><polygon points="70,14 78,20 70,26" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.3"/><polygon points="210,14 202,20 210,26" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.3"/></svg></div>
+    <!-- Ember Divider -->
+    <div class="ember-line">
+        <div class="ember-line-segment"></div>
+        <div class="ember-line-dot"></div>
+        <div class="ember-line-segment"></div>
+    </div>
 
     <!-- The Crisis -->
     <section class="crisis">
         <div class="crisis-container">
-            <h2 class="section-title">The Crisis</h2>
-            <p class="crisis-text">We are living through the most significant transition in human history.</p>
-            <p class="crisis-text">Machines are learning to think. To write. To create. To replace.</p>
-            <p class="crisis-text highlight">And in the acceleration, something essential is being forgotten.</p>
-            <p class="crisis-text">Not a technology. Not a skill. Not even a job.</p>
-            <p class="crisis-text highlight">The felt experience of being alive.</p>
-            <p class="crisis-text">The ache in your chest when you hold your child for the first time. The fire that moves through your body when you push past what you thought was possible. The silence that opens when you sit with God in the dark. The raw, unfiltered aliveness that no screen can deliver and no algorithm can replicate.</p>
-            <p class="crisis-text">This is what we are losing. And most of us do not even know it is gone.</p>
+            <h2 class="section-title reveal">The Crisis<span class="title-line"></span></h2>
+            <p class="crisis-text reveal">We are living through the most significant transition in human history.</p>
+            <p class="crisis-text reveal">Machines are learning to think. To write. To create. To replace.</p>
+            <p class="crisis-text highlight reveal">And in the acceleration, something essential is being forgotten.</p>
+            <p class="crisis-text reveal">Not a technology. Not a skill. Not even a job.</p>
+            <p class="crisis-text highlight reveal">The felt experience of being alive.</p>
+            <p class="crisis-text reveal">The ache in your chest when you hold your child for the first time. The fire that moves through your body when you push past what you thought was possible. The silence that opens when you sit with God in the dark. The raw, unfiltered aliveness that no screen can deliver and no algorithm can replicate.</p>
+            <p class="crisis-text reveal">This is what we are losing. And most of us do not even know it is gone.</p>
         </div>
     </section>
 
-    <!-- Sacred Geometry Divider -->
-    <div class="sg-divider"><svg viewBox="0 0 280 40"><circle cx="140" cy="20" r="16" fill="none" stroke="#d4872c" stroke-width="0.6" opacity="0.4"/><circle cx="140" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.5"/><circle cx="140" cy="20" r="3" fill="#d4872c" opacity="0.4"/><line x1="30" y1="20" x2="124" y2="20" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><line x1="156" y1="20" x2="250" y2="20" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><circle cx="30" cy="20" r="2" fill="#d4872c" opacity="0.3"/><circle cx="250" cy="20" r="2" fill="#d4872c" opacity="0.3"/><polygon points="70,14 78,20 70,26" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.3"/><polygon points="210,14 202,20 210,26" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.3"/></svg></div>
+    <!-- Ember Divider -->
+    <div class="ember-line">
+        <div class="ember-line-segment"></div>
+        <div class="ember-line-dot"></div>
+        <div class="ember-line-segment"></div>
+    </div>
 
     <!-- The Six Dimensions -->
     <section class="dimensions">
-        <h2 class="section-title">The Six Dimensions</h2>
-        <p style="text-align:center; font-family:'Inter',sans-serif; font-size:1rem; color:var(--smoke); margin-top:-2rem; margin-bottom:3rem; letter-spacing:1px;">The architecture of what it means to be fully alive</p>
+        <h2 class="section-title reveal">The Six Dimensions<span class="title-line"></span></h2>
+        <p class="dimensions-subtitle reveal">The architecture of what it means to be fully alive</p>
 
         <div class="dimensions-grid">
-            <div class="dimension-card">
-                <div class="dimension-icon">&#10022;</div>
+            <div class="dimension-card reveal">
+                <div class="dimension-icon">
+                    <svg viewBox="0 0 48 48" fill="none" stroke="var(--ember)" stroke-width="1.2">
+                        <circle cx="24" cy="24" r="18" opacity="0.3"/>
+                        <path d="M24 6 L24 42" opacity="0.4"/>
+                        <path d="M24 10 L28 18 L24 16 L20 18 Z" fill="var(--ember)" opacity="0.6" stroke="none"/>
+                        <circle cx="24" cy="24" r="4" fill="var(--ember)" opacity="0.5"/>
+                        <path d="M24 28 L28 36 M24 28 L20 36" opacity="0.4"/>
+                        <circle cx="24" cy="24" r="10" opacity="0.2"/>
+                    </svg>
+                </div>
                 <div class="dimension-name">Spirit</div>
                 <p class="dimension-desc">Your direct line to God is yours alone. No institution, no algorithm, no intermediary. The felt knowing that you are held by something greater. This is the foundation.</p>
             </div>
 
-            <div class="dimension-card">
-                <div class="dimension-icon">&#9670;</div>
+            <div class="dimension-card reveal">
+                <div class="dimension-icon">
+                    <svg viewBox="0 0 48 48" fill="none" stroke="var(--ember)" stroke-width="1.2">
+                        <path d="M24 8 C24 8 18 14 18 22 C18 28 20 32 24 40 C28 32 30 28 30 22 C30 14 24 8 24 8Z" opacity="0.4"/>
+                        <line x1="24" y1="12" x2="24" y2="38" opacity="0.3"/>
+                        <circle cx="24" cy="18" r="2" fill="var(--ember)" opacity="0.5" stroke="none"/>
+                        <circle cx="24" cy="26" r="2" fill="var(--ember)" opacity="0.4" stroke="none"/>
+                        <circle cx="24" cy="34" r="2" fill="var(--ember)" opacity="0.3" stroke="none"/>
+                        <path d="M18 22 Q24 20 30 22" opacity="0.3"/>
+                    </svg>
+                </div>
                 <div class="dimension-name">Body</div>
                 <p class="dimension-desc">Your body is not a machine to optimize. It is sacred ground. The temple through which everything is experienced. Train it. Align it. Honor it.</p>
             </div>
 
-            <div class="dimension-card">
-                <div class="dimension-icon">&#9711;</div>
+            <div class="dimension-card reveal">
+                <div class="dimension-icon">
+                    <svg viewBox="0 0 48 48" fill="none" stroke="var(--ember)" stroke-width="1.2">
+                        <circle cx="24" cy="30" r="10" opacity="0.3"/>
+                        <path d="M24 16 L24 20" opacity="0.5"/>
+                        <path d="M18 18 L20 21" opacity="0.4"/>
+                        <path d="M30 18 L28 21" opacity="0.4"/>
+                        <path d="M20 28 Q24 22 28 28 Q26 32 24 34 Q22 32 20 28Z" fill="var(--ember)" opacity="0.35" stroke="none"/>
+                        <path d="M22 26 Q24 22 26 26" opacity="0.5"/>
+                        <path d="M16 30 L14 30 M32 30 L34 30" opacity="0.3"/>
+                    </svg>
+                </div>
                 <div class="dimension-name">Ceremony</div>
                 <p class="dimension-desc">There are thresholds that cannot be crossed through thinking. The fire. The darkness. The medicine. These are the doorways to transformation that no app can simulate.</p>
             </div>
 
-            <div class="dimension-card">
-                <div class="dimension-icon">&#9733;</div>
+            <div class="dimension-card reveal">
+                <div class="dimension-icon">
+                    <svg viewBox="0 0 48 48" fill="none" stroke="var(--ember)" stroke-width="1.2">
+                        <polygon points="24,8 40,40 8,40" opacity="0.3"/>
+                        <polygon points="24,16 34,38 14,38" opacity="0.2"/>
+                        <circle cx="24" cy="28" r="4" fill="var(--ember)" opacity="0.4" stroke="none"/>
+                        <line x1="24" y1="22" x2="24" y2="8" opacity="0.4"/>
+                        <circle cx="24" cy="8" r="2" fill="var(--ember)" opacity="0.5" stroke="none"/>
+                    </svg>
+                </div>
                 <div class="dimension-name">Purpose</div>
                 <p class="dimension-desc">Alignment is not productivity. It is the felt sense that your life, your work, your relationships, and your mission are organized around what is true at your center.</p>
             </div>
 
-            <div class="dimension-card">
-                <div class="dimension-icon">&#9651;</div>
+            <div class="dimension-card reveal">
+                <div class="dimension-icon">
+                    <svg viewBox="0 0 48 48" fill="none" stroke="var(--ember)" stroke-width="1.2">
+                        <path d="M8 38 L16 26 L22 30 L30 16 L36 20 L42 10" opacity="0.4" stroke-width="1.5"/>
+                        <circle cx="42" cy="10" r="3" fill="var(--ember)" opacity="0.5" stroke="none"/>
+                        <path d="M8 38 L8 42 L42 42" opacity="0.2"/>
+                        <path d="M36 20 L42 10" opacity="0.5" stroke-width="1.5"/>
+                        <circle cx="16" cy="26" r="2" fill="var(--ember)" opacity="0.3" stroke="none"/>
+                        <circle cx="30" cy="16" r="2" fill="var(--ember)" opacity="0.3" stroke="none"/>
+                    </svg>
+                </div>
                 <div class="dimension-name">Adventure</div>
                 <p class="dimension-desc">The soul requires wildness. Not as escape, but as practice. Into the unknown. Into nature. Into the edges of what you thought you could handle.</p>
             </div>
 
-            <div class="dimension-card">
-                <div class="dimension-icon">&#10084;</div>
+            <div class="dimension-card reveal">
+                <div class="dimension-icon">
+                    <svg viewBox="0 0 48 48" fill="none" stroke="var(--ember)" stroke-width="1.2">
+                        <path d="M24 38 C24 38 10 28 10 20 C10 14 14 10 20 10 C22 10 23 11 24 13 C25 11 26 10 28 10 C34 10 38 14 38 20 C38 28 24 38 24 38Z" opacity="0.4"/>
+                        <path d="M24 34 C24 34 14 26 14 20 C14 16 16 13 20 13 C22 13 23 14 24 16 C25 14 26 13 28 13 C32 13 34 16 34 20 C34 26 24 34 24 34Z" fill="var(--ember)" opacity="0.2" stroke="none"/>
+                        <circle cx="24" cy="22" r="3" fill="var(--ember)" opacity="0.5" stroke="none"/>
+                    </svg>
+                </div>
                 <div class="dimension-name">Heart</div>
                 <p class="dimension-desc">Every wall you built to protect yourself is now the wall between you and love. Repair. Forgive. Open. The heart is the final frontier.</p>
             </div>
         </div>
     </section>
 
-    <!-- Sacred Geometry Divider -->
-    <div class="sg-divider"><svg viewBox="0 0 280 40"><circle cx="140" cy="20" r="16" fill="none" stroke="#d4872c" stroke-width="0.6" opacity="0.4"/><circle cx="140" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.5"/><circle cx="140" cy="20" r="3" fill="#d4872c" opacity="0.4"/><line x1="30" y1="20" x2="124" y2="20" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><line x1="156" y1="20" x2="250" y2="20" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><circle cx="30" cy="20" r="2" fill="#d4872c" opacity="0.3"/><circle cx="250" cy="20" r="2" fill="#d4872c" opacity="0.3"/><polygon points="70,14 78,20 70,26" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.3"/><polygon points="210,14 202,20 210,26" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.3"/></svg></div>
+    <!-- Ember Divider -->
+    <div class="ember-line">
+        <div class="ember-line-segment"></div>
+        <div class="ember-line-dot"></div>
+        <div class="ember-line-segment"></div>
+    </div>
 
     <!-- The Declaration -->
     <section class="declaration">
         <div class="declaration-container">
-            <h2 class="section-title">The Declaration</h2>
-            <p class="declaration-line bold">This is our line in the sand.</p>
-            <p class="declaration-line">We choose embodiment over optimization.</p>
-            <p class="declaration-line">We choose fire over comfort.</p>
-            <p class="declaration-line">We choose direct communion over secondhand belief.</p>
-            <p class="declaration-line">We choose adventure over routine.</p>
-            <p class="declaration-line">We choose the messy, beautiful, terrifying act of being fully human.</p>
-            <p class="declaration-line bold">We are not going back. We are going deeper.</p>
-            <p class="declaration-close">Return to Human.</p>
+            <h2 class="section-title reveal">The Declaration<span class="title-line"></span></h2>
+            <p class="declaration-line bold reveal">This is our line in the sand.</p>
+            <p class="declaration-line reveal">We choose embodiment over optimization.</p>
+            <p class="declaration-line reveal">We choose fire over comfort.</p>
+            <p class="declaration-line reveal">We choose direct communion over secondhand belief.</p>
+            <p class="declaration-line reveal">We choose adventure over routine.</p>
+            <p class="declaration-line reveal">We choose the messy, beautiful, terrifying act of being fully human.</p>
+            <p class="declaration-line bold reveal">We are not going back. We are going deeper.</p>
+            <p class="declaration-close reveal">Return to Human.</p>
         </div>
     </section>
 
-    <!-- Sacred Geometry Divider -->
-    <div class="sg-divider"><svg viewBox="0 0 280 40"><circle cx="140" cy="20" r="16" fill="none" stroke="#d4872c" stroke-width="0.6" opacity="0.4"/><circle cx="140" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.5"/><circle cx="140" cy="20" r="3" fill="#d4872c" opacity="0.4"/><line x1="30" y1="20" x2="124" y2="20" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><line x1="156" y1="20" x2="250" y2="20" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><circle cx="30" cy="20" r="2" fill="#d4872c" opacity="0.3"/><circle cx="250" cy="20" r="2" fill="#d4872c" opacity="0.3"/><polygon points="70,14 78,20 70,26" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.3"/><polygon points="210,14 202,20 210,26" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.3"/></svg></div>
+    <!-- Ember Divider -->
+    <div class="ember-line">
+        <div class="ember-line-segment"></div>
+        <div class="ember-line-dot"></div>
+        <div class="ember-line-segment"></div>
+    </div>
 
     <!-- CTA -->
     <section class="cta-section">
-        <div class="cta-container">
+        <div class="cta-container reveal">
             <h3 class="cta-title">The Full Manifesto</h3>
             <p class="cta-text">The complete manifesto is being written. Coming Spring 2026.</p>
             <p class="cta-text" style="margin-top:-1rem;">Sign up for Letters from Center to be the first to receive it.</p>
@@ -266,6 +403,16 @@
         window.addEventListener('scroll', () => {
             document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 50);
         });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
         // Email signup
         document.getElementById('signup-form').addEventListener('submit', function(e) {
