@@ -145,108 +145,175 @@
 
         /* Hero Section */
         .hero {
-            height: 100vh;
             position: relative;
+            height: 100vh;
+            height: 100dvh;
+            min-height: 600px;
             display: flex;
             align-items: center;
-            justify-content: center;
             overflow: hidden;
-            background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 50%, var(--bg3) 100%);
         }
 
-        .hero::before {
-            content: '';
+        .hero-bg {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('photos/duzzi-sunset-rock.jpg');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.4;
-            z-index: 0;
+            inset: 0;
+            background: url('photos/jungle-bg.jpg') center center / cover no-repeat;
+            filter: brightness(0.5) saturate(1.1);
+            transform: scale(1.05);
+            transition: transform 8s ease;
         }
 
-        .hero::after {
-            content: '';
+        .hero-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(ellipse at center, rgba(10,10,8,0.2) 0%, rgba(10,10,8,0.7) 100%);
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(10, 10, 8, 0.3) 0%,
+                rgba(10, 10, 8, 0.1) 40%,
+                rgba(10, 10, 8, 0.4) 70%,
+                rgba(10, 10, 8, 0.95) 100%
+            );
             z-index: 1;
         }
 
         .hero-portrait {
-            display: none;
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 55%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .hero-portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 20%;
+            opacity: 0.7;
+            mix-blend-mode: lighten;
+            filter: brightness(0.9) saturate(0.8);
+        }
+
+        .hero-portrait::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, var(--bg) 0%, transparent 40%);
+            z-index: 2;
+        }
+
+        .hero-portrait::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--bg) 0%, transparent 40%);
+            z-index: 2;
         }
 
         .hero-content {
             position: relative;
             z-index: 3;
-            text-align: center;
-            max-width: 700px;
-            padding: 2rem;
+            max-width: 650px;
+            padding: 0 2rem 0 5rem;
         }
 
         .hero-eyebrow {
             font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 500;
-            letter-spacing: 3px;
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.35em;
             text-transform: uppercase;
             color: var(--ember);
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease 0.2s both;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
         }
 
         .hero-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 5rem;
-            font-weight: 800;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5.5vw, 5rem);
+            font-weight: 300;
+            line-height: 1.1;
             color: var(--white);
             margin-bottom: 1.5rem;
-            letter-spacing: -1px;
-            animation: fadeInUp 1s ease 0.4s both;
-            line-height: 1;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
         }
 
         .hero-subtitle {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
-            color: var(--bone);
+            font-size: clamp(1rem, 1.8vw, 1.35rem);
+            font-weight: 300;
+            font-style: italic;
+            color: var(--smoke);
             margin-bottom: 2.5rem;
-            font-weight: 400;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            animation: fadeInUp 1s ease 0.6s both;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.9s forwards;
         }
 
         .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            border: 2px solid var(--ember);
-            background-color: transparent;
-            color: var(--ember);
+            display: inline-flex;
+            align-items: center;
             font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 600;
-            letter-spacing: 2px;
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.25em;
             text-transform: uppercase;
+            color: var(--ember);
+            border: 1px solid var(--ember);
+            background: transparent;
+            padding: 1rem 2.5rem;
             text-decoration: none;
             cursor: pointer;
             transition: all 0.4s ease;
-            animation: fadeInUp 1s ease 0.8s both;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.2s forwards;
+            min-height: 48px;
         }
 
         .cta-button:hover {
-            background-color: var(--ember);
+            background: var(--ember);
             color: var(--bg);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(212, 135, 44, 0.2);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.5s forwards;
+        }
+
+        .hero-scroll span {
+            display: block;
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(to bottom, var(--ember), transparent);
+            margin: 0 auto;
+            animation: scrollPulse 2s ease infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.4; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.2); }
+        }
+
+        @media (max-width: 1024px) {
+            .hero-content { padding: 0 2rem; }
+            .hero-portrait { width: 60%; opacity: 0.6; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content { padding: 0 1.5rem; max-width: 100%; }
+            .hero-portrait { width: 100%; opacity: 0.35; }
+            .hero-portrait::before {
+                background: linear-gradient(to right, var(--bg) 0%, transparent 60%);
+            }
         }
 
         @keyframes fadeInUp {
@@ -1083,20 +1150,7 @@
             --sg-hex: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52'%3E%3Cpolygon points='30,1 57,14 57,38 30,51 3,38 3,14' fill='none' stroke='%23c9a84c' stroke-width='0.3' opacity='0.08'/%3E%3C/svg%3E");
         }
 
-        /* Sacred geometry overlay on hero */
-        .hero .hero-content::before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            left: -100px;
-            right: -100px;
-            bottom: -100px;
-            background: var(--sg-flower);
-            background-size: 120px 104px;
-            opacity: 0.3;
-            z-index: -1;
-            animation: sg-rotate 120s linear infinite;
-        }
+        /* Sacred geometry overlay removed from hero for cleaner layered portrait layout */
 
         @keyframes sg-rotate {
             from { transform: rotate(0deg); }
@@ -1297,15 +1351,18 @@
 
     <!-- Hero Section -->
     <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
         <div class="hero-portrait">
-            <img src="photos/duzzi-hero-portrait-faded.jpg" alt="Anthony Balduzzi">
+            <img src="photos/duzzi-hero-portrait-faded.jpg" alt="Anthony Balduzzi" loading="eager">
         </div>
         <div class="hero-content">
-            <div class="hero-eyebrow">In the Age of AI</div>
-            <h1 class="hero-title">Return to Human</h1>
+            <p class="hero-eyebrow">In the Age of AI</p>
+            <h1 class="hero-title">Return to Human.</h1>
             <p class="hero-subtitle">The things that make you feel most alive are the things no machine will ever touch.</p>
             <a href="#thesis" class="cta-button">Enter</a>
         </div>
+        <div class="hero-scroll" aria-hidden="true"><span></span></div>
     </section>
 
     <!-- Sacred Geometry Divider -->
