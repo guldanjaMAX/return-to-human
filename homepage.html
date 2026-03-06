@@ -496,31 +496,49 @@
 
         .pillar-label {
             position: absolute;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .pillar-label .pl-title {
             font-family: 'Cormorant Garamond', serif;
             font-weight: 600;
             font-size: 1.1rem;
             color: var(--ember);
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            text-align: center;
-            white-space: nowrap;
+            display: block;
+        }
+
+        .pillar-label .pl-desc {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            font-size: 0.85rem;
+            color: var(--smoke);
+            display: block;
+            margin-top: 0.2rem;
+            letter-spacing: 0.02em;
         }
 
         /* Position 6 labels in a circle around the image */
-        .pillar-label:nth-child(2) { top: 2%; left: 50%; transform: translateX(-50%); }       /* Spirit - top center */
-        .pillar-label:nth-child(3) { top: 20%; right: 2%; }                                     /* Body - top right */
-        .pillar-label:nth-child(4) { bottom: 20%; right: 2%; }                                  /* Ceremony - bottom right */
-        .pillar-label:nth-child(5) { bottom: 2%; left: 50%; transform: translateX(-50%); }     /* Purpose - bottom center */
-        .pillar-label:nth-child(6) { bottom: 20%; left: 2%; }                                   /* Adventure - bottom left */
-        .pillar-label:nth-child(7) { top: 20%; left: 2%; }                                      /* Heart - top left */
+        .pillar-label:nth-child(2) { top: 1%; left: 50%; transform: translateX(-50%); }
+        .pillar-label:nth-child(3) { top: 19%; right: 1%; }
+        .pillar-label:nth-child(4) { bottom: 19%; right: 1%; }
+        .pillar-label:nth-child(5) { bottom: 1%; left: 50%; transform: translateX(-50%); }
+        .pillar-label:nth-child(6) { bottom: 19%; left: 1%; }
+        .pillar-label:nth-child(7) { top: 19%; left: 1%; }
 
         @media (max-width: 600px) {
             .framework-visual {
                 max-width: 360px;
             }
-            .pillar-label {
-                font-size: 0.75rem;
+            .pillar-label .pl-title {
+                font-size: 0.7rem;
                 letter-spacing: 0.1em;
+            }
+            .pillar-label .pl-desc {
+                font-size: 0.6rem;
+                display: none;
             }
         }
 
@@ -877,6 +895,180 @@
             }
         }
 
+        /* ===== SACRED GEOMETRY THEME ===== */
+
+        /* Inline SVG data for Flower of Life pattern tile */
+        :root {
+            --sg-flower: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104'%3E%3Ccircle cx='60' cy='52' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='30' cy='52' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='90' cy='52' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='45' cy='26' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='75' cy='26' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='45' cy='78' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='75' cy='78' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3C/svg%3E");
+            --sg-hex: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52'%3E%3Cpolygon points='30,1 57,14 57,38 30,51 3,38 3,14' fill='none' stroke='%23c9a84c' stroke-width='0.3' opacity='0.08'/%3E%3C/svg%3E");
+        }
+
+        /* Sacred geometry overlay on hero */
+        .hero .hero-content::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            right: -100px;
+            bottom: -100px;
+            background: var(--sg-flower);
+            background-size: 120px 104px;
+            opacity: 0.3;
+            z-index: -1;
+            animation: sg-rotate 120s linear infinite;
+        }
+
+        @keyframes sg-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Section divider: sacred geometry line */
+        .sg-divider {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 1.5rem 0;
+            overflow: hidden;
+            background-color: var(--bg);
+        }
+
+        .sg-divider svg {
+            width: 280px;
+            height: 40px;
+            opacity: 0.5;
+        }
+
+        /* Section title sacred geometry accent */
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ccircle cx='30' cy='30' r='28' fill='none' stroke='%23d4872c' stroke-width='0.5' opacity='0.4'/%3E%3Ccircle cx='30' cy='30' r='18' fill='none' stroke='%23d4872c' stroke-width='0.5' opacity='0.3'/%3E%3Ccircle cx='30' cy='30' r='8' fill='none' stroke='%23d4872c' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='30' y1='2' x2='30' y2='58' stroke='%23d4872c' stroke-width='0.3' opacity='0.2'/%3E%3Cline x1='2' y1='30' x2='58' y2='30' stroke='%23d4872c' stroke-width='0.3' opacity='0.2'/%3E%3Cline x1='8' y1='8' x2='52' y2='52' stroke='%23d4872c' stroke-width='0.3' opacity='0.15'/%3E%3Cline x1='52' y1='8' x2='8' y2='52' stroke='%23d4872c' stroke-width='0.3' opacity='0.15'/%3E%3C/svg%3E") no-repeat center;
+            background-size: contain;
+        }
+
+        /* No double accent on thesis quote or framework (has the big image) */
+        .thesis-quote::before,
+        .newsletter h2::before { display: none; }
+        .framework .section-title::before { display: none; }
+
+        /* Subtle flower of life background on thesis */
+        .thesis::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--sg-flower);
+            background-size: 120px 104px;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .thesis { position: relative; }
+        .thesis > * { position: relative; z-index: 1; }
+
+        /* Hexagonal background pattern on rules section */
+        .rules::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--sg-hex);
+            background-size: 60px 52px;
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .rules { position: relative; }
+        .rules > * { position: relative; z-index: 1; }
+
+        /* Sacred geometry corner accents on offering cards */
+        .offering::before,
+        .offering::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--ember);
+            opacity: 0.25;
+            transition: opacity 0.4s ease;
+        }
+        .offering { position: relative; overflow: hidden; }
+        .offering::before { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+        .offering::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+        .offering:hover::before,
+        .offering:hover::after { opacity: 0.6; }
+
+        /* Sacred geometry corner accents on pillar cards */
+        .pillar::before {
+            content: '';
+            position: absolute;
+            top: -1px; left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8' fill='none' stroke='%23d4872c' stroke-width='0.6' opacity='0.4'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23d4872c' opacity='0.3'/%3E%3C/svg%3E") no-repeat center;
+            background-size: contain;
+        }
+        .pillar { position: relative; }
+
+        /* Rule number sacred geometry ring */
+        .rule-number {
+            position: relative;
+            display: inline-block;
+        }
+        .rule-number::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 48px;
+            height: 48px;
+            border: 1px solid var(--ember);
+            border-radius: 50%;
+            opacity: 0.2;
+        }
+
+        /* Flower of Life subtle overlay on newsletter */
+        .newsletter::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--sg-flower);
+            background-size: 120px 104px;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .newsletter { position: relative; }
+        .newsletter > * { position: relative; z-index: 1; }
+
+        /* Footer sacred geometry line */
+        footer::before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                transparent 8px,
+                var(--ember) 8px,
+                var(--ember) 10px,
+                transparent 10px,
+                transparent 18px,
+                var(--gold) 18px,
+                var(--gold) 19px,
+                transparent 19px,
+                transparent 30px
+            );
+            opacity: 0.3;
+        }
+
+        /* ===== END SACRED GEOMETRY THEME ===== */
+
         /* Utility Classes */
         .container {
             max-width: 1200px;
@@ -928,6 +1120,9 @@
         </div>
     </section>
 
+    <!-- Sacred Geometry Divider -->
+    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="100" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="120" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="12" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/><circle cx="160" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="4" fill="#d4872c" opacity="0.2"/><line x1="180" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
+
     <!-- Thesis Section -->
     <section class="thesis" id="thesis">
         <h2 class="thesis-quote reveal">We lost ourselves a bit.</h2>
@@ -935,6 +1130,8 @@
             <p>Anxiety is skyrocketing. Depression is everywhere. We are more connected than ever and more alone than ever. We outsourced our attention, our bodies, our decision making to algorithms designed to keep us hooked and hollow. AI is changing everything. But here is the truth: turbulent waters are an invitation to find our deepest roots. The fire we are walking through right now is calling us home to what makes us actually, fiercely, undeniably human. This is not a retreat from the modern world. This is an ascent toward your truest power.</p>
         </div>
     </section>
+
+    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="100" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><polygon points="140,6 158,20 140,34 122,20" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.35"/><polygon points="140,12 150,20 140,28 130,20" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="3" fill="#d4872c" opacity="0.25"/><line x1="180" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
 
     <!-- What AI Will Never Touch -->
     <section class="ai-never">
@@ -963,6 +1160,8 @@
         </div>
     </section>
 
+    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="100" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="130" cy="20" r="6" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="140" cy="20" r="10" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/><circle cx="150" cy="20" r="6" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><line x1="180" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
+
     <!-- The Guide Section -->
     <section class="the-guide" id="story">
         <h2 class="section-title">The Guide</h2>
@@ -978,16 +1177,18 @@
         </div>
     </section>
 
+    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="95" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="115" cy="20" r="5" fill="none" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><circle cx="140" cy="20" r="14" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/><circle cx="140" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.35"/><circle cx="140" cy="20" r="2.5" fill="#d4872c" opacity="0.3"/><circle cx="165" cy="20" r="5" fill="none" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><line x1="185" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
+
     <!-- Framework Section -->
     <section class="framework" id="framework">
         <div class="framework-visual">
             <img src="photos/sacred-geometry-meditation-ai.png" alt="Sacred geometry surrounding meditation figure" class="sacred-geometry-img">
-            <span class="pillar-label">Spirit</span>
-            <span class="pillar-label">Body</span>
-            <span class="pillar-label">Ceremony</span>
-            <span class="pillar-label">Purpose</span>
-            <span class="pillar-label">Adventure</span>
-            <span class="pillar-label">Heart</span>
+            <span class="pillar-label"><span class="pl-title">Spirit</span><span class="pl-desc">Find your direct line to God</span></span>
+            <span class="pillar-label"><span class="pl-title">Body</span><span class="pl-desc">Train. Align. Embody your strength</span></span>
+            <span class="pillar-label"><span class="pl-title">Ceremony</span><span class="pl-desc">Enter the fire. Come out different</span></span>
+            <span class="pillar-label"><span class="pl-title">Purpose</span><span class="pl-desc">Align your life around your center</span></span>
+            <span class="pillar-label"><span class="pl-title">Adventure</span><span class="pl-desc">Into the wild. Break free</span></span>
+            <span class="pillar-label"><span class="pl-title">Heart</span><span class="pl-desc">Repair. Forgive. Love without walls</span></span>
         </div>
         <h2 class="section-title">The Dimensions of a Fully Alive Human</h2>
         <div class="pillars-grid">
@@ -1017,6 +1218,8 @@
             </div>
         </div>
     </section>
+
+    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="100" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><polygon points="140,6 158,20 140,34 122,20" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.35"/><polygon points="140,12 150,20 140,28 130,20" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="3" fill="#d4872c" opacity="0.25"/><line x1="180" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
 
     <!-- Rules Section -->
     <section class="rules" id="manifesto">
@@ -1065,6 +1268,8 @@
         </div>
     </section>
 
+    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="100" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="130" cy="20" r="6" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="140" cy="20" r="10" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/><circle cx="150" cy="20" r="6" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><line x1="180" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
+
     <!-- What We Do Section -->
     <section class="what-we-do" id="work">
         <h2 class="section-title">What We Do</h2>
@@ -1086,6 +1291,8 @@
             </div>
         </div>
     </section>
+
+    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="95" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="115" cy="20" r="5" fill="none" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><circle cx="140" cy="20" r="14" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/><circle cx="140" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.35"/><circle cx="140" cy="20" r="2.5" fill="#d4872c" opacity="0.3"/><circle cx="165" cy="20" r="5" fill="none" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><line x1="185" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
 
     <!-- Newsletter Section -->
     <section class="newsletter" id="letters">
