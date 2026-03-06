@@ -18,12 +18,37 @@
             --fire: #c45a1a; --fire-deep: #8b3a10;
             --gold: #c9a84c; --ash: #7a756b; --smoke: #a09888;
             --bone: #ddd5c5; --white: #f2ece0;
-            --sg-flower: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104'%3E%3Ccircle cx='60' cy='52' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='30' cy='52' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='90' cy='52' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='45' cy='26' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='75' cy='26' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='45' cy='78' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3Ccircle cx='75' cy='78' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.12'/%3E%3C/svg%3E");
-            --sg-hex: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52'%3E%3Cpolygon points='30,1 57,14 57,38 30,51 3,38 3,14' fill='none' stroke='%23c9a84c' stroke-width='0.3' opacity='0.08'/%3E%3C/svg%3E");
         }
 
         html { scroll-behavior: smooth; }
         body { font-family: 'Cormorant Garamond', serif; background-color: var(--bg); color: var(--bone); line-height: 1.8; overflow-x: hidden; }
+
+        /* Film grain overlay */
+        body::after {
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 9999; opacity: 0.5;
+        }
+
+        /* Center line */
+        body::before {
+            content: ''; position: fixed; top: 0; left: 50%; width: 1px; height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(212,135,44,0.08) 20%, rgba(212,135,44,0.12) 50%, rgba(212,135,44,0.08) 80%, transparent);
+            z-index: 1; pointer-events: none;
+        }
+
+        /* Floating embers */
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+            10% { opacity: 1; transform: translateY(90vh) translateX(10px) scale(1); }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) translateX(-20px) scale(0.3); opacity: 0; }
+        }
+        .ember-particle {
+            position: fixed; width: 3px; height: 3px; border-radius: 50%;
+            background: var(--ember); pointer-events: none; z-index: 2;
+            animation: floatUp linear infinite;
+        }
 
         /* Navigation */
         nav { position: fixed; top: 0; left: 0; right: 0; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; background-color: transparent; transition: background-color 0.3s ease; z-index: 1000; }
@@ -37,95 +62,237 @@
         @media (max-width: 768px) { nav { padding: 1rem 1.5rem; } .logo { font-size: 1rem; } .tagline { font-size: 0.6rem; } .nav-links { gap: 1rem; display: none; } nav.mobile-menu-open .nav-links { display: flex; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background-color: rgba(10,10,8,0.98); padding: 2rem 1.5rem; gap: 1.5rem; } }
 
         /* Hero */
-        .hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 50%, var(--bg3) 100%); }
-        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('photos/duzzi-log-amazon.jpg'); background-size: cover; background-position: center; opacity: 0.35; z-index: 0; }
-        .hero::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at center, rgba(10,10,8,0.3) 0%, rgba(10,10,8,0.8) 100%); z-index: 1; }
+        .hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('photos/duzzi-amazon-ceremony.jpg'); background-size: cover; background-position: center; opacity: 0.4; z-index: 0; }
+        .hero::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at center, rgba(10,10,8,0.2) 0%, rgba(10,10,8,0.85) 100%); z-index: 1; }
         .hero-content { position: relative; z-index: 3; text-align: center; max-width: 700px; padding: 2rem; }
-        .hero-content::before { content: ''; position: absolute; top: -100px; left: -100px; right: -100px; bottom: -100px; background: var(--sg-flower); background-size: 120px 104px; opacity: 0.3; z-index: -1; }
-        .hero-eyebrow { font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--ember); margin-bottom: 1rem; animation: fadeInUp 1s ease 0.2s both; }
-        .hero-title { font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 800; color: var(--white); margin-bottom: 1.5rem; letter-spacing: -1px; animation: fadeInUp 1s ease 0.4s both; line-height: 1; }
-        .hero-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--bone); font-weight: 400; max-width: 600px; margin: 0 auto; animation: fadeInUp 1s ease 0.6s both; }
+        .hero-eyebrow { font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; color: var(--ember); margin-bottom: 1.5rem; animation: fadeInUp 1s ease 0.2s both; }
+        .hero-title { font-family: 'Playfair Display', serif; font-size: 6rem; font-weight: 800; color: var(--white); margin-bottom: 1.5rem; letter-spacing: -2px; animation: fadeInUp 1s ease 0.4s both; line-height: 1; }
+        .hero-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--bone); font-weight: 400; max-width: 600px; margin: 0 auto; animation: fadeInUp 1s ease 0.6s both; line-height: 1.8; }
+        .hero-scroll-indicator { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); z-index: 3; animation: fadeInUp 1s ease 1s both; }
+        .hero-scroll-indicator svg { width: 24px; height: 36px; animation: bounce 2s ease infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @media (max-width: 768px) { .hero-title { font-size: 3rem; } .hero-subtitle { font-size: 1.1rem; } }
+        @media (max-width: 768px) { .hero-title { font-size: 3.5rem; } .hero-subtitle { font-size: 1.1rem; } }
 
-        /* Sacred Geometry */
+        /* Sacred Geometry Dividers */
         .sg-divider { display: block; width: 100%; text-align: center; padding: 1.5rem 0; overflow: hidden; background-color: var(--bg); }
         .sg-divider svg { width: 280px; height: 40px; opacity: 0.5; }
         .section-title { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: var(--white); margin-bottom: 3rem; text-align: center; letter-spacing: -1px; }
         .section-title::before { content: ''; display: block; width: 60px; height: 60px; margin: 0 auto 1.5rem; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ccircle cx='30' cy='30' r='28' fill='none' stroke='%23d4872c' stroke-width='0.5' opacity='0.4'/%3E%3Ccircle cx='30' cy='30' r='18' fill='none' stroke='%23d4872c' stroke-width='0.5' opacity='0.3'/%3E%3Ccircle cx='30' cy='30' r='8' fill='none' stroke='%23d4872c' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='30' y1='2' x2='30' y2='58' stroke='%23d4872c' stroke-width='0.3' opacity='0.2'/%3E%3Cline x1='2' y1='30' x2='58' y2='30' stroke='%23d4872c' stroke-width='0.3' opacity='0.2'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        footer::before { content: ''; display: block; width: 100%; height: 2px; background: repeating-linear-gradient(90deg, transparent 0px, transparent 8px, var(--ember) 8px, var(--ember) 10px, transparent 10px, transparent 18px, var(--gold) 18px, var(--gold) 19px, transparent 19px, transparent 30px); opacity: 0.3; }
 
-        /* Invitation */
-        .invitation { background-color: var(--bg2); padding: 5rem 2rem; position: relative; }
-        .invitation::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--sg-flower); background-size: 120px 104px; opacity: 0.1; pointer-events: none; z-index: 0; }
+        /* Invitation - Now with background image */
+        .invitation {
+            position: relative; padding: 8rem 2rem; overflow: hidden;
+            background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+        }
+        .invitation::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('photos/duzzi-meditating.jpg');
+            background-size: cover; background-position: center;
+            opacity: 0.2; z-index: 0;
+        }
+        .invitation::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 30% 50%, rgba(212,135,44,0.06) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 50%, rgba(196,90,26,0.04) 0%, transparent 60%);
+            z-index: 0; pointer-events: none;
+        }
         .invitation > * { position: relative; z-index: 1; }
         .invitation-container { max-width: 800px; margin: 0 auto; text-align: center; }
-        .invitation-intro { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: var(--ember); margin-bottom: 2rem; line-height: 1.2; }
-        .invitation-quote { font-size: 1.4rem; color: var(--bone); margin-bottom: 2rem; font-style: italic; line-height: 1.8; }
-        .invitation-body { font-size: 1.2rem; color: var(--bone); line-height: 2; }
+        .invitation-intro { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; color: var(--ember); margin-bottom: 2rem; line-height: 1.2; }
+        .invitation-quote { font-size: 1.5rem; color: var(--bone); margin-bottom: 2.5rem; font-style: italic; line-height: 1.8; }
+        .invitation-body { font-size: 1.25rem; color: var(--bone); line-height: 2; }
 
-        /* Transformation */
-        .transformation { padding: 5rem 2rem; }
-        .transform-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 1000px; margin: 0 auto; }
-        .transform-column { padding: 2rem; border-left: 3px solid var(--fire); background-color: rgba(196, 90, 26, 0.05); position: relative; overflow: hidden; }
-        .transform-column::before, .transform-column::after { content: ''; position: absolute; width: 24px; height: 24px; border: 1px solid var(--ember); opacity: 0.2; }
-        .transform-column::before { top: 6px; left: 6px; border-right: none; border-bottom: none; }
-        .transform-column::after { bottom: 6px; right: 6px; border-left: none; border-top: none; }
-        .transform-column.to { border-left-color: var(--ember); background-color: rgba(212, 135, 44, 0.05); }
-        .transform-column h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--ember); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        /* Transformation - Split screen with dramatic styling */
+        .transformation { padding: 6rem 2rem; position: relative; }
+        .transformation::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104'%3E%3Ccircle cx='60' cy='52' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.06'/%3E%3Ccircle cx='30' cy='52' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.06'/%3E%3Ccircle cx='90' cy='52' r='30' fill='none' stroke='%23d4872c' stroke-width='0.4' opacity='0.06'/%3E%3C/svg%3E");
+            background-size: 120px 104px; pointer-events: none;
+        }
+        .transform-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; max-width: 1100px; margin: 0 auto; align-items: stretch; }
+        .transform-divider {
+            width: 1px; background: linear-gradient(to bottom, transparent, var(--ember) 20%, var(--gold) 50%, var(--ember) 80%, transparent);
+            position: relative; margin: 0 2.5rem;
+        }
+        .transform-divider::before {
+            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 60px; height: 60px; border-radius: 50%; border: 1px solid var(--ember);
+            background: var(--bg);
+        }
+        .transform-divider::after {
+            content: '→'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-family: 'Inter', sans-serif; font-size: 1.5rem; color: var(--ember); z-index: 1;
+        }
+        .transform-column { padding: 3rem; position: relative; overflow: hidden; }
+        .transform-column.from {
+            background: linear-gradient(135deg, rgba(139,58,16,0.08) 0%, rgba(10,10,8,0.9) 100%);
+            border: 1px solid rgba(139,58,16,0.15);
+        }
+        .transform-column.to {
+            background: linear-gradient(135deg, rgba(10,10,8,0.9) 0%, rgba(212,135,44,0.1) 100%);
+            border: 1px solid rgba(212,135,44,0.2);
+        }
+        .transform-column::before, .transform-column::after { content: ''; position: absolute; width: 30px; height: 30px; border: 1px solid var(--ember); opacity: 0.15; }
+        .transform-column::before { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+        .transform-column::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+        .transform-column h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--fire); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 2px; }
         .transform-column.to h3 { color: var(--ember-light); }
-        .transform-text { font-size: 1.1rem; line-height: 1.9; color: var(--bone); }
-        @media (max-width: 768px) { .transform-grid { grid-template-columns: 1fr; gap: 2rem; } }
+        .transform-text { font-size: 1.15rem; line-height: 2; color: var(--bone); }
+        @media (max-width: 768px) { .transform-grid { grid-template-columns: 1fr; gap: 2rem; } .transform-divider { width: 100%; height: 1px; margin: 0; background: linear-gradient(to right, transparent, var(--ember), transparent); } .transform-divider::before, .transform-divider::after { display: none; } }
 
-        /* Phases */
-        .phases { background-color: var(--bg2); padding: 5rem 2rem; position: relative; }
-        .phases::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--sg-hex); background-size: 60px 52px; opacity: 0.4; pointer-events: none; z-index: 0; }
+        /* Phases - Dramatic timeline with icons and bg images */
+        .phases {
+            position: relative; padding: 8rem 2rem; overflow: hidden;
+            background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 50%, var(--bg2) 100%);
+        }
+        .phases::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('photos/embers.jpg');
+            background-size: cover; background-position: center;
+            opacity: 0.08; z-index: 0;
+        }
         .phases > * { position: relative; z-index: 1; }
-        .phases-container { max-width: 1000px; margin: 0 auto; }
-        .phase { margin-bottom: 3rem; padding: 2.5rem; border-top: 2px solid var(--ember); background-color: rgba(212, 135, 44, 0.03); transition: all 0.3s ease; position: relative; overflow: hidden; }
-        .phase::before, .phase::after { content: ''; position: absolute; width: 30px; height: 30px; border: 1px solid var(--ember); opacity: 0.15; transition: opacity 0.4s; }
-        .phase::before { top: 8px; left: 8px; border-right: none; border-bottom: none; }
-        .phase::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
-        .phase:hover::before, .phase:hover::after { opacity: 0.5; }
-        .phase:hover { background-color: rgba(212, 135, 44, 0.08); transform: translateX(10px); }
-        .phase-number { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--ember); margin-bottom: 0.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-        .phase-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--white); margin-bottom: 1rem; font-weight: 700; letter-spacing: -0.5px; }
+        .phases-container { max-width: 900px; margin: 0 auto; position: relative; }
+        /* Timeline line */
+        .phases-container::before {
+            content: ''; position: absolute; left: 40px; top: 0; bottom: 0; width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--ember) 10%, var(--gold) 50%, var(--ember) 90%, transparent);
+        }
+        .phase {
+            margin-bottom: 0; padding: 3rem 3rem 3rem 100px; position: relative;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.3, 1);
+        }
+        .phase:last-child { margin-bottom: 0; }
+        /* Timeline dot */
+        .phase::before {
+            content: ''; position: absolute; left: 28px; top: 3.5rem; width: 26px; height: 26px;
+            border-radius: 50%; border: 2px solid var(--ember); background: var(--bg);
+            z-index: 2; transition: all 0.4s ease;
+        }
+        .phase:hover::before { background: var(--ember); box-shadow: 0 0 20px rgba(212,135,44,0.4); }
+        .phase-icon {
+            position: absolute; left: 32px; top: 3.7rem; width: 18px; height: 18px; z-index: 3;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .phase-icon svg { width: 16px; height: 16px; }
+        .phase-card {
+            background: linear-gradient(135deg, rgba(22,20,18,0.9) 0%, rgba(15,14,12,0.95) 100%);
+            border: 1px solid rgba(212,135,44,0.12); padding: 2.5rem;
+            transition: all 0.5s ease; position: relative; overflow: hidden;
+        }
+        .phase-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+            background: linear-gradient(to bottom, var(--fire), var(--ember), var(--gold));
+        }
+        .phase:hover .phase-card {
+            border-color: rgba(212,135,44,0.3);
+            transform: translateX(8px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3), 0 0 30px rgba(212,135,44,0.05);
+        }
+        .phase-number { font-family: 'Inter', sans-serif; font-size: 0.8rem; color: var(--ember); margin-bottom: 0.5rem; font-weight: 600; text-transform: uppercase; letter-spacing: 3px; }
+        .phase-title { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--white); margin-bottom: 1rem; font-weight: 700; letter-spacing: -0.5px; }
         .phase-desc { font-size: 1.1rem; color: var(--bone); line-height: 1.9; }
 
-        /* Agreements */
-        .agreements { padding: 5rem 2rem; }
-        .agreements-intro { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--ember); margin-bottom: 3rem; text-align: center; }
-        .agreements-list { max-width: 800px; margin: 0 auto; display: grid; gap: 1.5rem; }
-        .agreement-item { padding: 1.5rem 2rem; border-left: 3px solid var(--gold); background-color: rgba(201, 168, 76, 0.05); font-size: 1.1rem; color: var(--bone); line-height: 1.8; }
+        /* Agreements - Dramatic fullscreen section */
+        .agreements {
+            position: relative; padding: 8rem 2rem; overflow: hidden;
+            background: linear-gradient(135deg, var(--bg) 0%, var(--bg3) 100%);
+        }
+        .agreements::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('photos/duzzi-sunset-rock.jpg');
+            background-size: cover; background-position: center top;
+            opacity: 0.15; z-index: 0;
+        }
+        .agreements::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at center bottom, rgba(212,135,44,0.05) 0%, transparent 70%);
+            z-index: 0;
+        }
+        .agreements > * { position: relative; z-index: 1; }
+        .agreements-intro {
+            font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700;
+            color: var(--white); margin-bottom: 1rem; text-align: center; letter-spacing: -1px;
+        }
+        .agreements-subtitle {
+            font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500;
+            letter-spacing: 4px; text-transform: uppercase; color: var(--ember);
+            text-align: center; margin-bottom: 4rem;
+        }
+        .agreements-list { max-width: 800px; margin: 0 auto; display: grid; gap: 0; }
+        .agreement-item {
+            padding: 2rem 2.5rem; font-size: 1.15rem; color: var(--bone); line-height: 1.9;
+            border-bottom: 1px solid rgba(212,135,44,0.08);
+            display: flex; align-items: flex-start; gap: 1.5rem;
+            transition: all 0.4s ease; position: relative;
+        }
+        .agreement-item:first-child { border-top: 1px solid rgba(212,135,44,0.08); }
+        .agreement-item:hover {
+            background: rgba(212,135,44,0.04);
+            padding-left: 3rem;
+        }
+        .agreement-icon {
+            flex-shrink: 0; width: 28px; height: 28px; margin-top: 2px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .agreement-icon svg { width: 20px; height: 20px; }
 
-        /* Who For */
-        .who-for { background-color: var(--bg2); padding: 5rem 2rem; }
+        /* Who For - Cinematic section */
+        .who-for {
+            position: relative; padding: 8rem 2rem; overflow: hidden;
+            background: var(--bg2);
+        }
+        .who-for::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('photos/duzzi-amazon-walk.jpg');
+            background-size: cover; background-position: center;
+            opacity: 0.12; z-index: 0;
+        }
+        .who-for::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom, var(--bg2) 0%, rgba(15,14,12,0.85) 30%, rgba(15,14,12,0.85) 70%, var(--bg2) 100%);
+            z-index: 0;
+        }
+        .who-for > * { position: relative; z-index: 1; }
         .who-for-container { max-width: 800px; margin: 0 auto; text-align: center; }
-        .who-intro { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: var(--white); margin-bottom: 2rem; line-height: 1.2; }
-        .who-subtitle { font-size: 1.3rem; color: var(--bone); margin-bottom: 1.5rem; line-height: 1.8; }
-        .who-description { font-size: 1.1rem; color: var(--bone); line-height: 1.9; margin-bottom: 1.5rem; }
-        .who-description strong { color: var(--ember); }
+        .who-intro { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; color: var(--white); margin-bottom: 3rem; line-height: 1.2; }
+        .who-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 700px; margin: 0 auto 3rem; text-align: left; }
+        .who-card {
+            padding: 2rem; border: 1px solid rgba(212,135,44,0.12);
+            background: rgba(10,10,8,0.6); transition: all 0.4s ease;
+        }
+        .who-card:hover { border-color: rgba(212,135,44,0.3); transform: translateY(-3px); }
+        .who-card-text { font-size: 1.1rem; color: var(--bone); line-height: 1.8; }
+        .who-card-text strong { color: var(--ember); }
+        .who-closing {
+            font-size: 1.3rem; color: var(--bone); max-width: 600px; margin: 0 auto;
+            font-style: italic; line-height: 1.8;
+        }
+        @media (max-width: 768px) { .who-cards { grid-template-columns: 1fr; } }
 
         /* CTA */
-        .cta-section { position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; min-height: 70vh; background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%); }
-        .cta-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('photos/duzzi-stump-lake.jpg'); background-size: cover; background-position: center; opacity: 0.2; z-index: 0; }
-        .cta-section::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at center, rgba(10,10,8,0.2) 0%, rgba(10,10,8,0.8) 100%); z-index: 1; }
-        .cta-content { position: relative; z-index: 2; text-align: center; max-width: 600px; padding: 3rem 2rem; }
-        .cta-heading { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: var(--white); margin-bottom: 2rem; line-height: 1.2; letter-spacing: -1px; }
-        .cta-subtext { font-size: 1.1rem; color: var(--bone); margin-bottom: 2rem; line-height: 1.8; }
+        .cta-section { position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; min-height: 80vh; }
+        .cta-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('photos/duzzi-stump-lake.jpg'); background-size: cover; background-position: center; opacity: 0.25; z-index: 0; }
+        .cta-section::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at center, rgba(10,10,8,0.3) 0%, rgba(10,10,8,0.85) 100%); z-index: 1; }
+        .cta-content { position: relative; z-index: 2; text-align: center; max-width: 600px; padding: 4rem 2rem; }
+        .cta-heading { font-family: 'Playfair Display', serif; font-size: 3.2rem; font-weight: 700; color: var(--white); margin-bottom: 1.5rem; line-height: 1.2; letter-spacing: -1px; }
+        .cta-subtext { font-size: 1.15rem; color: var(--bone); margin-bottom: 2.5rem; line-height: 1.8; }
         .cta-note { font-size: 1rem; color: var(--ash); margin-top: 2rem; font-style: italic; line-height: 1.6; }
-        .contact-form { max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem; background-color: rgba(15, 14, 12, 0.8); padding: 2.5rem; border: 1px solid rgba(212, 135, 44, 0.2); }
+        .contact-form { max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem; background-color: rgba(10, 10, 8, 0.85); padding: 3rem; border: 1px solid rgba(212, 135, 44, 0.15); backdrop-filter: blur(10px); }
         .form-group { display: flex; flex-direction: column; }
-        .form-group label { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 500; color: var(--bone); margin-bottom: 0.5rem; letter-spacing: 0.5px; }
-        .form-group input, .form-group textarea { padding: 1rem; border: 1px solid rgba(212, 135, 44, 0.3); background-color: rgba(10, 10, 8, 0.6); color: var(--white); font-family: 'Cormorant Garamond', serif; font-size: 1rem; transition: all 0.3s ease; }
+        .form-group label { font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500; color: var(--smoke); margin-bottom: 0.5rem; letter-spacing: 1px; text-transform: uppercase; }
+        .form-group input, .form-group textarea { padding: 1rem; border: 1px solid rgba(212, 135, 44, 0.2); background-color: rgba(10, 10, 8, 0.4); color: var(--white); font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; transition: all 0.3s ease; }
         .form-group input::placeholder, .form-group textarea::placeholder { color: var(--ash); }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--ember); background-color: rgba(10, 10, 8, 0.8); box-shadow: 0 0 15px rgba(212, 135, 44, 0.15); }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--ember); background-color: rgba(10, 10, 8, 0.6); box-shadow: 0 0 20px rgba(212, 135, 44, 0.1); }
         .form-group textarea { resize: vertical; min-height: 120px; }
-        .form-submit { padding: 1.2rem; border: 2px solid var(--ember); background-color: var(--ember); color: var(--bg); font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.4s ease; margin-top: 0.5rem; }
-        .form-submit:hover { background-color: var(--ember-light); border-color: var(--ember-light); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(212, 135, 44, 0.2); }
+        .form-submit { padding: 1.2rem; border: 2px solid var(--ember); background-color: transparent; color: var(--ember); font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.4s ease; margin-top: 0.5rem; }
+        .form-submit:hover { background-color: var(--ember); color: var(--bg); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(212, 135, 44, 0.2); }
 
         /* Footer */
-        footer { background-color: var(--bg3); padding: 3rem 2rem; border-top: 1px solid rgba(212, 135, 44, 0.2); }
+        footer { background-color: var(--bg3); padding: 3rem 2rem; }
+        footer::before { content: ''; display: block; width: 100%; height: 2px; background: repeating-linear-gradient(90deg, transparent 0px, transparent 8px, var(--ember) 8px, var(--ember) 10px, transparent 10px, transparent 18px, var(--gold) 18px, var(--gold) 19px, transparent 19px, transparent 30px); opacity: 0.3; margin-bottom: 3rem; }
         .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; align-items: start; }
         .footer-brand { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
         .footer-secondary { font-size: 0.9rem; color: var(--ash); margin-top: 1rem; }
@@ -135,14 +302,24 @@
         .footer-social { display: flex; gap: 1.5rem; }
         .social-link { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid var(--ember); color: var(--ember); text-decoration: none; font-family: 'Inter', sans-serif; font-size: 0.9rem; transition: all 0.3s ease; }
         .social-link:hover { background-color: var(--ember); color: var(--bg); }
-        .footer-message { grid-column: 1 / -1; text-align: center; padding-top: 2rem; border-top: 1px solid rgba(212, 135, 44, 0.1); font-size: 1.1rem; color: var(--bone); }
-        @media (max-width: 768px) { .footer-content { grid-template-columns: 1fr; gap: 2rem; } .footer-message { grid-column: 1; } section { padding: 3rem 1.5rem; } .section-title { font-size: 2rem; } .cta-heading { font-size: 2rem; } .invitation-intro { font-size: 2rem; } .who-intro { font-size: 2rem; } }
+        .footer-message { grid-column: 1 / -1; text-align: center; padding-top: 2rem; border-top: 1px solid rgba(212, 135, 44, 0.1); font-size: 1.1rem; color: var(--bone); font-style: italic; }
+        @media (max-width: 768px) { .footer-content { grid-template-columns: 1fr; gap: 2rem; } .footer-message { grid-column: 1; } section { padding: 4rem 1.5rem; } .section-title { font-size: 2rem; } .cta-heading { font-size: 2.2rem; } .invitation-intro { font-size: 2rem; } .who-intro { font-size: 2rem; } .agreements-intro { font-size: 2.2rem; } .phase { padding-left: 80px; } .phases-container::before { left: 30px; } .phase::before { left: 18px; width: 22px; height: 22px; } .phase-icon { left: 22px; } }
 
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.3, 1); }
         .reveal.in-view { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
+    <!-- Floating ember particles -->
+    <div class="ember-particle" style="left:8%;animation-duration:12s;animation-delay:0s;width:2px;height:2px;"></div>
+    <div class="ember-particle" style="left:22%;animation-duration:15s;animation-delay:3s;"></div>
+    <div class="ember-particle" style="left:45%;animation-duration:18s;animation-delay:1s;width:2px;height:2px;"></div>
+    <div class="ember-particle" style="left:67%;animation-duration:14s;animation-delay:5s;"></div>
+    <div class="ember-particle" style="left:83%;animation-duration:16s;animation-delay:2s;width:2px;height:2px;"></div>
+    <div class="ember-particle" style="left:35%;animation-duration:20s;animation-delay:7s;"></div>
+    <div class="ember-particle" style="left:55%;animation-duration:13s;animation-delay:4s;width:4px;height:4px;"></div>
+    <div class="ember-particle" style="left:92%;animation-duration:17s;animation-delay:6s;width:2px;height:2px;"></div>
+
     <nav id="nav">
         <a href="index.html" class="logo-group" style="text-decoration:none;">
             <div class="logo">ANTHONY BALDUZZI</div>
@@ -163,6 +340,12 @@
             <h1 class="hero-title">The Work</h1>
             <p class="hero-subtitle">A baptism by fire. Not iron sharpens iron. Fire transforms the state of things entirely.</p>
         </div>
+        <div class="hero-scroll-indicator">
+            <svg viewBox="0 0 24 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="1" y="1" width="22" height="34" rx="11" stroke="#d4872c" stroke-width="1" opacity="0.4"/>
+                <circle cx="12" cy="10" r="3" fill="#d4872c" opacity="0.6"/>
+            </svg>
+        </div>
     </section>
 
     <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="100" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="120" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="12" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/><circle cx="160" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="4" fill="#d4872c" opacity="0.2"/><line x1="180" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
@@ -170,7 +353,7 @@
     <!-- Invitation -->
     <section class="invitation">
         <div class="invitation-container">
-            <p class="invitation-intro reveal">This is not coaching. This is not therapy.</p>
+            <p class="invitation-intro reveal">This is not coaching.<br>This is not therapy.</p>
             <p class="invitation-quote reveal">This is a sacred container where a man comes to be broken open, rebuilt, and sent home alive.</p>
             <p class="invitation-body reveal">Anthony meets you exactly where you are. Beside you, not above you. And together, you walk into the fire.</p>
         </div>
@@ -182,10 +365,11 @@
     <section class="transformation">
         <h2 class="section-title">The Transformation</h2>
         <div class="transform-grid">
-            <div class="transform-column reveal">
+            <div class="transform-column from reveal">
                 <h3>From</h3>
                 <p class="transform-text">Tame. Numb. Disconnected from God. Physically stagnant. Spiritually performative. Relationship tension. Routine bound. Quietly suffocating behind a successful exterior. Running from a pain he cannot name. Caged by the life he built.</p>
             </div>
+            <div class="transform-divider"></div>
             <div class="transform-column to reveal">
                 <h3>To</h3>
                 <p class="transform-text">Fully alive. Centered in his power. Connected to God directly, his own relationship, his own knowing. Physically strong, aligned, vibrant. Relationships mending, deepening, honest. Planning and living adventures. Free of numbing habits. Leading his partner, family, and mission from center. Waking up with enthusiasm. Expressing fully. A knowing man on the high path.</p>
@@ -193,49 +377,100 @@
         </div>
     </section>
 
+    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="110" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="140" cy="20" r="15" fill="none" stroke="#c9a84c" stroke-width="0.4" opacity="0.25"/><circle cx="140" cy="20" r="10" fill="none" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><circle cx="140" cy="20" r="5" fill="none" stroke="#d4872c" stroke-width="0.4" opacity="0.4"/><circle cx="140" cy="20" r="2" fill="#d4872c" opacity="0.3"/><line x1="170" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
+
     <!-- Phases -->
     <section class="phases">
-        <h2 class="section-title">The Five Phases of the Work</h2>
+        <h2 class="section-title">The Five Phases</h2>
         <div class="phases-container">
             <div class="phase reveal">
-                <div class="phase-number">Phase 1</div>
-                <h3 class="phase-title">Physical Alignment</h3>
-                <p class="phase-desc">We train the body. Jaw to spine alignment, hanging, moving, twisting. Cardiovascular activation, nitric oxide. Cleaning the digestive tract. Living foods. Connecting daily routine with natural alignment. Strength, agility, full embodied vitality.</p>
+                <div class="phase-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#d4872c" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-number">Phase One</div>
+                    <h3 class="phase-title">Physical Alignment</h3>
+                    <p class="phase-desc">We train the body. Jaw to spine alignment, hanging, moving, twisting. Cardiovascular activation, nitric oxide. Cleaning the digestive tract. Living foods. Connecting daily routine with natural alignment. Strength, agility, full embodied vitality.</p>
+                </div>
             </div>
             <div class="phase reveal">
-                <div class="phase-number">Phase 2</div>
-                <h3 class="phase-title">Spiritual Exploration</h3>
-                <p class="phase-desc">We explore the deepest questions: Who are you? Where do you come from? Why are you here? What is the alignment from your center? We develop your direct relationship with Creator. One that is real, yours, and direct.</p>
+                <div class="phase-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#d4872c" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/></svg>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-number">Phase Two</div>
+                    <h3 class="phase-title">Spiritual Exploration</h3>
+                    <p class="phase-desc">We explore the deepest questions: Who are you? Where do you come from? Why are you here? What is the alignment from your center? We develop your direct relationship with Creator. One that is real, yours, and direct.</p>
+                </div>
             </div>
             <div class="phase reveal">
-                <div class="phase-number">Phase 3</div>
-                <h3 class="phase-title">Ceremony</h3>
-                <p class="phase-desc">At the right point in the work, we go into nature, by the fire. You take sacred medicine in a legal container. Anthony plays the flute. You go deep within yourself. He holds space.</p>
+                <div class="phase-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#d4872c" stroke-width="1.5"><path d="M12 2C8 6 4 10 4 14a8 8 0 1016 0c0-4-4-8-8-12z"/><path d="M12 22v-4"/></svg>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-number">Phase Three</div>
+                    <h3 class="phase-title">Ceremony</h3>
+                    <p class="phase-desc">At the right point in the work, we go into nature, by the fire. You take sacred medicine in a legal container. Anthony plays the flute. You go deep within yourself. He holds space.</p>
+                </div>
             </div>
             <div class="phase reveal">
-                <div class="phase-number">Phase 4</div>
-                <h3 class="phase-title">Life Alignment</h3>
-                <p class="phase-desc">We examine your relationships, your fears, your mission, your daily patterns. We do the forgiveness work, the clearing, the rebuilding. We plan adventures. We make radical shifts where they are needed. At the midpoint, Anthony comes to your home.</p>
+                <div class="phase-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#d4872c" stroke-width="1.5"><path d="M3 12l9-9 9 9"/><path d="M9 21V12h6v9"/></svg>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-number">Phase Four</div>
+                    <h3 class="phase-title">Life Alignment</h3>
+                    <p class="phase-desc">We examine your relationships, your fears, your mission, your daily patterns. We do the forgiveness work, the clearing, the rebuilding. We plan adventures. We make radical shifts where they are needed. At the midpoint, Anthony comes to your home.</p>
+                </div>
             </div>
             <div class="phase reveal">
-                <div class="phase-number">Phase 5</div>
-                <h3 class="phase-title">Integration and Release</h3>
-                <p class="phase-desc">Anthony teaches you his system. The movements, the nutrition, the stillness practices, the prayer life, the daily alignment. May it serve you for life. The work has an ending. He transmits and releases.</p>
+                <div class="phase-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#d4872c" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-number">Phase Five</div>
+                    <h3 class="phase-title">Integration and Release</h3>
+                    <p class="phase-desc">Anthony teaches you his system. The movements, the nutrition, the stillness practices, the prayer life, the daily alignment. May it serve you for life. The work has an ending. He transmits and releases.</p>
+                </div>
             </div>
         </div>
     </section>
 
+    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="100" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="120" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="12" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/><circle cx="160" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="4" fill="#d4872c" opacity="0.2"/><line x1="180" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
+
     <!-- Agreements -->
     <section class="agreements">
-        <div class="agreements-intro reveal">What Anthony Promises</div>
+        <h2 class="agreements-intro reveal">What Anthony Promises</h2>
+        <div class="agreements-subtitle reveal">Sacred Agreements</div>
         <div class="agreements-list">
-            <div class="agreement-item reveal">I promise to meet you exactly where you are.</div>
-            <div class="agreement-item reveal">I promise to do this work together. Beside you, not above you.</div>
-            <div class="agreement-item reveal">I promise to hold sacred, confidential space for whatever emerges.</div>
-            <div class="agreement-item reveal">I promise to bring the full weight of my life experience, my medical knowledge, my spiritual practice.</div>
-            <div class="agreement-item reveal">I promise to help you face and overcome your fears.</div>
-            <div class="agreement-item reveal">I promise to help you awaken your sacred connection to Creator.</div>
-            <div class="agreement-item reveal">I promise that this work has an ending. I am not building dependency. I am transmitting what I know and sending you back into your life, transformed and free.</div>
+            <div class="agreement-item reveal">
+                <div class="agreement-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#d4872c" stroke-width="1.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+                <span>I promise to meet you exactly where you are.</span>
+            </div>
+            <div class="agreement-item reveal">
+                <div class="agreement-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#d4872c" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+                <span>I promise to do this work together. Beside you, not above you.</span>
+            </div>
+            <div class="agreement-item reveal">
+                <div class="agreement-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#d4872c" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+                <span>I promise to hold sacred, confidential space for whatever emerges.</span>
+            </div>
+            <div class="agreement-item reveal">
+                <div class="agreement-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#d4872c" stroke-width="1.5"><path d="M12 2C8 6 4 10 4 14a8 8 0 1016 0c0-4-4-8-8-12z"/></svg></div>
+                <span>I promise to bring the full weight of my life experience, my medical knowledge, my spiritual practice.</span>
+            </div>
+            <div class="agreement-item reveal">
+                <div class="agreement-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#d4872c" stroke-width="1.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></div>
+                <span>I promise to help you face and overcome your fears.</span>
+            </div>
+            <div class="agreement-item reveal">
+                <div class="agreement-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#d4872c" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg></div>
+                <span>I promise to help you awaken your sacred connection to Creator.</span>
+            </div>
+            <div class="agreement-item reveal">
+                <div class="agreement-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#d4872c" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+                <span>I promise that this work has an ending. I am not building dependency. I am transmitting what I know and sending you back into your life, transformed and free.</span>
+            </div>
         </div>
     </section>
 
@@ -243,20 +478,33 @@
     <section class="who-for">
         <h2 class="section-title">Who This Is For</h2>
         <div class="who-for-container">
-            <p class="who-subtitle reveal">Men, likely ages 35 to 55. <strong>Accomplished. Successful by the world's standards.</strong> And quietly suffocating.</p>
-            <p class="who-description reveal">You have the family, the career, the exterior. And <strong>something essential is missing.</strong></p>
-            <p class="who-description reveal">You are ready to <strong>stop performing and start living.</strong></p>
-            <p class="who-description reveal">You are open to the sacred, the unconventional, <strong>the fire.</strong></p>
-            <p class="who-description reveal">This is mentorship and spiritual guidance, not therapy.</p>
+            <p class="who-intro reveal">Men, ages 35 to 55.<br><span style="color:var(--ember);">Accomplished. Successful.</span><br>And quietly suffocating.</p>
+            <div class="who-cards">
+                <div class="who-card reveal">
+                    <p class="who-card-text">You have the family, the career, the exterior. And <strong>something essential is missing.</strong></p>
+                </div>
+                <div class="who-card reveal">
+                    <p class="who-card-text">You are ready to <strong>stop performing and start living.</strong></p>
+                </div>
+                <div class="who-card reveal">
+                    <p class="who-card-text">You are open to the sacred, the unconventional, <strong>the fire.</strong></p>
+                </div>
+                <div class="who-card reveal">
+                    <p class="who-card-text">You want mentorship and spiritual guidance, <strong>not more information.</strong></p>
+                </div>
+            </div>
+            <p class="who-closing reveal">This is for the man who is done waiting. Who is ready to walk into the fire and come out the other side.</p>
         </div>
     </section>
+
+    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="100" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><polygon points="140,6 158,20 140,34 122,20" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.35"/><polygon points="140,12 150,20 140,28 130,20" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="3" fill="#d4872c" opacity="0.25"/><line x1="180" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
 
     <!-- CTA -->
     <section class="cta-section">
         <div class="cta-content">
-            <h2 class="cta-heading">Every crossing begins with a single conversation.</h2>
-            <p class="cta-subtext">This is a sacred, exclusive container. One client at a time. The conversation begins with a simple message.</p>
-            <form class="contact-form" onsubmit="handleFormSubmit(event)">
+            <h2 class="cta-heading reveal">Every crossing begins with a single conversation.</h2>
+            <p class="cta-subtext reveal">This is a sacred, exclusive container. One client at a time. The conversation begins with a simple message.</p>
+            <form class="contact-form reveal" onsubmit="handleFormSubmit(event)">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" placeholder="Your name" required>
@@ -271,7 +519,7 @@
                 </div>
                 <button type="submit" class="form-submit">Begin the Conversation</button>
             </form>
-            <p class="cta-note">Your message will initiate a direct conversation with Anthony. This is sacred ground.</p>
+            <p class="cta-note reveal">Your message will initiate a direct conversation with Anthony. This is sacred ground.</p>
         </div>
     </section>
 
