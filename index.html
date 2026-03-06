@@ -1015,50 +1015,6 @@
             }
         }
 
-        /* Image Break Section */
-        .image-break {
-            position: relative;
-            height: 60vh;
-            min-height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        .image-break::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(10, 10, 8, 0.65) 0%, rgba(10, 10, 8, 0.45) 50%, rgba(10, 10, 8, 0.65) 100%);
-            z-index: 1;
-        }
-
-        .image-break-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 700px;
-            padding: 2rem;
-        }
-
-        .image-break-quote {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
-            font-style: italic;
-            color: var(--white);
-            line-height: 1.5;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.3s forwards;
-        }
 
         /* Framework Section */
         .framework {
@@ -1084,6 +1040,7 @@
             transform: translate(-50%, -50%);
             animation: geometryBreathe 4s ease-in-out infinite;
             filter: drop-shadow(0 0 30px rgba(212, 135, 44, 0.15));
+            mix-blend-mode: screen;
         }
 
         @keyframes geometryBreathe {
@@ -1434,26 +1391,6 @@
             }
         }
 
-        /* Dramatic Quote Section */
-        .dramatic-quote {
-            background-color: var(--bg2);
-            padding: 8rem 2rem;
-            text-align: center;
-        }
-
-        .dramatic-quote-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .dramatic-quote-content p {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            font-weight: 300;
-            font-style: italic;
-            color: var(--ember-light);
-            line-height: 1.6;
-        }
 
         /* Newsletter Section */
         .newsletter {
@@ -1666,48 +1603,57 @@
         }
 
         /* Full-bleed photo dividers with quote overlays */
-        .divider {
-            position: relative;
-            height: 350px;
-            overflow: hidden;
-        }
 
-        .divider img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.6;
-        }
-
-        .divider-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, var(--bg) 0%, transparent 30%, transparent 70%, var(--bg) 100%);
-        }
-
-        .divider-quote {
-            position: absolute;
-            top: 50%;
+        /* Center line design motif - "Find your center" */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 100vh;
             left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
+            transform: translateX(-50%);
+            width: 1px;
+            height: calc(100vh * 4);
+            background: linear-gradient(to bottom,
+                transparent 0%,
+                rgba(212, 135, 44, 0.15) 10%,
+                rgba(212, 135, 44, 0.15) 90%,
+                transparent 100%);
             z-index: 2;
-            width: 90%;
-            max-width: 700px;
+            pointer-events: none;
         }
 
-        .divider-quote blockquote {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.3rem, 3vw, 2rem);
-            font-weight: 300;
-            font-style: italic;
-            color: var(--ember-light);
-            line-height: 1.5;
+        /* Center line nodes at section boundaries */
+        .center-node {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--ember);
+            opacity: 0.3;
+            box-shadow: 0 0 15px rgba(212, 135, 44, 0.4);
+            z-index: 2;
+            pointer-events: none;
         }
 
-        /* Section divider: sacred geometry line (deprecated, kept for reference) */
-        .sg-divider {
-            display: none;
+        /* Sacred Geometry Section Separator */
+        .sg-separator {
+            width: 100%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 1rem 0 2rem 0;
+            pointer-events: none;
+        }
+
+        .sg-separator svg {
+            width: 60px;
+            height: 60px;
+            opacity: 0.25;
+            animation: sigilBreathe 6s ease-in-out infinite;
         }
 
         /* Section title sacred geometry accent */
@@ -1944,13 +1890,19 @@
         </div>
     </section>
 
-    <!-- Divider with photo: between thesis and ai-never -->
-    <div class="divider">
-        <img src="photos/duzzi-ffp-group-close.jpg" alt="Group moment">
-        <div class="divider-overlay"></div>
-        <div class="divider-quote">
-            <blockquote>The wound is where the light enters.</blockquote>
-        </div>
+    <!-- Sacred geometry separator: between thesis and ai-never -->
+    <div class="sg-separator">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
+            <circle cx="30" cy="30" r="28" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.6"/>
+            <circle cx="30" cy="30" r="18" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/>
+            <circle cx="30" cy="30" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.8"/>
+            <line x1="30" y1="2" x2="30" y2="58" stroke="#d4872c" stroke-width="0.3" opacity="0.3"/>
+            <line x1="2" y1="30" x2="58" y2="30" stroke="#d4872c" stroke-width="0.3" opacity="0.3"/>
+            <circle cx="30" cy="8" r="2" fill="#d4872c" opacity="0.5"/>
+            <circle cx="52" cy="30" r="2" fill="#d4872c" opacity="0.5"/>
+            <circle cx="30" cy="52" r="2" fill="#d4872c" opacity="0.5"/>
+            <circle cx="8" cy="30" r="2" fill="#d4872c" opacity="0.5"/>
+        </svg>
     </div>
 
     <!-- What AI Will Never Touch -->
@@ -1983,13 +1935,25 @@
         </div>
     </section>
 
-    <!-- Divider with photo: between ai-never and the-guide -->
-    <div class="divider">
-        <img src="photos/duzzi-amazon-walk.jpg" alt="Amazon walk">
-        <div class="divider-overlay"></div>
-        <div class="divider-quote">
-            <blockquote>You were not made for the life you settled for.</blockquote>
-        </div>
+    <!-- Sacred geometry separator: between ai-never and the-guide -->
+    <div class="sg-separator">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
+            <defs>
+                <pattern id="metatron" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+                    <circle cx="15" cy="15" r="3" fill="#d4872c" opacity="0.4"/>
+                </pattern>
+            </defs>
+            <circle cx="30" cy="30" r="25" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.5"/>
+            <circle cx="15" cy="15" r="2" fill="#d4872c" opacity="0.6"/>
+            <circle cx="45" cy="15" r="2" fill="#d4872c" opacity="0.6"/>
+            <circle cx="45" cy="45" r="2" fill="#d4872c" opacity="0.6"/>
+            <circle cx="15" cy="45" r="2" fill="#d4872c" opacity="0.6"/>
+            <circle cx="30" cy="30" r="2" fill="#d4872c" opacity="0.8"/>
+            <line x1="15" y1="15" x2="45" y2="45" stroke="#d4872c" stroke-width="0.3" opacity="0.3"/>
+            <line x1="45" y1="15" x2="15" y2="45" stroke="#d4872c" stroke-width="0.3" opacity="0.3"/>
+            <line x1="30" y1="10" x2="30" y2="50" stroke="#d4872c" stroke-width="0.3" opacity="0.3"/>
+            <line x1="10" y1="30" x2="50" y2="30" stroke="#d4872c" stroke-width="0.3" opacity="0.3"/>
+        </svg>
     </div>
 
     <!-- The Guide Section -->
@@ -2007,13 +1971,6 @@
         </div>
     </section>
 
-    <!-- Dramatic quote section -->
-    <div class="dramatic-quote">
-        <div class="dramatic-quote-content">
-            <p>The things that scare you most are the things most worth doing.</p>
-        </div>
-    </div>
-
     <!-- Framework Section -->
     <section class="framework" id="framework">
         <h2 class="section-title">The Dimensions of a Fully Alive Human</h2>
@@ -2028,13 +1985,19 @@
         </div>
     </section>
 
-    <!-- Divider with photo: between framework and rules -->
-    <div class="divider">
-        <img src="generated/embers.jpg" alt="Embers">
-        <div class="divider-overlay"></div>
-        <div class="divider-quote">
-            <blockquote>The path to transformation begins with a single choice.</blockquote>
-        </div>
+    <!-- Sacred geometry separator: between framework and rules -->
+    <div class="sg-separator">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
+            <circle cx="30" cy="30" r="26" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.5"/>
+            <polygon points="30,6 48,22 42,45 18,45 12,22" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/>
+            <circle cx="30" cy="30" r="6" fill="none" stroke="#d4872c" stroke-width="0.4" opacity="0.6"/>
+            <circle cx="30" cy="12" r="1.5" fill="#d4872c" opacity="0.7"/>
+            <circle cx="45" cy="24" r="1.5" fill="#d4872c" opacity="0.7"/>
+            <circle cx="40" cy="44" r="1.5" fill="#d4872c" opacity="0.7"/>
+            <circle cx="20" cy="44" r="1.5" fill="#d4872c" opacity="0.7"/>
+            <circle cx="15" cy="24" r="1.5" fill="#d4872c" opacity="0.7"/>
+            <circle cx="30" cy="30" r="1.5" fill="#d4872c" opacity="0.8"/>
+        </svg>
     </div>
 
     <!-- Rules Section -->
@@ -2148,13 +2111,24 @@
         </div>
     </section>
 
-    <!-- Divider with photo: between rules and what-we-do -->
-    <div class="divider">
-        <img src="generated/embers.jpg" alt="Embers">
-        <div class="divider-overlay"></div>
-        <div class="divider-quote">
-            <blockquote>When you return to yourself, you return home.</blockquote>
-        </div>
+    <!-- Sacred geometry separator: between rules and what-we-do -->
+    <div class="sg-separator">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
+            <g opacity="0.6">
+                <circle cx="30" cy="30" r="24" fill="none" stroke="#d4872c" stroke-width="0.5"/>
+                <circle cx="30" cy="30" r="16" fill="none" stroke="#d4872c" stroke-width="0.4" opacity="0.5"/>
+                <circle cx="30" cy="30" r="8" fill="none" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/>
+            </g>
+            <circle cx="30" cy="12" r="2" fill="#d4872c" opacity="0.7"/>
+            <circle cx="44" cy="18" r="2" fill="#d4872c" opacity="0.7"/>
+            <circle cx="48" cy="30" r="2" fill="#d4872c" opacity="0.7"/>
+            <circle cx="44" cy="42" r="2" fill="#d4872c" opacity="0.7"/>
+            <circle cx="30" cy="48" r="2" fill="#d4872c" opacity="0.7"/>
+            <circle cx="16" cy="42" r="2" fill="#d4872c" opacity="0.7"/>
+            <circle cx="12" cy="30" r="2" fill="#d4872c" opacity="0.7"/>
+            <circle cx="16" cy="18" r="2" fill="#d4872c" opacity="0.7"/>
+            <circle cx="30" cy="30" r="2" fill="#d4872c" opacity="0.9"/>
+        </svg>
     </div>
 
     <!-- What We Do Section -->
@@ -2179,21 +2153,30 @@
         </div>
     </section>
 
-    <!-- Divider with photo: between what-we-do and image-break -->
-    <div class="divider">
-        <img src="generated/embers.jpg" alt="Embers">
-        <div class="divider-overlay"></div>
-        <div class="divider-quote">
-            <blockquote>Step forward and see what you are capable of.</blockquote>
-        </div>
+    <!-- Sacred geometry separator: before newsletter -->
+    <div class="sg-separator">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
+            <defs>
+                <filter id="glow">
+                    <feGaussianBlur stdDeviation="0.5" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+            <circle cx="30" cy="30" r="28" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.5"/>
+            <path d="M 30 4 L 50 13 L 43 34 L 17 34 L 10 13 Z" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/>
+            <path d="M 30 56 L 50 47 L 43 26 L 17 26 L 10 47 Z" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/>
+            <circle cx="30" cy="30" r="4" fill="none" stroke="#d4872c" stroke-width="0.4" opacity="0.6"/>
+            <circle cx="30" cy="10" r="1.5" fill="#d4872c" opacity="0.8"/>
+            <circle cx="45" cy="22" r="1.5" fill="#d4872c" opacity="0.8"/>
+            <circle cx="40" cy="40" r="1.5" fill="#d4872c" opacity="0.8"/>
+            <circle cx="20" cy="40" r="1.5" fill="#d4872c" opacity="0.8"/>
+            <circle cx="15" cy="22" r="1.5" fill="#d4872c" opacity="0.8"/>
+            <circle cx="30" cy="50" r="1.5" fill="#d4872c" opacity="0.8"/>
+        </svg>
     </div>
-
-    <!-- Image Break Section -->
-    <section class="image-break" style="background-image: url('photos/duzzi-amazon-walk.jpg');">
-        <div class="image-break-content">
-            <p class="image-break-quote">The path back to yourself was never lost. It was waiting.</p>
-        </div>
-    </section>
 
     <!-- Newsletter Section -->
     <section class="newsletter" id="letters">
