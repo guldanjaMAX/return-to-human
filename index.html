@@ -622,6 +622,23 @@
         /* Thesis Section */
         .thesis {
             background-color: var(--bg2);
+            background-image: url('generated/jungle2.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .thesis::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: rgba(10, 10, 8, 0.95);
+            z-index: 0;
+        }
+
+        .thesis > * {
+            position: relative;
+            z-index: 1;
         }
 
         .thesis-quote {
@@ -924,6 +941,15 @@
 
         .guide-image {
             position: relative;
+            overflow: hidden;
+        }
+
+        .guide-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 60%, rgba(212, 135, 44, 0.3) 100%);
+            z-index: 1;
         }
 
         .guide-image img {
@@ -933,6 +959,7 @@
             object-position: top;
             border-left: 4px solid var(--ember);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            scale: 1.02;
         }
 
         .guide-content h3 {
@@ -1162,6 +1189,23 @@
         /* Rules Section */
         .rules {
             background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+            background-image: url('generated/embers.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .rules::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(10, 10, 8, 0.96) 0%, rgba(22, 20, 18, 0.96) 100%);
+            z-index: 0;
+        }
+
+        .rules > * {
+            position: relative;
+            z-index: 1;
         }
 
         .rules-intro {
@@ -1340,9 +1384,9 @@
 
         .offering:hover {
             border-color: var(--ember);
-            background-color: rgba(212, 135, 44, 0.1);
+            background-color: rgba(212, 135, 44, 0.12);
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(212, 135, 44, 0.1);
+            box-shadow: 0 20px 60px rgba(212, 135, 44, 0.25), inset 0 0 30px rgba(212, 135, 44, 0.08);
         }
 
         .offering:hover::before,
@@ -1388,6 +1432,27 @@
             .what-we-do::before {
                 display: none;
             }
+        }
+
+        /* Dramatic Quote Section */
+        .dramatic-quote {
+            background-color: var(--bg2);
+            padding: 8rem 2rem;
+            text-align: center;
+        }
+
+        .dramatic-quote-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .dramatic-quote-content p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 300;
+            font-style: italic;
+            color: var(--ember-light);
+            line-height: 1.6;
         }
 
         /* Newsletter Section */
@@ -1600,20 +1665,49 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Section divider: sacred geometry line */
-        .sg-divider {
-            display: block;
-            width: 100%;
-            text-align: center;
-            padding: 1.5rem 0;
+        /* Full-bleed photo dividers with quote overlays */
+        .divider {
+            position: relative;
+            height: 350px;
             overflow: hidden;
-            background-color: var(--bg);
         }
 
-        .sg-divider svg {
-            width: 280px;
-            height: 40px;
-            opacity: 0.5;
+        .divider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+
+        .divider-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, var(--bg) 0%, transparent 30%, transparent 70%, var(--bg) 100%);
+        }
+
+        .divider-quote {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+            width: 90%;
+            max-width: 700px;
+        }
+
+        .divider-quote blockquote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.3rem, 3vw, 2rem);
+            font-weight: 300;
+            font-style: italic;
+            color: var(--ember-light);
+            line-height: 1.5;
+        }
+
+        /* Section divider: sacred geometry line (deprecated, kept for reference) */
+        .sg-divider {
+            display: none;
         }
 
         /* Section title sacred geometry accent */
@@ -1842,9 +1936,6 @@
         <div class="hero-scroll" aria-hidden="true"><span></span></div>
     </section>
 
-    <!-- Sacred Geometry Divider -->
-    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="100" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="120" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="12" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/><circle cx="160" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="4" fill="#d4872c" opacity="0.2"/><line x1="180" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
-
     <!-- Thesis Section -->
     <section class="thesis" id="thesis">
         <h2 class="thesis-quote reveal">We lost ourselves a bit.</h2>
@@ -1853,13 +1944,13 @@
         </div>
     </section>
 
-    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="100" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><polygon points="140,6 158,20 140,34 122,20" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.35"/><polygon points="140,12 150,20 140,28 130,20" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="3" fill="#d4872c" opacity="0.25"/><line x1="180" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
-
-    <!-- Breath Moment -->
-    <div class="breath-moment">
-        <div class="breath-line"></div>
-        <p class="breath-quote">The wound is where the light enters.</p>
-        <div class="breath-line"></div>
+    <!-- Divider with photo: between thesis and ai-never -->
+    <div class="divider">
+        <img src="photos/duzzi-ffp-group-close.jpg" alt="Group moment">
+        <div class="divider-overlay"></div>
+        <div class="divider-quote">
+            <blockquote>The wound is where the light enters.</blockquote>
+        </div>
     </div>
 
     <!-- What AI Will Never Touch -->
@@ -1892,7 +1983,14 @@
         </div>
     </section>
 
-    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="100" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="130" cy="20" r="6" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="140" cy="20" r="10" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/><circle cx="150" cy="20" r="6" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><line x1="180" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
+    <!-- Divider with photo: between ai-never and the-guide -->
+    <div class="divider">
+        <img src="photos/duzzi-amazon-walk.jpg" alt="Amazon walk">
+        <div class="divider-overlay"></div>
+        <div class="divider-quote">
+            <blockquote>You were not made for the life you settled for.</blockquote>
+        </div>
+    </div>
 
     <!-- The Guide Section -->
     <section class="the-guide" id="story">
@@ -1909,13 +2007,11 @@
         </div>
     </section>
 
-    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="95" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="115" cy="20" r="5" fill="none" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><circle cx="140" cy="20" r="14" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/><circle cx="140" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.35"/><circle cx="140" cy="20" r="2.5" fill="#d4872c" opacity="0.3"/><circle cx="165" cy="20" r="5" fill="none" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><line x1="185" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
-
-    <!-- Breath Moment -->
-    <div class="breath-moment">
-        <div class="breath-line"></div>
-        <p class="breath-quote">You were not made for the life you settled for.</p>
-        <div class="breath-line"></div>
+    <!-- Dramatic quote section -->
+    <div class="dramatic-quote">
+        <div class="dramatic-quote-content">
+            <p>The things that scare you most are the things most worth doing.</p>
+        </div>
     </div>
 
     <!-- Framework Section -->
@@ -1932,7 +2028,14 @@
         </div>
     </section>
 
-    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="100" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><polygon points="140,6 158,20 140,34 122,20" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.35"/><polygon points="140,12 150,20 140,28 130,20" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="3" fill="#d4872c" opacity="0.25"/><line x1="180" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
+    <!-- Divider with photo: between framework and rules -->
+    <div class="divider">
+        <img src="generated/embers.jpg" alt="Embers">
+        <div class="divider-overlay"></div>
+        <div class="divider-quote">
+            <blockquote>The path to transformation begins with a single choice.</blockquote>
+        </div>
+    </div>
 
     <!-- Rules Section -->
     <section class="rules" id="manifesto">
@@ -2045,7 +2148,14 @@
         </div>
     </section>
 
-    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="100" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="130" cy="20" r="6" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="140" cy="20" r="10" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/><circle cx="150" cy="20" r="6" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><line x1="180" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
+    <!-- Divider with photo: between rules and what-we-do -->
+    <div class="divider">
+        <img src="generated/embers.jpg" alt="Embers">
+        <div class="divider-overlay"></div>
+        <div class="divider-quote">
+            <blockquote>When you return to yourself, you return home.</blockquote>
+        </div>
+    </div>
 
     <!-- What We Do Section -->
     <section class="what-we-do" id="work">
@@ -2069,7 +2179,14 @@
         </div>
     </section>
 
-    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="95" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="115" cy="20" r="5" fill="none" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><circle cx="140" cy="20" r="14" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/><circle cx="140" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.35"/><circle cx="140" cy="20" r="2.5" fill="#d4872c" opacity="0.3"/><circle cx="165" cy="20" r="5" fill="none" stroke="#d4872c" stroke-width="0.4" opacity="0.3"/><line x1="185" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
+    <!-- Divider with photo: between what-we-do and image-break -->
+    <div class="divider">
+        <img src="generated/embers.jpg" alt="Embers">
+        <div class="divider-overlay"></div>
+        <div class="divider-quote">
+            <blockquote>Step forward and see what you are capable of.</blockquote>
+        </div>
+    </div>
 
     <!-- Image Break Section -->
     <section class="image-break" style="background-image: url('photos/duzzi-amazon-walk.jpg');">
