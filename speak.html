@@ -39,6 +39,35 @@
             overflow-x: hidden;
         }
 
+        /* Film grain overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.5;
+        }
+
+        /* Center line */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 100vh;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: calc(100vh * 4);
+            background: linear-gradient(to bottom,
+                transparent 0%,
+                rgba(212, 135, 44, 0.12) 10%,
+                rgba(212, 135, 44, 0.12) 90%,
+                transparent 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
         /* Navigation */
         nav {
             position: fixed; top: 0; left: 0; right: 0;
@@ -96,10 +125,11 @@
         .hero-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--bone); font-weight: 400; max-width: 600px; margin: 0 auto; animation: fadeInUp 1s ease 0.6s both; }
 
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes sigilBreathe { 0%, 100% { opacity: 0.2; transform: scale(1); } 50% { opacity: 0.35; transform: scale(1.05); } }
         @media (max-width: 768px) { .hero-title { font-size: 3rem; } .hero-subtitle { font-size: 1.1rem; } }
 
-        /* Sacred Geometry */
-        .sg-divider { display: block; width: 100%; text-align: center; padding: 1.5rem 0; overflow: hidden; background-color: var(--bg); }
+        /* Sacred Geometry Divider */
+        .sg-divider { display: block; width: 100%; text-align: center; padding: 0.75rem 0; overflow: hidden; background-color: var(--bg); }
         .sg-divider svg { width: 280px; height: 40px; opacity: 0.5; }
 
         .section-title {
@@ -119,63 +149,203 @@
             opacity: 0.3;
         }
 
-        /* Story Section */
+        /* ============================== */
+        /* THE MAN BEHIND THE MESSAGE     */
+        /* ============================== */
         .speaker-story {
-            padding: 5rem 2rem;
-            background-color: var(--bg2);
+            padding: 4rem 2rem;
             position: relative;
+            overflow: hidden;
+            background-color: var(--bg2);
+        }
+        .speaker-story::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('photos/duzzi-sunset-rock.jpg');
+            background-size: cover; background-position: center;
+            opacity: 0.08; z-index: 0;
         }
         .speaker-story::after {
             content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
             background: var(--sg-flower); background-size: 120px 104px;
-            opacity: 0.1; pointer-events: none; z-index: 0;
+            opacity: 0.08; pointer-events: none; z-index: 0;
         }
         .speaker-story > * { position: relative; z-index: 1; }
 
-        .story-container {
-            max-width: 800px; margin: 0 auto;
-        }
+        .story-container { max-width: 900px; margin: 0 auto; }
 
         .story-text {
             font-size: 1.2rem; color: var(--bone); line-height: 2;
             margin-bottom: 2rem; text-align: center;
         }
-
         .story-text strong { color: var(--ember); font-weight: 600; }
 
-        .story-accolades {
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem;
+        /* Credentials Grid */
+        .credentials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
             margin-top: 3rem;
+            margin-bottom: 2rem;
         }
+        @media (max-width: 900px) { .credentials-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .credentials-grid { grid-template-columns: 1fr; } }
 
-        .story-accolade {
-            padding: 1rem 1.5rem;
-            border: 1px solid rgba(212, 135, 44, 0.3);
+        .credential-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 2rem 1.5rem;
             background: rgba(212, 135, 44, 0.03);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.85rem; font-weight: 500;
-            color: var(--bone); letter-spacing: 1px;
-            text-transform: uppercase;
+            border: 1px solid rgba(212, 135, 44, 0.15);
+            position: relative;
+            overflow: hidden;
             transition: all 0.4s ease;
-            position: relative; overflow: hidden;
+        }
+        .credential-badge:hover {
+            border-color: rgba(212, 135, 44, 0.4);
+            background: rgba(212, 135, 44, 0.06);
+            transform: translateY(-3px);
         }
 
-        .story-accolade::before,
-        .story-accolade::after {
-            content: ''; position: absolute; width: 16px; height: 16px;
+        /* Corner accents on badges */
+        .credential-badge::before,
+        .credential-badge::after {
+            content: ''; position: absolute; width: 20px; height: 20px;
             border: 1px solid var(--ember); opacity: 0.2; transition: opacity 0.4s;
         }
-        .story-accolade::before { top: 4px; left: 4px; border-right: none; border-bottom: none; }
-        .story-accolade::after { bottom: 4px; right: 4px; border-left: none; border-top: none; }
-        .story-accolade:hover::before, .story-accolade:hover::after { opacity: 0.5; }
+        .credential-badge::before { top: 6px; left: 6px; border-right: none; border-bottom: none; }
+        .credential-badge::after { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+        .credential-badge:hover::before, .credential-badge:hover::after { opacity: 0.5; }
 
-        .story-accolade:hover {
-            border-color: rgba(212, 135, 44, 0.6);
-            background: rgba(212, 135, 44, 0.08);
+        .credential-icon {
+            width: 56px;
+            height: 56px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .credential-icon svg {
+            width: 100%;
+            height: 100%;
         }
 
-        /* Topics Section */
-        .topics-section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .credential-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--ember);
+            margin-bottom: 0.4rem;
+        }
+        .credential-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1.3;
+        }
+        .credential-detail {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            color: var(--smoke);
+            margin-top: 0.3rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Company Logo Badges */
+        .company-badges {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .company-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 2rem 2.5rem;
+            border: 1px solid rgba(212, 135, 44, 0.2);
+            background: linear-gradient(135deg, rgba(212, 135, 44, 0.04) 0%, rgba(201, 168, 76, 0.02) 100%);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        .company-badge:hover {
+            border-color: rgba(212, 135, 44, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(212, 135, 44, 0.08);
+        }
+
+        .company-logo-svg {
+            width: 140px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .company-stat {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--ember);
+            line-height: 1;
+        }
+        .company-stat-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--smoke);
+        }
+
+        /* Impact Banner */
+        .impact-banner {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(212, 135, 44, 0.1);
+            border-bottom: 1px solid rgba(212, 135, 44, 0.1);
+            flex-wrap: wrap;
+        }
+        .impact-stat {
+            text-align: center;
+        }
+        .impact-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--ember);
+            line-height: 1;
+        }
+        .impact-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--smoke);
+            margin-top: 0.5rem;
+        }
+
+        /* ============================== */
+        /* SPEAKING TOPICS                */
+        /* ============================== */
+        .topics-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
 
         .topics-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -216,37 +386,175 @@
 
         @media (max-width: 768px) { .topics-grid { grid-template-columns: 1fr; } }
 
-        /* Ideal Stages */
+        /* ============================== */
+        /* IDEAL STAGES - REDESIGNED      */
+        /* ============================== */
         .stages-section {
-            padding: 5rem 2rem;
-            background-color: var(--bg2);
+            padding: 4rem 2rem;
             position: relative;
+            overflow: hidden;
+            background-color: var(--bg2);
+        }
+        .stages-section::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('photos/duzzi-amazon-ceremony.jpg');
+            background-size: cover; background-position: center;
+            opacity: 0.06; z-index: 0;
         }
         .stages-section::after {
             content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
             background: var(--sg-hex); background-size: 60px 52px;
-            opacity: 0.4; pointer-events: none; z-index: 0;
+            opacity: 0.3; pointer-events: none; z-index: 0;
         }
         .stages-section > * { position: relative; z-index: 1; }
 
-        .stages-container { max-width: 800px; margin: 0 auto; text-align: center; }
+        .stages-container { max-width: 1000px; margin: 0 auto; }
 
-        .stages-text {
+        .stages-intro {
             font-size: 1.2rem; color: var(--bone); line-height: 2;
-            margin-bottom: 1.5rem;
+            text-align: center; max-width: 700px; margin: 0 auto 3rem;
         }
 
-        .stages-emphasis {
+        .stages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        @media (max-width: 600px) { .stages-grid { grid-template-columns: 1fr; } }
+
+        .stage-card {
+            padding: 2rem;
+            border-left: 3px solid var(--ember);
+            background: rgba(212, 135, 44, 0.03);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .stage-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(212, 135, 44, 0.04) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .stage-card:hover::before { opacity: 1; }
+        .stage-card:hover {
+            transform: translateX(4px);
+            border-color: var(--ember-light);
+        }
+
+        .stage-icon {
+            width: 36px;
+            height: 36px;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .stage-card h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem; color: var(--ember);
-            font-weight: 600; margin-top: 2rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+        .stage-card p {
+            font-size: 0.95rem;
+            color: var(--bone);
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Booking Section */
-        .booking-section {
-            padding: 5rem 2rem;
+        .stages-closing {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--ember);
+            font-weight: 600;
             text-align: center;
+            margin-top: 3rem;
         }
+
+        /* ============================== */
+        /* MEDIA & FEATURED IN            */
+        /* ============================== */
+        .media-section {
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .media-section::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('generated/embers.jpg');
+            background-size: cover; background-position: center;
+            opacity: 0.04; z-index: 0;
+        }
+        .media-section > * { position: relative; z-index: 1; }
+
+        .media-container { max-width: 900px; margin: 0 auto; text-align: center; }
+        .media-section .section-title { margin-bottom: 2rem; }
+
+        .media-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .media-logo-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0.6;
+            transition: opacity 0.4s ease;
+        }
+        .media-logo-item:hover { opacity: 1; }
+
+        .media-logo-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--smoke);
+        }
+        .media-logo-svg {
+            width: 48px;
+            height: 48px;
+        }
+
+        .podcast-count {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: var(--smoke);
+            letter-spacing: 1px;
+            margin-top: 1rem;
+        }
+        .podcast-count strong {
+            color: var(--ember);
+            font-size: 1.1rem;
+        }
+
+        /* ============================== */
+        /* BOOKING SECTION                */
+        /* ============================== */
+        .booking-section {
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--bg2);
+        }
+        .booking-section::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('photos/duzzi-stump-lake.jpg');
+            background-size: cover; background-position: center;
+            opacity: 0.06; z-index: 0;
+        }
+        .booking-section > * { position: relative; z-index: 1; }
 
         .booking-container { max-width: 600px; margin: 0 auto; }
 
@@ -254,6 +562,11 @@
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem; font-weight: 700;
             color: var(--white); margin-bottom: 1.5rem;
+        }
+        .booking-container h2::before {
+            content: ''; display: block; width: 60px; height: 60px; margin: 0 auto 1.5rem;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ccircle cx='30' cy='30' r='28' fill='none' stroke='%23d4872c' stroke-width='0.5' opacity='0.4'/%3E%3Ccircle cx='30' cy='30' r='18' fill='none' stroke='%23d4872c' stroke-width='0.5' opacity='0.3'/%3E%3Ccircle cx='30' cy='30' r='8' fill='none' stroke='%23d4872c' stroke-width='0.5' opacity='0.5'/%3E%3C/svg%3E") no-repeat center;
+            background-size: contain;
         }
 
         .booking-container p {
@@ -326,21 +639,125 @@
     <!-- Sacred Geometry Divider -->
     <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="100" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="120" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="12" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/><circle cx="160" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="4" fill="#d4872c" opacity="0.2"/><line x1="180" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
 
-    <!-- Speaker Story -->
+    <!-- ================================ -->
+    <!-- THE MAN BEHIND THE MESSAGE       -->
+    <!-- ================================ -->
     <section class="speaker-story">
         <div class="story-container">
             <h2 class="section-title">The Man Behind the Message</h2>
-            <p class="story-text reveal">Anthony Balduzzi lost his father at age nine. That loss set him on a path through competitive bodybuilding, naturopathic medical school, and building two multi million dollar health companies, the <strong>Fit Father Project</strong> and the <strong>Fit Mother Project</strong>, serving tens of thousands of families worldwide.</p>
+            <p class="story-text reveal">Anthony Balduzzi lost his father at age nine. That loss set him on a path through competitive bodybuilding, naturopathic medical school, and building two health companies serving tens of thousands of families worldwide.</p>
             <p class="story-text reveal">Then a near fatal skiing accident, seven surgeries, a decade of reconstruction, plant medicine ceremony in the Amazon, a week in total darkness, and the birth of his daughter cracked everything wide open.</p>
             <p class="story-text reveal">Today, Anthony speaks from the intersection of science and spirit. His talks are not motivational. They are transmissions from a man who has walked through the fire and come back with something real to share.</p>
 
-            <div class="story-accolades">
-                <div class="story-accolade reveal">Naturopathic Medical Doctor</div>
-                <div class="story-accolade reveal">Founder, Fit Father Project</div>
-                <div class="story-accolade reveal">Founder, Fit Mother Project</div>
-                <div class="story-accolade reveal">40,000+ Families Served</div>
-                <div class="story-accolade reveal">Ceremonialist &amp; Sacred Guide</div>
-                <div class="story-accolade reveal">Speaker &amp; Father</div>
+            <!-- Credential Badges -->
+            <div class="credentials-grid">
+                <!-- Education -->
+                <div class="credential-badge reveal">
+                    <div class="credential-icon">
+                        <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="28" cy="28" r="26" stroke="#d4872c" stroke-width="0.8" opacity="0.3"/>
+                            <path d="M28 12L42 20V36L28 44L14 36V20L28 12Z" stroke="#d4872c" stroke-width="1" fill="none" opacity="0.5"/>
+                            <path d="M28 20L36 24V32L28 36L20 32V24L28 20Z" stroke="#c9a84c" stroke-width="0.8" fill="none" opacity="0.4"/>
+                            <circle cx="28" cy="28" r="4" fill="#d4872c" opacity="0.3"/>
+                        </svg>
+                    </div>
+                    <div class="credential-label">Education</div>
+                    <div class="credential-value">University of Pennsylvania</div>
+                    <div class="credential-detail">B.A. Psychology, Nutrition &amp; Neuroscience</div>
+                </div>
+
+                <!-- Medical Degree -->
+                <div class="credential-badge reveal">
+                    <div class="credential-icon">
+                        <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="28" cy="28" r="26" stroke="#d4872c" stroke-width="0.8" opacity="0.3"/>
+                            <rect x="24" y="14" width="8" height="28" rx="1" stroke="#d4872c" stroke-width="1" fill="none" opacity="0.5"/>
+                            <rect x="14" y="24" width="28" height="8" rx="1" stroke="#d4872c" stroke-width="1" fill="none" opacity="0.5"/>
+                            <circle cx="28" cy="28" r="3" fill="#c9a84c" opacity="0.3"/>
+                        </svg>
+                    </div>
+                    <div class="credential-label">Medical Credential</div>
+                    <div class="credential-value">Naturopathic Medical Doctor</div>
+                    <div class="credential-detail">NMD, Southwest College of Naturopathic Medicine</div>
+                </div>
+
+                <!-- Bodybuilding -->
+                <div class="credential-badge reveal">
+                    <div class="credential-icon">
+                        <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="28" cy="28" r="26" stroke="#d4872c" stroke-width="0.8" opacity="0.3"/>
+                            <polygon points="28,10 32,22 44,22 34,30 38,42 28,34 18,42 22,30 12,22 24,22" stroke="#c9a84c" stroke-width="0.8" fill="none" opacity="0.5"/>
+                            <polygon points="28,18 30,24 36,24 31,28 33,34 28,30 23,34 25,28 20,24 26,24" stroke="#d4872c" stroke-width="0.6" fill="#d4872c" opacity="0.15"/>
+                        </svg>
+                    </div>
+                    <div class="credential-label">Athletic Achievement</div>
+                    <div class="credential-value">7x National Champion</div>
+                    <div class="credential-detail">Competitive Bodybuilder, Mr. Pennsylvania</div>
+                </div>
+
+                <!-- Fit Father Project -->
+                <div class="credential-badge reveal">
+                    <div class="credential-icon">
+                        <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="28" cy="28" r="26" stroke="#d4872c" stroke-width="0.8" opacity="0.3"/>
+                            <circle cx="28" cy="28" r="16" stroke="#c9a84c" stroke-width="0.6" opacity="0.3"/>
+                            <text x="28" y="25" text-anchor="middle" font-family="Inter, sans-serif" font-size="7" font-weight="700" fill="#d4872c" opacity="0.8">FIT</text>
+                            <text x="28" y="34" text-anchor="middle" font-family="Inter, sans-serif" font-size="6" font-weight="500" fill="#c9a84c" opacity="0.7">FATHER</text>
+                        </svg>
+                    </div>
+                    <div class="credential-label">Founded 2015</div>
+                    <div class="credential-value">The Fit Father Project</div>
+                    <div class="credential-detail">40,000+ Men Served in 100+ Countries</div>
+                </div>
+
+                <!-- Fit Mother Project -->
+                <div class="credential-badge reveal">
+                    <div class="credential-icon">
+                        <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="28" cy="28" r="26" stroke="#d4872c" stroke-width="0.8" opacity="0.3"/>
+                            <circle cx="28" cy="28" r="16" stroke="#c9a84c" stroke-width="0.6" opacity="0.3"/>
+                            <text x="28" y="25" text-anchor="middle" font-family="Inter, sans-serif" font-size="7" font-weight="700" fill="#d4872c" opacity="0.8">FIT</text>
+                            <text x="28" y="34" text-anchor="middle" font-family="Inter, sans-serif" font-size="6" font-weight="500" fill="#c9a84c" opacity="0.7">MOTHER</text>
+                        </svg>
+                    </div>
+                    <div class="credential-label">Founded 2018</div>
+                    <div class="credential-value">The Fit Mother Project</div>
+                    <div class="credential-detail">20,000+ Women Served in 100+ Countries</div>
+                </div>
+
+                <!-- Ceremonialist -->
+                <div class="credential-badge reveal">
+                    <div class="credential-icon">
+                        <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="28" cy="28" r="26" stroke="#d4872c" stroke-width="0.8" opacity="0.3"/>
+                            <path d="M28 14C28 14 36 22 36 30C36 34.4 32.4 38 28 38C23.6 38 20 34.4 20 30C20 22 28 14 28 14Z" stroke="#d4872c" stroke-width="1" fill="none" opacity="0.5"/>
+                            <path d="M28 22C28 22 32 26 32 30C32 32.2 30.2 34 28 34C25.8 34 24 32.2 24 30C24 26 28 22 28 22Z" stroke="#c9a84c" stroke-width="0.8" fill="#d4872c" opacity="0.1"/>
+                        </svg>
+                    </div>
+                    <div class="credential-label">Sacred Work</div>
+                    <div class="credential-value">Ceremonialist &amp; Guide</div>
+                    <div class="credential-detail">Plant Medicine, Darkness Retreat, Fire Ceremony</div>
+                </div>
+            </div>
+
+            <!-- Impact Numbers -->
+            <div class="impact-banner reveal">
+                <div class="impact-stat">
+                    <div class="impact-number">60,000+</div>
+                    <div class="impact-label">Families Transformed</div>
+                </div>
+                <div class="impact-stat">
+                    <div class="impact-number">100+</div>
+                    <div class="impact-label">Countries Reached</div>
+                </div>
+                <div class="impact-stat">
+                    <div class="impact-number">200K+</div>
+                    <div class="impact-label">Lbs of Fat Lost</div>
+                </div>
+                <div class="impact-stat">
+                    <div class="impact-number">700+</div>
+                    <div class="impact-label">Articles Published</div>
+                </div>
             </div>
         </div>
     </section>
@@ -384,13 +801,143 @@
         </div>
     </section>
 
-    <!-- Ideal Stages -->
+    <!-- Sacred Geometry Divider -->
+    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="100" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="130" cy="20" r="6" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.35"/><circle cx="140" cy="20" r="10" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.25"/><circle cx="150" cy="20" r="6" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.35"/><circle cx="140" cy="20" r="3" fill="#d4872c" opacity="0.2"/><line x1="180" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
+
+    <!-- ================================ -->
+    <!-- IDEAL STAGES - REDESIGNED        -->
+    <!-- ================================ -->
     <section class="stages-section">
         <div class="stages-container">
             <h2 class="section-title">Ideal Stages</h2>
-            <p class="stages-text reveal">Anthony speaks at intimate gatherings over large arenas. Men's leadership summits, consciousness and transformation events, podcasts hosted by people doing deep work, and stages at the intersection of performance, purpose, and spirit.</p>
-            <p class="stages-text reveal">Not mainstream fitness stages. Not corporate motivational circuits. Spaces where real transformation is possible and expected.</p>
-            <p class="stages-emphasis reveal">The room should be ready for something real.</p>
+            <p class="stages-intro reveal">Anthony speaks at intimate gatherings over large arenas. Spaces where real transformation is possible and expected.</p>
+
+            <div class="stages-grid">
+                <div class="stage-card reveal">
+                    <svg class="stage-icon" viewBox="0 0 36 36" fill="none">
+                        <circle cx="18" cy="18" r="16" stroke="#d4872c" stroke-width="0.8" opacity="0.4"/>
+                        <path d="M18 8L22 14H26L22 18L24 24L18 20L12 24L14 18L10 14H14L18 8Z" stroke="#c9a84c" stroke-width="0.6" fill="none" opacity="0.5"/>
+                    </svg>
+                    <h3>Men's Leadership Summits</h3>
+                    <p>Gatherings of men doing the real work. Not networking events. Containers for breakthrough, accountability, and brotherhood.</p>
+                </div>
+
+                <div class="stage-card reveal">
+                    <svg class="stage-icon" viewBox="0 0 36 36" fill="none">
+                        <circle cx="18" cy="18" r="16" stroke="#d4872c" stroke-width="0.8" opacity="0.4"/>
+                        <circle cx="18" cy="18" r="8" stroke="#c9a84c" stroke-width="0.6" fill="none" opacity="0.5"/>
+                        <circle cx="18" cy="18" r="3" fill="#d4872c" opacity="0.2"/>
+                        <line x1="18" y1="2" x2="18" y2="34" stroke="#d4872c" stroke-width="0.4" opacity="0.2"/>
+                        <line x1="2" y1="18" x2="34" y2="18" stroke="#d4872c" stroke-width="0.4" opacity="0.2"/>
+                    </svg>
+                    <h3>Consciousness &amp; Transformation</h3>
+                    <p>Events at the intersection of spiritual growth, plant medicine integration, and the ancient wisdom traditions meeting modern science.</p>
+                </div>
+
+                <div class="stage-card reveal">
+                    <svg class="stage-icon" viewBox="0 0 36 36" fill="none">
+                        <circle cx="18" cy="18" r="16" stroke="#d4872c" stroke-width="0.8" opacity="0.4"/>
+                        <rect x="10" y="12" width="16" height="12" rx="2" stroke="#c9a84c" stroke-width="0.6" fill="none" opacity="0.5"/>
+                        <circle cx="18" cy="18" r="4" stroke="#d4872c" stroke-width="0.6" fill="none" opacity="0.4"/>
+                        <circle cx="18" cy="18" r="1.5" fill="#d4872c" opacity="0.3"/>
+                    </svg>
+                    <h3>Deep Work Podcasts</h3>
+                    <p>Long form conversations with hosts doing meaningful work. Not quick hit content. Discussions that go somewhere real and stay there.</p>
+                </div>
+
+                <div class="stage-card reveal">
+                    <svg class="stage-icon" viewBox="0 0 36 36" fill="none">
+                        <circle cx="18" cy="18" r="16" stroke="#d4872c" stroke-width="0.8" opacity="0.4"/>
+                        <path d="M18 8C18 8 28 16 28 22C28 27.5 23.5 32 18 32C12.5 32 8 27.5 8 22C8 16 18 8 18 8Z" stroke="#c9a84c" stroke-width="0.6" fill="none" opacity="0.5"/>
+                        <path d="M18 16C18 16 22 20 22 22C22 24.2 20.2 26 18 26C15.8 26 14 24.2 14 22C14 20 18 16 18 16Z" fill="#d4872c" opacity="0.15"/>
+                    </svg>
+                    <h3>Performance &amp; Purpose</h3>
+                    <p>Stages where peak physical performance meets spiritual depth. Where athletes, entrepreneurs, and leaders come to find something beyond achievement.</p>
+                </div>
+
+                <div class="stage-card reveal">
+                    <svg class="stage-icon" viewBox="0 0 36 36" fill="none">
+                        <circle cx="18" cy="18" r="16" stroke="#d4872c" stroke-width="0.8" opacity="0.4"/>
+                        <path d="M12 28L18 8L24 28" stroke="#c9a84c" stroke-width="0.6" fill="none" opacity="0.5"/>
+                        <line x1="14" y1="22" x2="22" y2="22" stroke="#c9a84c" stroke-width="0.6" opacity="0.4"/>
+                        <circle cx="18" cy="14" r="2" fill="#d4872c" opacity="0.2"/>
+                    </svg>
+                    <h3>Retreats &amp; Ceremonies</h3>
+                    <p>Intimate containers. Belize. The Amazon. Sedona red rocks. Spaces where the veil is thin and people come ready to be changed.</p>
+                </div>
+
+                <div class="stage-card reveal">
+                    <svg class="stage-icon" viewBox="0 0 36 36" fill="none">
+                        <circle cx="18" cy="18" r="16" stroke="#d4872c" stroke-width="0.8" opacity="0.4"/>
+                        <polygon points="18,6 30,18 18,30 6,18" stroke="#c9a84c" stroke-width="0.6" fill="none" opacity="0.4"/>
+                        <polygon points="18,12 24,18 18,24 12,18" stroke="#d4872c" stroke-width="0.6" fill="none" opacity="0.3"/>
+                        <circle cx="18" cy="18" r="2" fill="#d4872c" opacity="0.25"/>
+                    </svg>
+                    <h3>Health &amp; Wellness Summits</h3>
+                    <p>Not mainstream fitness stages. Events where health is understood as physical, emotional, and spiritual. Where healing is the goal, not aesthetics.</p>
+                </div>
+            </div>
+
+            <p class="stages-closing reveal">The room should be ready for something real.</p>
+        </div>
+    </section>
+
+    <!-- Sacred Geometry Divider -->
+    <div class="sg-divider"><svg viewBox="0 0 280 40"><line x1="0" y1="20" x2="100" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/><circle cx="120" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="12" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/><circle cx="160" cy="20" r="8" fill="none" stroke="#d4872c" stroke-width="0.5" opacity="0.4"/><circle cx="140" cy="20" r="4" fill="#d4872c" opacity="0.2"/><line x1="180" y1="20" x2="280" y2="20" stroke="#d4872c" stroke-width="0.5" opacity="0.3"/></svg></div>
+
+    <!-- Featured & Media -->
+    <section class="media-section">
+        <div class="media-container">
+            <h2 class="section-title">Featured In</h2>
+
+            <div class="media-logos">
+                <div class="media-logo-item reveal">
+                    <svg class="media-logo-svg" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="22" stroke="#d4872c" stroke-width="0.6" opacity="0.3"/>
+                        <text x="24" y="20" text-anchor="middle" font-family="'Playfair Display', serif" font-size="8" font-weight="700" fill="#d4872c" opacity="0.7">A</text>
+                        <text x="24" y="30" text-anchor="middle" font-family="Inter, sans-serif" font-size="5" fill="#c9a84c" opacity="0.6">MAG</text>
+                    </svg>
+                    <span class="media-logo-text">Authority Magazine</span>
+                </div>
+
+                <div class="media-logo-item reveal">
+                    <svg class="media-logo-svg" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="22" stroke="#d4872c" stroke-width="0.6" opacity="0.3"/>
+                        <text x="24" y="20" text-anchor="middle" font-family="'Playfair Display', serif" font-size="8" font-weight="700" fill="#d4872c" opacity="0.7">H</text>
+                        <text x="24" y="30" text-anchor="middle" font-family="Inter, sans-serif" font-size="5" fill="#c9a84c" opacity="0.6">PRO</text>
+                    </svg>
+                    <span class="media-logo-text">Healthpreneur</span>
+                </div>
+
+                <div class="media-logo-item reveal">
+                    <svg class="media-logo-svg" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="22" stroke="#d4872c" stroke-width="0.6" opacity="0.3"/>
+                        <text x="24" y="20" text-anchor="middle" font-family="'Playfair Display', serif" font-size="8" font-weight="700" fill="#d4872c" opacity="0.7">E</text>
+                        <text x="24" y="30" text-anchor="middle" font-family="Inter, sans-serif" font-size="5" fill="#c9a84c" opacity="0.6">FIT</text>
+                    </svg>
+                    <span class="media-logo-text">Exercise.com</span>
+                </div>
+
+                <div class="media-logo-item reveal">
+                    <svg class="media-logo-svg" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="22" stroke="#d4872c" stroke-width="0.6" opacity="0.3"/>
+                        <text x="24" y="20" text-anchor="middle" font-family="'Playfair Display', serif" font-size="8" font-weight="700" fill="#d4872c" opacity="0.7">I</text>
+                        <text x="24" y="30" text-anchor="middle" font-family="Inter, sans-serif" font-size="5" fill="#c9a84c" opacity="0.6">MEDIA</text>
+                    </svg>
+                    <span class="media-logo-text">Influencive</span>
+                </div>
+
+                <div class="media-logo-item reveal">
+                    <svg class="media-logo-svg" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="22" stroke="#d4872c" stroke-width="0.6" opacity="0.3"/>
+                        <text x="24" y="20" text-anchor="middle" font-family="'Playfair Display', serif" font-size="8" font-weight="700" fill="#d4872c" opacity="0.7">P</text>
+                        <text x="24" y="30" text-anchor="middle" font-family="Inter, sans-serif" font-size="5" fill="#c9a84c" opacity="0.6">GAZETTE</text>
+                    </svg>
+                    <span class="media-logo-text">Penn Gazette</span>
+                </div>
+            </div>
+
+            <p class="podcast-count reveal"><strong>50+</strong> podcast appearances and counting</p>
         </div>
     </section>
 
