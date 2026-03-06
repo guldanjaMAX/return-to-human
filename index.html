@@ -280,6 +280,16 @@
             margin: 0 auto;
         }
 
+        /* Full-bleed sections break out of max-width */
+        .hero,
+        .ai-never,
+        .the-guide,
+        .what-we-do,
+        .newsletter {
+            max-width: none;
+            width: 100%;
+        }
+
         .section-title {
             font-family: 'Playfair Display', serif;
             font-size: 3rem;
@@ -400,6 +410,7 @@
             width: 100%;
             height: auto;
             object-fit: cover;
+            object-position: top;
             border-left: 4px solid var(--ember);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
@@ -906,7 +917,7 @@
         <h2 class="section-title">The Guide</h2>
         <div class="guide-container">
             <div class="guide-image">
-                <img src="photos/duzzi-amazon-walk.jpg" alt="Anthony Balduzzi in the Amazon">
+                <img src="photos/duzzi-stump-lake.jpg" alt="Anthony Balduzzi">
             </div>
             <div class="guide-content reveal">
                 <h3>Anthony Balduzzi</h3>
